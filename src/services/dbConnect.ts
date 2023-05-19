@@ -3,16 +3,34 @@ import mongoose, { ConnectOptions } from 'mongoose'
 const DB_URI = process.env.MONGODB_URI || ''
 
 // MongoDB 연결 설정
-const connectDB = async () => {
-  try {
-    await mongoose.connect(DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as ConnectOptions)
-    console.log('MongoDB 연결 성공')
-  } catch (error) {
-    console.error('MongoDB 연결 실패:', error)
+let cached = global.mongoose
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null }
+}
+
+async function connectDB() {
+  if (cached.conn) return cached.conn
+
+  const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
   }
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .set({ debug: true, strictQuery: false })
+      .connect(`${DB_URI}`, options as ConnectOptions)
+      .then((mongoose) => {
+        console.log('MongoDB 연결 성공')
+        return mongoose
+      })
+  }
+
+  cached.conn = await cached.promise
+  return cached.conn
 }
 
 export default connectDB
