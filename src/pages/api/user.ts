@@ -7,12 +7,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'POST') {
     try {
+      const { username, email, password, firstName, lastName } = req.body
+
       const newUser: IUser = new User({
-        username: 'testUser2',
-        email: 'test2@example.com',
-        password: 'testPassword2',
-        firstName: 'Test2',
-        lastName: 'User2',
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
       })
       await newUser.save()
 
