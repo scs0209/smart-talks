@@ -40,6 +40,13 @@ const SignupForm = () => {
             <h2>회원가입</h2>
             <form onSubmit={handleSubmit}>
               <Input type="text" placeholder="이름" required {...firstName} />
+              <Input type="text" placeholder="성" required {...lastName} />
+              <Input
+                type="text"
+                placeholder="사용자 이름"
+                required
+                {...username}
+              />
               <Input type="email" placeholder="이메일" required {...email} />
               <Input
                 type="password"

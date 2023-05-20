@@ -1,4 +1,5 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema, Document, model, CallbackError } from 'mongoose'
+import bcrypt from 'bcrypt'
 
 export interface IUser extends Document {
   username: string
@@ -16,6 +17,7 @@ const UserSchema: Schema = new Schema<IUser>({
   lastName: { type: String, required: true },
 })
 
-const User = mongoose.model<IUser>('User', UserSchema)
+const User: mongoose.Model<IUser> =
+  mongoose.models.User || model<IUser>('User', UserSchema)
 
 export default User

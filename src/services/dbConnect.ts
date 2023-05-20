@@ -15,8 +15,6 @@ async function connectDB() {
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
   }
 
   if (!cached.promise) {
