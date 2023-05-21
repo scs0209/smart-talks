@@ -1,5 +1,4 @@
-import mongoose, { Schema, Document, model, CallbackError } from 'mongoose'
-import bcrypt from 'bcrypt'
+import mongoose, { Schema, Document, model } from 'mongoose'
 
 export interface IUser extends Document {
   username: string
