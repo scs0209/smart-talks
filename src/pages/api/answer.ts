@@ -7,16 +7,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'POST') {
     try {
-      const newAnswer: IAnswer = new Answer({
-        answerText: '42.',
-        question: 'question-id-here',
-        createdBy: 'user-id-here',
+      const { answerText, question, createdBy } = req.body
+
+      const answer: IAnswer = new Answer({
+        answerText,
+        question,
+        createdBy,
       })
-      await newAnswer.save()
+      await answer.save()
 
       res.status(200).json({
         success: true,
-        answer: newAnswer,
+        answer,
       })
     } catch (error: unknown) {
       const message =

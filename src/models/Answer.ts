@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema, Document, model } from 'mongoose'
 
 export interface IAnswer extends Document {
   answerText: string
@@ -12,6 +12,7 @@ const AnswerSchema: Schema = new Schema({
   createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
 })
 
-const Answer = mongoose.model<IAnswer>('Answer', AnswerSchema)
+const Answer: mongoose.Model<IAnswer> =
+  mongoose.models.Answer || model<IAnswer>('Answer', AnswerSchema)
 
 export default Answer
