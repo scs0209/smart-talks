@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { apiService } from '@/services/apiServices'
-import { SET_USER, CLEAR_USER } from '../actionTypes'
 import { IUser } from '@/models/User'
+import { SET_USER, CLEAR_USER } from '../actionTypes'
 
 // 유저 정보를 설정하는 액션
 export const setUser = (user: IUser) => {

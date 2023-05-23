@@ -8,7 +8,7 @@ interface SignUpData {
   lastName: string
 }
 
-export async function signUp(data: SignUpData) {
+export default async function signUp(data: SignUpData) {
   try {
     const response = await axios.post('/api/user', data)
     if (response.status === 200) {

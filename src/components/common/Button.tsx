@@ -2,14 +2,13 @@ import MUIButton, {
   ButtonProps as MUIButtonProps,
 } from '@material-ui/core/Button'
 
-const Button = (props: MUIButtonProps) => {
+const Button: React.FC<MUIButtonProps> = ({
+  color = 'primary',
+  variant = 'contained',
+  ...props
+}) => {
   return (
-    <MUIButton
-      {...props}
-      color={props.color || 'primary'}
-      variant={props.variant || 'contained'}
-      disableElevation
-    />
+    <MUIButton {...props} color={color} variant={variant} disableElevation />
   )
 }
 

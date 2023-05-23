@@ -1,11 +1,11 @@
 import { Action } from 'redux'
+import { IQuestion } from '@/models/Question'
 import {
   ADD_QUESTION,
   DELETE_QUESTION,
   SET_QUESTIONS,
   UPDATE_QUESTION,
 } from '../actionTypes'
-import { IQuestion } from '@/models/Question'
 
 interface SetQuestionsAction extends Action<typeof SET_QUESTIONS> {
   payload: IQuestion[]

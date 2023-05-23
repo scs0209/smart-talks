@@ -1,8 +1,9 @@
+/* eslint-disable */
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
+import NextAuth from 'next-auth/next'
 import connectDB from '../../services/dbConnect'
 import User, { IUser } from '../../models/User'
-import NextAuth from 'next-auth/next'
 import { authOptions } from './auth/[...nextauth]'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

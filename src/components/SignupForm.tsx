@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
-import { signUp } from '../services/authService'
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Button from '@/components/common/Button'
 import Input from '@/components/common/Input'
+import signUp from '@/services/authService'
 import useInput from '../hooks/useInput'
 
 const SignupForm = () => {

@@ -1,11 +1,11 @@
 import { Action } from 'redux'
+import { IAnswer } from '@/models/Answer'
 import {
   ADD_ANSWER,
   DELETE_ANSWER,
   SET_ANSWERS,
   UPDATE_ANSWER,
 } from '../actionTypes'
-import { IAnswer } from '@/models/Answer'
 
 interface SetAnswersAction extends Action<typeof SET_ANSWERS> {
   payload: IAnswer[]

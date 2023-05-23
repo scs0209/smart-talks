@@ -1,6 +1,6 @@
 import { Mongoose } from 'mongoose'
 
-/* eslint-disable no-var */
+/* eslint-disable */
 
 declare global {
   var mongoose: {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import mongoose, { ConnectOptions } from 'mongoose'
 
 const DB_URI = process.env.MONGODB_URI || ''

@@ -1,12 +1,12 @@
 import { Dispatch } from 'redux'
 import Question, { IQuestion } from '@/models/Question'
+import { QuestionService } from '@/services/apiServices'
 import {
   SET_QUESTIONS,
   ADD_QUESTION,
   UPDATE_QUESTION,
   DELETE_QUESTION,
 } from '../actionTypes'
-import { QuestionService } from '@/services/apiServices'
 
 // 질문 목록을 설정하는 액션
 export const setQuestions = (questions: IQuestion[]) => {

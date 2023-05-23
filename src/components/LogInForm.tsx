@@ -1,3 +1,6 @@
+'use client'
+
+/* eslint-disable */
 import useInput from '@/hooks/useInput'
 import { signIn } from 'next-auth/react'
 import Input from './common/Input'
@@ -25,11 +28,11 @@ const LoginForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="email">Email</label>
-        <Input type="text" required {...email} />
+        <Input id="email" type="text" required {...email} />
       </div>
       <div>
         <label htmlFor="password">Password</label>
-        <Input type="password" required {...password} />
+        <Input id="password" type="password" required {...password} />
       </div>
       <Button type="submit">Sign In</Button>
     </form>

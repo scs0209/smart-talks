@@ -1,22 +1,30 @@
 import { apiService } from '@/services/apiServices'
-import { signOut, useSession } from 'next-auth/react'
+import { getSession, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
+import { GetServerSideProps } from 'next'
 
-export default function Home() {
-  const [question, setQuestion] = useState('')
-  const [answer, setAnswer] = useState('')
-  const { data: session, status } = useSession()
+interface HomeProps {
+  session: any
+}
 
-  if (status === 'authenticated') console.log('session', session)
-  const isLoading = status === 'loading'
+const Home: React.FC<HomeProps> = ({ session }) => {
+  const [question, setQuestion] = useState<string>('')
+  const [answer, setAnswer] = useState<string>('')
+  const isLoading = !session
 
-  const onChangeQuestion = useCallback((e: any) => {
+  const onChangeQuestion = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value)
   }, [])
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
       apiService.post('/api/chatGptService', { question }).then((response) => {
@@ -44,7 +52,9 @@ export default function Home() {
       </Head>
       {session && (
         <>
-          <button onClick={handleLogout}>Logout</button>
+          <button type="submit" onClick={handleLogout}>
+            Logout
+          </button>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -60,3 +70,13 @@ export default function Home() {
     </>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+
+  return {
+    props: { session },
+  }
+}
+
+export default Home

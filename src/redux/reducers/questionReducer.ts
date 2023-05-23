@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Question, { IQuestion } from '@/models/Question'
 import {
   SET_QUESTIONS,

@@ -32,25 +32,8 @@ export default async function handler(
   }
 
   try {
-    // ChatGPT로부터 답변 생성
     const response = await openai.createCompletion(request)
-    const answerText = response.data.choices[0].text
-
-    // 질문을 Question 모델에 저장
-    const questionEntry = new Question({
-      question, // questionText 필드 추가
-      createdBy, // createdBy 필드 추가
-    })
-    await questionEntry.save()
-
-    // 답변을 Answer 모델에 저장
-    const answer = new Answer({
-      answerText,
-      question: questionEntry._id, // Question 모델의 ID를 저장
-    })
-    await answer.save()
-
-    res.status(200).json({ result: answerText })
+    res.status(200).json({ result: response.data.choices[0].text })
   } catch (error) {
     console.error('Failed to create chat GPT completion:', error)
     res.status(500).json({ error: { message: 'Failed to generate response' } })

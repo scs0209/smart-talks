@@ -1,12 +1,12 @@
 import { Dispatch } from 'redux'
+import { IAnswer } from '@/models/Answer'
+import { AnswerService } from '@/services/apiServices'
 import {
   SET_ANSWERS,
   ADD_ANSWER,
   UPDATE_ANSWER,
   DELETE_ANSWER,
 } from '../actionTypes'
-import { IAnswer } from '@/models/Answer'
-import { AnswerService } from '@/services/apiServices'
 
 // 답변 목록을 설정하는 액션
 export const setAnswers = (answers: IAnswer[]) => {

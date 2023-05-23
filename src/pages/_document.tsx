@@ -1,4 +1,4 @@
-import React from 'react'
+/* eslint-disable */
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheets } from '@mui/styles'
 

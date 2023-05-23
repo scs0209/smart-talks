@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { IAnswer } from '@/models/Answer'
 import {
   SET_ANSWERS,

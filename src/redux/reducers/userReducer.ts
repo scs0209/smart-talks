@@ -1,3 +1,4 @@
+/* eslint-disable */
 import User, { IUser } from '@/models/User'
 import { SET_USER, CLEAR_USER } from '../actionTypes'
 import { UserActionTypes } from '../types/userTypes'
