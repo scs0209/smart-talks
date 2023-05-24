@@ -1,5 +1,3 @@
-import Answer from '@/models/Answer'
-import Question from '@/models/Question'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Configuration, OpenAIApi, CreateCompletionRequest } from 'openai'
 

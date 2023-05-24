@@ -1,10 +1,10 @@
 import LoginForm from '@/components/LogInForm'
-import Head from 'next/head'
+import Head from '@/components/common/HeadInfo'
 
 const Login = () => {
   return (
     <div>
-      <Head>LogIn</Head>
+      <Head title="LogIn" />
       <h1>Login</h1>
       <LoginForm />
     </div>

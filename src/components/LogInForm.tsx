@@ -5,6 +5,7 @@ import useInput from '@/hooks/useInput'
 import { signIn } from 'next-auth/react'
 import Input from './common/Input'
 import Button from './common/Button'
+import Link from 'next/link'
 
 const LoginForm = () => {
   const email = useInput('')
@@ -35,6 +36,9 @@ const LoginForm = () => {
         <Input id="password" type="password" required {...password} />
       </div>
       <Button type="submit">Sign In</Button>
+      <Link href="/signup" passHref>
+        <Button type="button">Sign Up</Button>
+      </Link>
     </form>
   )
 }

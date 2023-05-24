@@ -1,43 +1,30 @@
 import { apiService } from '@/services/apiServices'
-import { getSession, signOut, useSession } from 'next-auth/react'
-import Head from 'next/head'
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
-import { GetServerSideProps } from 'next'
+import { signOut, useSession } from 'next-auth/react'
+import React, { useCallback, useEffect, useState } from 'react'
+import Error from 'next/error'
+import Head from '@/components/common/HeadInfo'
 
-interface HomeProps {
-  session: any
-}
-
-const Home: React.FC<HomeProps> = ({ session }) => {
-  const [question, setQuestion] = useState<string>('')
-  const [answer, setAnswer] = useState<string>('')
-  const isLoading = !session
-
-  const onChangeQuestion = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+export default function Home({ errorCode, stars }: any) {
+  const [question, setQuestion] = useState('')
+  const [answer, setAnswer] = useState('')
+  const { data: session, status } = useSession()
+  if (status === 'authenticated') console.log('session', session)
+  const isLoading = status === 'loading'
+  const onChangeQuestion = useCallback((e: any) => {
     setQuestion(e.target.value)
   }, [])
-
   const handleSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
+    (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-
       apiService.post('/api/chatGptService', { question }).then((response) => {
         setAnswer(response.result)
       })
     },
     [question],
   )
-
   const handleLogout = useCallback(() => {
     signOut()
   }, [])
-
   useEffect(() => {
     if (!isLoading && !session) {
       // 로그인되지 않은 경우 로그인 페이지로 이동
@@ -45,11 +32,13 @@ const Home: React.FC<HomeProps> = ({ session }) => {
     }
   }, [session, isLoading])
 
+  if (errorCode) {
+    return <Error statusCode={errorCode} />
+  }
+
   return (
     <>
-      <Head>
-        <title>Home</title>
-      </Head>
+      <Head title="Home" />
       {session && (
         <>
           <button type="submit" onClick={handleLogout}>
@@ -71,12 +60,11 @@ const Home: React.FC<HomeProps> = ({ session }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
-
+export async function getServerSideProps() {
+  const res = await fetch('https://api.github.com/repos/vercel/next.js')
+  const errorCode = res.ok ? false : res.status
+  const json = await res.json()
   return {
-    props: { session },
+    props: { errorCode, stars: json.stargazers_count },
   }
 }
-
-export default Home
