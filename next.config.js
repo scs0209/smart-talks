@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   // 정적 사이트 생성 설정
+  i18n: {
+    locales: ['en', 'ko'],
+    defaultLocale: 'en',
+  },
   exportPathMap: async function () {
     return {
       '/signup': { page: '/signup' },
