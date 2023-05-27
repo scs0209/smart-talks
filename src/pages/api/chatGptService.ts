@@ -20,7 +20,6 @@ export default async function handler(
   }
 
   const question: string = req.body.question || ''
-  const createdBy: string = req.body.createdBy || ''
 
   const request: CreateCompletionRequest = {
     model: 'text-davinci-003',

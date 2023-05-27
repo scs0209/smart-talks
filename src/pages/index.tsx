@@ -1,21 +1,16 @@
-import { apiService } from '@/services/apiServices'
 import { useSession } from 'next-auth/react'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Error from 'next/error'
 import Head from '@/components/common/HeadInfo'
-import QuestionForm from '@/components/QuestionForm'
 import { Box, Container, Typography } from '@mui/material'
+import ServiceCard from '@/components/ServiceCard'
+import serviceData from '@/services.json'
 
 export default function Home({ errorCode, stars }: any) {
-  const [answer, setAnswer] = useState('')
   const { data: session, status } = useSession()
+  console.log(session)
 
   const isLoading = status === 'loading'
-
-  const handleSubmit = useCallback(async (question: string) => {
-    const response = await apiService.post('/api/chatGptService', { question })
-    setAnswer(response.result)
-  }, [])
 
   useEffect(() => {
     if (!isLoading && !session) {
@@ -34,18 +29,23 @@ export default function Home({ errorCode, stars }: any) {
       {session && (
         <Container>
           <Box mt={4}>
-            <QuestionForm onSubmit={handleSubmit} isLoading={isLoading} />
-          </Box>
-          {answer && (
-            <Box mt={2}>
-              <Typography
-                variant="body1"
-                sx={{ backgroundColor: '#f5f5f5', padding: '10px' }}
-              >
-                {answer}
-              </Typography>
+            <Typography variant="h3" gutterBottom>
+              {`어서오세요, ${session.user?.name}님!`}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+              어떤 서비스를 원하시나요?
+            </Typography>
+            <Box mt={2} display="flex" flexWrap="wrap">
+              {serviceData.services.map((service) => (
+                <ServiceCard
+                  key={service.link}
+                  title={service.title}
+                  description={service.description}
+                  link={service.link}
+                />
+              ))}
             </Box>
-          )}
+          </Box>
         </Container>
       )}
     </>
