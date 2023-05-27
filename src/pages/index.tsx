@@ -42,6 +42,7 @@ export default function Home({ errorCode, stars }: any) {
                   title={service.title}
                   description={service.description}
                   link={service.link}
+                  image={service.image}
                 />
               ))}
             </Box>
