@@ -8,7 +8,8 @@ import serviceData from '@/services.json'
 
 export default function Home({ errorCode, stars }: any) {
   const { data: session, status } = useSession()
-  console.log(session)
+  if (status === 'authenticated')
+    console.log('session', session.user?.email, session)
 
   const isLoading = status === 'loading'
 
@@ -30,7 +31,7 @@ export default function Home({ errorCode, stars }: any) {
         <Container>
           <Box mt={4}>
             <Typography variant="h3" gutterBottom>
-              {`어서오세요, ${session.user?.name}님!`}
+              {`어서오세요, ${session.user?.email}님!`}
             </Typography>
             <Typography variant="h5" gutterBottom>
               어떤 서비스를 원하시나요?

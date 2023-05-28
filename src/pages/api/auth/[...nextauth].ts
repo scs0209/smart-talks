@@ -58,15 +58,14 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async jwt(token: JWT, user?: { [key: string]: any }) {
-      let modifiedToken = token
       if (user) {
-        modifiedToken = { ...user }
+        token.user = user
       }
-      return modifiedToken
+      return token
     },
     async session(params) {
-      const { session, token } = params
-      session.user = token
+      const { session, token }: any = params
+      session.user = token.user
       return session
     },
   },

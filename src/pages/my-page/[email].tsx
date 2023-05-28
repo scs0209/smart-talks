@@ -8,7 +8,6 @@ const MyPage = () => {
   const router = useRouter()
   const { email } = router.query
   const { data: session, status } = useSession()
-  console.log(session)
 
   useEffect(() => {
     if (email) {
@@ -18,6 +17,7 @@ const MyPage = () => {
           const fetchedUser = await getUserByEmail(email as string)
           // 여기서 fetchedUser와 세션 정보를 비교하여 권한 검사 등을 수행할 수 있습니다.
           console.log('User:', fetchedUser)
+          console.log('Session:', session)
         } catch (error) {
           // 오류 처리
           console.error('Failed to fetch user:', error)
