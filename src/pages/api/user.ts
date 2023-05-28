@@ -34,6 +34,29 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         error instanceof Error ? error.message : 'Unknown error occurred'
       res.status(400).json({ success: false, message: message })
     }
+  } else if (req.method === 'GET') {
+    try {
+      const { email } = req.query
+
+      // 이메일을 사용하여 사용자 정보를 조회
+      const user = await User.findOne({ email })
+
+      if (!user) {
+        // 사용자를 찾을 수 없는 경우 에러 응답
+        return res
+          .status(404)
+          .json({ success: false, message: 'User not found' })
+      }
+
+      res.status(200).json({
+        success: true,
+        user,
+      })
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : 'Unknown error occurred'
+      res.status(500).json({ success: false, message })
+    }
   } else {
     await NextAuth(req, res, authOptions)
   }

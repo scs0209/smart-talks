@@ -79,3 +79,14 @@ export const AnswerService = {
 
   // 다른 API 메소드들을 여기에 추가해주세요.
 }
+
+export const getUserByEmail = async (email: string) => {
+  try {
+    // 서버에 이메일을 전달하여 사용자 정보를 요청
+    const response = await axios.get(`/api/user?email=${email}`)
+    const user = response.data
+    return user
+  } catch (error) {
+    throw new Error('Failed to fetch user')
+  }
+}

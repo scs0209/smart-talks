@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
-import Paper from '@material-ui/core/Paper'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Button from '@/components/common/Button'
 import Input from '@/components/common/Input'
 import signUp from '@/services/authService'
@@ -36,7 +36,7 @@ const SignupForm = () => {
     <Grid container justifyContent="center">
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Paper elevation={3}>
-          <Box p={4}>
+          <Box p={4} bgcolor="#FFFFFF" color="#000000">
             <h2>회원가입</h2>
             <form onSubmit={handleSubmit}>
               <Input type="text" placeholder="이름" required {...firstName} />
@@ -55,14 +55,36 @@ const SignupForm = () => {
                 {...password}
               />
               <Box mt={2}>
-                <Button type="submit" fullWidth>
-                  회원가입
+                <Button
+                  type="submit"
+                  fullWidth
+                  style={{ backgroundColor: '#2196F3', color: '#FFFFFF' }}
+                >
+                  가입하기
                 </Button>
               </Box>
             </form>
             <Box mt={3}>
-              <Button>Google 회원가입</Button>
-              <Button>Facebook 회원가입</Button>
+              <Button
+                style={{
+                  backgroundColor: '#FF9800',
+                  color: '#FFFFFF',
+                  marginRight: '0.5rem',
+                  marginBottom: '0.5rem',
+                  width: '100%',
+                }}
+              >
+                Google 가입
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: '#FF9800',
+                  color: '#FFFFFF',
+                  width: '100%',
+                }}
+              >
+                Facebook 가입
+              </Button>
             </Box>
           </Box>
         </Paper>
