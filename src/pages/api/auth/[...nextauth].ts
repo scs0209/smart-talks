@@ -37,13 +37,8 @@ export const authOptions: AuthOptions = {
             throw new Error('Invalid password')
           }
 
-          const token = sign({ user }, process.env.JWT_SECRET as string, {
-            expiresIn: '1h',
-          })
-
-          return { ...user.toJSON(), token }
+          return { ...user.toJSON() }
         }
-
         return null
       },
     }),
@@ -56,16 +51,19 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+  session: {
+    strategy: 'jwt',
+    maxAge: 24 * 60 * 60,
+    updateAge: 2 * 24 * 60 * 60,
+  },
   callbacks: {
-    async jwt(token: JWT, user?: { [key: string]: any }) {
-      if (user) {
-        token.user = user
+    async jwt({ token, account, profile }) {
+      if (account) {
+        token.accessToken = account.access_token
       }
       return token
     },
-    async session(params) {
-      const { session, token }: any = params
-      session.user = token.user
+    async session({ session, token, user }) {
       return session
     },
   },
