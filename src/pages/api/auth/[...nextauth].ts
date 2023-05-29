@@ -3,8 +3,6 @@ import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
-import { sign } from 'jsonwebtoken'
-import { JWT } from 'next-auth/jwt'
 
 import connectDB from '@/services/dbConnect'
 import User, { IUser } from '@/models/User'
@@ -37,7 +35,7 @@ export const authOptions: AuthOptions = {
             throw new Error('Invalid password')
           }
 
-          return { ...user.toJSON() }
+          return { ...user.toJSON() } //session에 이메일이 들어감
         }
         return null
       },
@@ -51,9 +49,15 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    // JWT 만료 시간을 설정하세요 (예: 24시간)
+    // 24 * 60 * 60 = 86400 (24시간)
+    maxAge: 24 * 60 * 60, // 24 hours (in seconds)
+  },
   session: {
     strategy: 'jwt',
-    maxAge: 24 * 60 * 60,
+    maxAge: 48 * 60 * 60,
     updateAge: 2 * 24 * 60 * 60,
   },
   callbacks: {

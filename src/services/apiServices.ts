@@ -90,3 +90,20 @@ export const getUserByEmail = async (email: string) => {
     throw new Error('Failed to fetch user')
   }
 }
+
+// 비밀번호 변경
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+) {
+  try {
+    const response = await axios.post('/api/auth/change-password', {
+      currentPassword,
+      newPassword,
+    })
+    return response.data
+  } catch (error) {
+    console.log(error)
+    throw new Error('Failed to update password')
+  }
+}

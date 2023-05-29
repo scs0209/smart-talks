@@ -1,13 +1,15 @@
-import { Typography } from '@mui/material'
+import { Typography, Button } from '@mui/material'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { getUserByEmail } from '@/services/apiServices'
+import ChangePasswordModal from '@/components/ChangePasswordModal'
 
 const MyPage = () => {
   const router = useRouter()
   const { email } = router.query
   const { data: session, status } = useSession()
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (email) {
@@ -28,6 +30,14 @@ const MyPage = () => {
     }
   }, [email])
 
+  const handleOpenModal = () => {
+    setOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setOpen(false)
+  }
+
   if (status === 'loading') {
     // 세션 정보 로딩 중인 경우 로딩 상태를 표시할 수 있습니다.
     return <div>Loading...</div>
@@ -44,6 +54,10 @@ const MyPage = () => {
       <Typography variant="h2">My Page</Typography>
       <Typography variant="body1">Email: {session.user?.email}</Typography>
       {/* 필요한 사용자 정보를 여기에 추가 */}
+      <Button variant="contained" onClick={handleOpenModal}>
+        Change Password
+      </Button>
+      <ChangePasswordModal open={open} handleClose={handleCloseModal} />
     </div>
   )
 }
