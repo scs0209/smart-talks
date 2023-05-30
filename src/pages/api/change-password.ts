@@ -1,23 +1,16 @@
 import { compare, hash } from 'bcrypt'
 import connectDB from '@/services/dbConnect'
 import User from '@/models/User'
-import { getSession } from 'next-auth/react'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   await connectDB()
 
-  if (req.method !== 'POST') {
+  if (req.method !== 'PUT') {
     return res.status(405).end()
   }
 
-  const session = await getSession({ req })
-
-  if (!session || !session.user) {
-    return res.status(401).end()
-  }
-
-  const { currentPassword, newPassword } = req.body
+  const { currentPassword, newPassword, session } = req.body
 
   // 현재 비밀번호 일치 여부 확인
   const user = await User.findOne({ email: session.user.email })

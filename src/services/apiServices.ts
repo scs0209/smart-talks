@@ -95,12 +95,20 @@ export const getUserByEmail = async (email: string) => {
 export async function changePassword(
   currentPassword: string,
   newPassword: string,
+  session: any,
 ) {
   try {
-    const response = await axios.post('/api/auth/change-password', {
-      currentPassword,
-      newPassword,
-    })
+    const response = await axios.put(
+      '/api/change-password',
+      {
+        currentPassword,
+        newPassword,
+        session,
+      },
+      {
+        withCredentials: true,
+      },
+    )
     return response.data
   } catch (error) {
     console.log(error)

@@ -2,6 +2,7 @@ import { Typography, Button, Modal, Box, TextField } from '@mui/material'
 import { FC, useState } from 'react'
 import useInput from '@/hooks/useInput'
 import { changePassword } from '@/services/apiServices'
+import { useSession } from 'next-auth/react'
 
 interface Props {
   open: boolean
@@ -9,24 +10,37 @@ interface Props {
 }
 
 const ChangePasswordModal: FC<Props> = ({ open, handleClose }) => {
+  const { data: session, status } = useSession() // 세션 정보 로딩 상태
   const currentPassword = useInput('')
   const newPassword = useInput('')
   const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [passwordLoading, setPasswordLoading] = useState(false)
+
+  const isLoading = status === 'loading'
 
   const handleChangePassword = async () => {
     setError('')
-    setLoading(true)
+    setPasswordLoading(true)
 
     try {
-      await changePassword(currentPassword.value, newPassword.value)
+      await changePassword(currentPassword.value, newPassword.value, session)
       handleClose()
       // 비밀번호 변경 성공 처리
     } catch (error) {
       setError('Failed to update password')
     }
 
-    setLoading(false)
+    setPasswordLoading(false)
+  }
+
+  if (isLoading) {
+    // 세션 로딩 중이면 로딩 표시
+    return <div>Loading...</div>
+  }
+
+  if (!session) {
+    // 세션이 없으면 로그인 요청
+    return <div>Please sign in to continue.</div>
   }
 
   return (
@@ -75,9 +89,9 @@ const ChangePasswordModal: FC<Props> = ({ open, handleClose }) => {
         <Button
           variant="contained"
           onClick={handleChangePassword}
-          disabled={loading}
+          disabled={passwordLoading}
         >
-          {loading ? 'Loading...' : 'Change Password'}
+          {passwordLoading ? 'Loading...' : 'Change Password'}
         </Button>
       </Box>
     </Modal>
