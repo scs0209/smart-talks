@@ -7,14 +7,18 @@ import Input from './common/Input'
 import Button from './common/Button'
 import Link from 'next/link'
 import { FaGoogle, FaGithub } from 'react-icons/fa'
-import { Grid, Typography } from '@mui/material'
+import { Grid, Modal, Typography } from '@mui/material'
 import { useStyles } from '@/styles/LoginFormStyle'
+import { useCallback, useState } from 'react'
+import FindPasswordModal from './FindPasswordModal'
 
 const LoginForm = () => {
   const classes = useStyles()
 
   const email = useInput('')
   const password = useInput('')
+
+  const [showModal, setShowModal] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,6 +41,14 @@ const LoginForm = () => {
   const handleGithubLogin = async () => {
     await signIn('github')
   }
+
+  const handleForgotPasswordClick = useCallback(() => {
+    setShowModal(true)
+  }, [])
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false)
+  }, [])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -93,8 +105,18 @@ const LoginForm = () => {
               Sign Up
             </Link>
           </Typography>
+          <Typography variant="body1">
+            if you forgot your password?
+            <span
+              className={classes.forgotPasswordLink}
+              onClick={handleForgotPasswordClick}
+            >
+              Click
+            </span>{' '}
+          </Typography>
         </Grid>
       </Grid>
+      <FindPasswordModal open={showModal} onClose={handleCloseModal} />
     </form>
   )
 }

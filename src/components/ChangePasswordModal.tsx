@@ -24,6 +24,7 @@ const ChangePasswordModal: FC<Props> = ({ open, handleClose }) => {
 
     try {
       await changePassword(currentPassword.value, newPassword.value, session)
+      alert('비밀번호 변경 완료')
       handleClose()
       // 비밀번호 변경 성공 처리
     } catch (error) {

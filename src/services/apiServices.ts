@@ -115,3 +115,21 @@ export async function changePassword(
     throw new Error('Failed to update password')
   }
 }
+
+// 비밀번호 찾기
+export async function sendTempPasswordEmail(
+  email: string,
+  receiveEmail: string,
+): Promise<void> {
+  try {
+    await axios.post(
+      '/api/find-password',
+      { email, receiveEmail },
+      {
+        withCredentials: true,
+      },
+    )
+  } catch (error) {
+    throw new Error('Failed to send temporary password email')
+  }
+}

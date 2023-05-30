@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
+  spacing: 3,
   palette: {
     primary: {
       main: '#000000', // 원하는 primary 색상 값으로 수정해주세요.

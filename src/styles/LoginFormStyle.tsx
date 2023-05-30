@@ -33,4 +33,21 @@ export const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '1.5rem',
     color: theme.palette.text.primary,
   },
+  forgotPasswordLink: {
+    color: '#2196F3',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: theme.spacing(2),
+    width: 400,
+    borderRadius: theme.spacing(1),
+    outline: 'none',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+  },
 }))
