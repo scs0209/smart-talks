@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { getUserByEmail } from '@/services/apiServices'
 import ChangePasswordModal from '@/components/ChangePasswordModal'
+import HeadInfo from '@/components/common/HeadInfo'
 
 const MyPage = () => {
   const router = useRouter()
@@ -51,6 +52,7 @@ const MyPage = () => {
 
   return (
     <div>
+      <HeadInfo title={`${email}'s Page`} />
       <Typography variant="h2">My Page</Typography>
       <Typography variant="body1">Email: {session.user?.email}</Typography>
       {/* 필요한 사용자 정보를 여기에 추가 */}
