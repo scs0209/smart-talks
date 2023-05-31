@@ -4,7 +4,8 @@ import AnswerView from '@/components/AnswerView'
 import useQuestionSubmit from '@/hooks/useQuestionSubmit'
 
 const AiAssistant = () => {
-  const { answer, isLoading, handleSubmit } = useQuestionSubmit('/api/question')
+  const { answer, isLoading, handleSubmit } =
+    useQuestionSubmit('/api/ai/assistant')
 
   return (
     <div>

@@ -4,11 +4,11 @@ import AnswerView from '@/components/AnswerView'
 import useQuestionSubmit from '@/hooks/useQuestionSubmit'
 
 const TimeComplexity = () => {
-  const { answer, isLoading, handleSubmit } = useQuestionSubmit('/api/question')
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit('/api/ai/time')
 
   return (
     <div>
-      <HeadInfo title="Q&A" />
+      <HeadInfo title="시간복잡도" />
       <QuestionForm onSubmit={handleSubmit} isLoading={isLoading} />
       {answer && <AnswerView answer={answer} />}
     </div>

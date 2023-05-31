@@ -28,7 +28,7 @@ export default function Home({ errorCode, stars }: any) {
     <>
       <Head title="Home" />
       {session && (
-        <Container>
+        <Container sx={{ textAlign: 'center' }}>
           <Box mt={4}>
             <Typography variant="h3" gutterBottom>
               {`어서오세요, ${session.user?.email}님!`}
@@ -36,7 +36,12 @@ export default function Home({ errorCode, stars }: any) {
             <Typography variant="h5" gutterBottom>
               어떤 서비스를 원하시나요?
             </Typography>
-            <Box mt={2} display="flex" flexWrap="wrap">
+            <Box
+              mt={2}
+              display="flex"
+              flexWrap="wrap"
+              sx={{ justifyContent: 'center' }}
+            >
               {serviceData.services.map((service) => (
                 <ServiceCard
                   key={service.link}

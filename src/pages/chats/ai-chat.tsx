@@ -4,11 +4,11 @@ import AnswerView from '@/components/AnswerView'
 import useQuestionSubmit from '@/hooks/useQuestionSubmit'
 
 const AiChat = () => {
-  const { answer, isLoading, handleSubmit } = useQuestionSubmit('/api/question')
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit('/api/ai/chat')
 
   return (
     <div>
-      <HeadInfo title="Q&A" />
+      <HeadInfo title="AI Friend" />
       <QuestionForm onSubmit={handleSubmit} isLoading={isLoading} />
       {answer && <AnswerView answer={answer} />}
     </div>

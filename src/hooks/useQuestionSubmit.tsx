@@ -15,7 +15,7 @@ const useQuestionSubmit = (endpoint: string) => {
 
         if (response.status === 200) {
           const data = response.data
-          setAnswer(data.answer)
+          setAnswer(data.result)
         } else {
           console.error('Request failed:', response.status)
         }
