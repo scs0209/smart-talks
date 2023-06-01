@@ -4,9 +4,14 @@ import { Box, Button, CircularProgress, TextField } from '@mui/material'
 interface QuestionFormProps {
   onSubmit: (question: string) => void
   isLoading: boolean
+  placeholder: string
 }
 
-const QuestionForm: React.FC<QuestionFormProps> = ({ onSubmit, isLoading }) => {
+const QuestionForm: React.FC<QuestionFormProps> = ({
+  onSubmit,
+  isLoading,
+  placeholder,
+}) => {
   const [question, setQuestion] = useState('')
 
   const onChangeQuestion = useCallback(
@@ -28,11 +33,11 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ onSubmit, isLoading }) => {
     <Box
       component="form"
       onSubmit={handleSubmit}
-      sx={{ display: 'flex', gap: '10px' }}
+      sx={{ display: 'flex', gap: '10px', marginTop: '4px' }}
     >
       <TextField
         type="text"
-        label="Ask a question"
+        label={placeholder}
         value={question}
         onChange={onChangeQuestion}
         variant="outlined"

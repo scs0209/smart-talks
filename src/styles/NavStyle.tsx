@@ -4,7 +4,7 @@ import { Theme } from '@mui/material'
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      marginBottom: theme.spacing(2),
+      marginBottom: 0,
     },
     navLinks: {
       marginLeft: 'auto',

@@ -3,7 +3,9 @@ import { useCallback, useState } from 'react'
 import axios from 'axios'
 
 const useQuestionSubmit = (endpoint: string) => {
-  const [answer, setAnswer] = useState('')
+  const [answers, setAnswers] = useState<
+    { question: string; answer: string }[]
+  >([])
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = useCallback(
@@ -15,7 +17,10 @@ const useQuestionSubmit = (endpoint: string) => {
 
         if (response.status === 200) {
           const data = response.data
-          setAnswer(data.result)
+          setAnswers((prevAnswers) => [
+            ...prevAnswers,
+            { question, answer: data.result },
+          ])
         } else {
           console.error('Request failed:', response.status)
         }
@@ -28,7 +33,7 @@ const useQuestionSubmit = (endpoint: string) => {
     [endpoint],
   )
 
-  return { answer, isLoading, handleSubmit }
+  return { answers, isLoading, handleSubmit }
 }
 
 export default useQuestionSubmit

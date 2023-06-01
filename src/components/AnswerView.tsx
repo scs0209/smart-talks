@@ -2,18 +2,23 @@ import React from 'react'
 import { Box, Typography } from '@mui/material'
 
 interface AnswerViewProps {
-  answer: string
+  answers: { question: string; answer: string }[]
 }
 
-const AnswerView: React.FC<AnswerViewProps> = ({ answer }) => {
+const AnswerView: React.FC<AnswerViewProps> = ({ answers }) => {
   return (
     <Box mt={2}>
-      <Typography
-        variant="body1"
-        sx={{ backgroundColor: '#f5f5f5', padding: '10px' }}
-      >
-        {answer}
-      </Typography>
+      {answers.map((entry, index) => (
+        <Typography
+          key={index}
+          variant="body1"
+          sx={{ backgroundColor: '#f5f5f5', padding: '10px' }}
+        >
+          <strong>Question:</strong> {entry.question}
+          <br />
+          <strong>Answer:</strong> {entry.answer}
+        </Typography>
+      ))}
     </Box>
   )
 }
