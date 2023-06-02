@@ -19,6 +19,8 @@ export default async function handler(
     return
   }
 
+  console.log('!configuration.apiKey: ', !configuration.apiKey)
+
   const question: string = req.body.question || ''
 
   const request: CreateCompletionRequest = {
