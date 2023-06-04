@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { Box } from '@mui/material'
 
 const QnA = () => {
-  const { answers, isLoading, handleSubmit } = useQuestionSubmit('/api/ai/qna')
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit('/api/ai/qna')
 
   return (
     <div style={{ height: '87vh' }}>
@@ -42,7 +42,7 @@ const QnA = () => {
             isLoading={isLoading}
             placeholder="궁금한 것이 있으면 물어보세요."
           />
-          <AnswerView answers={answers} />
+          <AnswerView answer={answer} />
         </div>
       </Box>
     </div>
