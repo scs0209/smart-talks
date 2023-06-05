@@ -1,47 +1,49 @@
+/* eslint-disable */
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Configuration, OpenAIApi, CreateCompletionRequest } from 'openai'
+import axios from 'axios'
 
-const configuration = new Configuration({
-  apiKey: process.env.CHAT_GPT_API_KEY,
-})
-const openai = new OpenAIApi(configuration)
+const openApiURL = 'http://aiopen.etri.re.kr:8000/MRCServlet'
+const accessKey = process.env.ETRI_API_KEY
+const passage = '안녕'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (!configuration.apiKey) {
-    res.status(500).json({
-      error: {
-        message: 'OpenAI API key not configured',
-      },
-    })
-    return
-  }
+  if (req.method === 'POST') {
+    try {
+      const { question } = req.body
 
-  const question: string = req.body.question || ''
+      const requestJson = {
+        argument: {
+          question: question,
+          passage: passage,
+        },
+      }
 
-  const request: CreateCompletionRequest = {
-    model: 'text-davinci-003',
-    prompt: `The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.
-  
-  Human: Hello, who are you?
-  AI: I am an AI created by OpenAI. How can I help you today?
-  Human: ${question}
-  AI:`,
-    temperature: 0.9,
-    max_tokens: 150,
-    top_p: 1,
-    frequency_penalty: 0.0,
-    presence_penalty: 0.6,
-    stop: [' Human:', ' AI:'],
-  }
+      const options = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: accessKey,
+        },
+      }
 
-  try {
-    const response = await openai.createCompletion(request)
-    res.status(200).json({ result: response.data.choices[0].text })
-  } catch (error) {
-    console.error('Failed to create chat GPT completion:', error)
-    res.status(500).json({ error: { message: 'Failed to generate response' } })
+      const response = await axios.post(openApiURL, requestJson, options)
+
+      console.log('responseCode = ' + response.status)
+      console.log('responseBody = ' + JSON.stringify(response.data))
+
+      res.status(200).json({
+        success: true,
+        response: response.data,
+      })
+    } catch (error: unknown) {
+      console.log(error)
+      const message =
+        error instanceof Error ? error.message : 'Unknown error occurred'
+      res.status(400).json({ success: false, message })
+    }
+  } else {
+    res.status(405).json({ success: false, message: 'Method Not Allowed' })
   }
 }

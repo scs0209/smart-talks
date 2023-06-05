@@ -6,8 +6,10 @@ import Image from 'next/image'
 import { Box } from '@mui/material'
 
 const PnG = () => {
-  const { answers, isLoading, handleSubmit } =
-    useQuestionSubmit('/api/ai/naming')
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit(
+    '/api/ai/naming',
+    'response.data.response.return_object.WiKiInfo.AnswerInfo[0].answer',
+  )
 
   return (
     <div style={{ height: '87vh' }}>
@@ -43,7 +45,7 @@ const PnG = () => {
             isLoading={isLoading}
             placeholder="please write the product"
           />
-          <AnswerView answers={answers} />
+          <AnswerView answer={answer} />
         </div>
       </Box>
     </div>

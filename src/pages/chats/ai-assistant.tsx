@@ -6,8 +6,10 @@ import Image from 'next/image'
 import { Box } from '@mui/material'
 
 const AiAssistant = () => {
-  const { answers, isLoading, handleSubmit } =
-    useQuestionSubmit('/api/ai/assistant')
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit(
+    '/api/ai/assistant',
+    'response.data.response.return_object.WiKiInfo.AnswerInfo[0].answer',
+  )
 
   return (
     <div style={{ height: '87vh' }}>
@@ -43,7 +45,7 @@ const AiAssistant = () => {
             isLoading={isLoading}
             placeholder="비서에게 말을 걸어보세요."
           />
-          <AnswerView answers={answers} />
+          <AnswerView answer={answer} />
         </div>
       </Box>
     </div>

@@ -27,7 +27,7 @@ const ChangePasswordModal: FC<Props> = ({ open, handleClose }) => {
       alert('비밀번호 변경 완료')
       handleClose()
       // 비밀번호 변경 성공 처리
-    } catch (error) {
+    } catch (err) {
       setError('Failed to update password')
     }
 

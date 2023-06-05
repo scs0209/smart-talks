@@ -6,8 +6,9 @@ import Image from 'next/image'
 import { Box } from '@mui/material'
 
 const AiChatRude = () => {
-  const { answers, isLoading, handleSubmit } = useQuestionSubmit(
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit(
     '/api/ai/rude-friend',
+    'response.data.response.return_object.WiKiInfo.AnswerInfo[0].answer',
   )
 
   return (
@@ -44,7 +45,7 @@ const AiChatRude = () => {
             isLoading={isLoading}
             placeholder="이 친구는 조금 건방져요."
           />
-          <AnswerView answers={answers} />
+          <AnswerView answer={answer} />
         </div>
       </Box>
     </div>

@@ -2,7 +2,7 @@
 import { useCallback, useState } from 'react'
 import axios from 'axios'
 
-const useQuestionSubmit = (endpoint: string) => {
+const useQuestionSubmit = (endpoint: string, answerPath: string) => {
   const [answer, setAnswer] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -13,7 +13,7 @@ const useQuestionSubmit = (endpoint: string) => {
       try {
         const response = await axios.post(endpoint, { question })
         if (response.status === 200) {
-          const data = response.data.response
+          const data = eval(answerPath)
           setAnswer(data)
         } else {
           console.error('Request failed:', response.status)
@@ -25,6 +25,12 @@ const useQuestionSubmit = (endpoint: string) => {
     },
     [endpoint],
   )
+
+  // Helper function to get nested value from an object
+  function getNestedValue(obj: any, path: string) {
+    const keys = path.split('.')
+    return keys.reduce((value, key) => (value ? value[key] : undefined), obj)
+  }
 
   return { answer, isLoading, handleSubmit }
 }

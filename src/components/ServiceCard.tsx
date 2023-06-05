@@ -1,8 +1,9 @@
-import Link from 'next/link'
 import { Card, CardContent, CardActionArea, Typography } from '@mui/material'
-import { FC } from 'react'
+import { FC, useCallback, useState } from 'react'
 import Image from 'next/image'
-import { makeStyles } from '@mui/styles'
+import { useStyles } from '@/styles/ServiceCardStyle'
+import { motion } from 'framer-motion'
+import { useRouter } from 'next/router'
 
 interface ServiceCardProps {
   title: string
@@ -10,17 +11,7 @@ interface ServiceCardProps {
   link: string
   image: string
 }
-const useStyles = makeStyles({
-  link: {
-    textDecoration: 'none',
-  },
-  imageContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-})
 
-// ServiceCard 컴포넌트
 const ServiceCard: FC<ServiceCardProps> = ({
   title,
   description,
@@ -28,39 +19,49 @@ const ServiceCard: FC<ServiceCardProps> = ({
   image,
 }: ServiceCardProps) => {
   const classes = useStyles()
+  const router = useRouter()
+  const [isAnimating, setAnimating] = useState(false)
 
-  // mt: mt는 margin-top을 나타내며, 요소의 위쪽 여백을 조정합니다.
-  // mr: mr은 margin-right을 나타내며, 요소의 오른쪽 여백을 조정합니다.
-  // mb: mb는 margin-bottom을 나타내며, 요소의 아래쪽 여백을 조정합니다.
+  const handleCardClick = useCallback(() => {
+    setAnimating(true)
+    setTimeout(() => {
+      router.push(link)
+    }, 500) // 애니메이션 시간 후 페이지 이동
+  }, [link, router])
+
   return (
-    <Link className={classes.link} href={link} passHref>
-      <Card sx={{ width: 300, height: 300, mr: 2, mb: 2 }}>
-        <CardActionArea>
-          <CardContent>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{
-                textDecoration: 'none',
-                textAlign: 'center',
-              }}
-            >
-              {title}
-            </Typography>
-            <div className={classes.imageContainer}>
-              <Image src={image} alt={title} width={300} height={200} />
-            </div>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ textDecoration: 'none', textAlign: 'center' }}
-            >
-              {description}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </Link>
+    <Card sx={{ width: 300, height: 300, mr: 2, mb: 2 }}>
+      <CardActionArea onClick={handleCardClick}>
+        <CardContent>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              textDecoration: 'none',
+              textAlign: 'center',
+            }}
+          >
+            {title}
+          </Typography>
+          <motion.div
+            className={classes.imageContainer}
+            initial={{ scale: 1 }}
+            whileHover={{ scale: 1.2 }}
+            animate={{ opacity: isAnimating ? 0 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Image src={image} alt={title} width={300} height={200} />
+          </motion.div>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ textDecoration: 'none', textAlign: 'center' }}
+          >
+            {description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   )
 }
 

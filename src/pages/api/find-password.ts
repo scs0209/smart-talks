@@ -1,3 +1,4 @@
+/* eslint-disable */
 import User, { IUser } from '@/models/User'
 import connectDB from '@/services/dbConnect'
 import sendTempPasswordEmail from '@/services/mailer'

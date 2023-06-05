@@ -25,7 +25,7 @@ const FindPasswordModal: FC<Props> = ({ open, onClose }) => {
   }
 
   return (
-    <>
+    <div>
       <Modal open={open} onClose={onClose}>
         <div className={classes.modalContent}>
           <Typography variant="h5" gutterBottom>
@@ -74,7 +74,7 @@ const FindPasswordModal: FC<Props> = ({ open, onClose }) => {
           </form>
         </div>
       </Modal>
-    </>
+    </div>
   )
 }
 

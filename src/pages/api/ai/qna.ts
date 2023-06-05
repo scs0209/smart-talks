@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 
@@ -28,14 +29,13 @@ export default async function handler(
       }
 
       const response = await axios.post(openApiURL, requestJson, options)
-      const responseData = JSON.stringify(response.data)
 
       console.log('responseCode = ' + response.status)
       console.log('responseBody = ' + JSON.stringify(response.data))
 
       res.status(200).json({
         success: true,
-        response: responseData,
+        response: response.data,
       })
     } catch (error: unknown) {
       const message =

@@ -6,7 +6,10 @@ import Image from 'next/image'
 import { Box } from '@mui/material'
 
 const TimeComplexity = () => {
-  const { answers, isLoading, handleSubmit } = useQuestionSubmit('/api/ai/time')
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit(
+    '/api/ai/time',
+    'response.data.response.return_object.WiKiInfo.AnswerInfo[0].answer',
+  )
 
   return (
     <div style={{ height: '87vh' }}>
@@ -42,7 +45,7 @@ const TimeComplexity = () => {
             isLoading={isLoading}
             placeholder="함수를 적어서 시간복잡도를 계산해 보세요."
           />
-          <AnswerView answers={answers} />
+          <AnswerView answer={answer} />
         </div>
       </Box>
     </div>

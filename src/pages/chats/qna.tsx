@@ -6,7 +6,10 @@ import Image from 'next/image'
 import { Box } from '@mui/material'
 
 const QnA = () => {
-  const { answer, isLoading, handleSubmit } = useQuestionSubmit('/api/ai/qna')
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit(
+    '/api/ai/qna',
+    'response.data.response.return_object.WiKiInfo.AnswerInfo[0].answer',
+  )
 
   return (
     <div style={{ height: '87vh' }}>

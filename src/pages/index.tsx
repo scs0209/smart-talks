@@ -1,16 +1,15 @@
 import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
-import Error from 'next/error'
 import Head from '@/components/common/HeadInfo'
 import { Box, Container, Typography } from '@mui/material'
 import ServiceCard from '@/components/ServiceCard'
 import serviceData from '@/services.json'
 
-export default function Home({ errorCode, stars }: any) {
+export default function Home() {
   const { data: session, status } = useSession()
+
   if (status === 'authenticated')
     console.log('session', session.user?.email, session)
-
   const isLoading = status === 'loading'
 
   useEffect(() => {
@@ -19,10 +18,6 @@ export default function Home({ errorCode, stars }: any) {
       window.location.href = '/login'
     }
   }, [session, isLoading])
-
-  if (errorCode) {
-    return <Error statusCode={errorCode} />
-  }
 
   return (
     <>
@@ -57,13 +52,4 @@ export default function Home({ errorCode, stars }: any) {
       )}
     </>
   )
-}
-
-export async function getServerSideProps() {
-  const res = await fetch('https://api.github.com/repos/vercel/next.js')
-  const errorCode = res.ok ? false : res.status
-  const json = await res.json()
-  return {
-    props: { errorCode, stars: json.stargazers_count },
-  }
 }

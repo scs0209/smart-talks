@@ -6,7 +6,10 @@ import Image from 'next/image'
 import { Box } from '@mui/material'
 
 const AiChat = () => {
-  const { answers, isLoading, handleSubmit } = useQuestionSubmit('/api/ai/chat')
+  const { answer, isLoading, handleSubmit } = useQuestionSubmit(
+    '/api/ai/chat',
+    'response.data.response.return_object.MRCInfo.answer',
+  )
 
   return (
     <div style={{ height: '87vh' }}>
@@ -42,7 +45,7 @@ const AiChat = () => {
             isLoading={isLoading}
             placeholder="친구에게 말을 걸어보세요"
           />
-          <AnswerView answers={answers} />
+          <AnswerView answer={answer} />
         </div>
       </Box>
     </div>
