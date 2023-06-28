@@ -2,8 +2,6 @@ import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
 import Head from '@/components/common/HeadInfo'
 import { Box, Container, Typography } from '@mui/material'
-import ServiceCard from '@/components/ServiceCard'
-import serviceData from '@/services.json'
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -31,22 +29,6 @@ export default function Home() {
             <Typography variant="h5" gutterBottom>
               어떤 서비스를 원하시나요?
             </Typography>
-            <Box
-              mt={2}
-              display="flex"
-              flexWrap="wrap"
-              sx={{ justifyContent: 'center' }}
-            >
-              {serviceData.services.map((service) => (
-                <ServiceCard
-                  key={service.link}
-                  title={service.title}
-                  description={service.description}
-                  link={service.link}
-                  image={service.image}
-                />
-              ))}
-            </Box>
           </Box>
         </Container>
       )}

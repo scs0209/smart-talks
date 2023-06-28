@@ -1,4 +1,4 @@
-import LoginForm from '@/components/LogInForm'
+import LoginForm from '@/components/Login/LogInForm'
 import Head from '@/components/common/HeadInfo'
 
 const Login = () => {

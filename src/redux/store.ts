@@ -1,22 +1,38 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import {
+  combineReducers,
+  configureStore,
+  PayloadAction,
+  ThunkAction,
+  Action,
+} from '@reduxjs/toolkit'
 import { createWrapper, HYDRATE } from 'next-redux-wrapper'
-import thunk from 'redux-thunk'
-import userReducer from './reducers/userReducer'
-import questionReducer from './reducers/questionReducer'
-import answerReducer from './reducers/answerReducer'
+import moviesReducer from './reducers'
 
-const rootReducer = combineReducers({
-  user: userReducer,
-  question: questionReducer,
-  answer: answerReducer,
-  // 추가적인 리듀서들을 여기에 추가해주세요.
-})
-
-const makeStore = () => {
-  const store = createStore(rootReducer, applyMiddleware(thunk))
-  return store
+const reducer = (state: any, action: PayloadAction<any>) => {
+  return combineReducers({
+    movies: moviesReducer,
+    // 추가적인 리듀서들을 여기에 추가해주세요.
+  })(state, action)
 }
 
-const wrapper = createWrapper(makeStore)
+const makeStore = () =>
+  configureStore({
+    reducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+    devTools: process.env.NODE_ENV !== 'production',
+  })
 
-export default wrapper
+const store = makeStore()
+
+export const wrapper = createWrapper<AppStore>(makeStore, {
+  debug: process.env.NODE_ENV === 'development',
+})
+export type AppStore = ReturnType<typeof makeStore>
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action
+>

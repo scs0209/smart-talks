@@ -13,40 +13,78 @@ const Nav = () => {
   }, [])
 
   return (
-    <AppBar position="static" className={classes.appBar}>
-      <Toolbar>
-        <Typography variant="h6">
-          <Link href="/" className={classes.homeLink} passHref>
-            My App
-          </Link>
-        </Typography>
-        <div className={classes.navLinks}>
+    <>
+      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
+          <div className="flex items-center">
+            <Link
+              href="/"
+              className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+            >
+              SMAX
+            </Link>
+          </div>
           {session ? (
-            <>
-              <Button
-                component={Link}
+            <div className="flex items-center">
+              <Link
                 href={`/my-page/${session.user?.email}`}
-                color="inherit"
+                className="text-sm mr-3 text-blue-600 dark:text-blue-500 hover:underline"
               >
                 My Page
-              </Button>
-              <Button onClick={handleLogout} color="inherit">
+              </Link>
+              <span
+                onClick={handleLogout}
+                className="text-sm text-blue-600 dark:text-blue-500 hover:underline"
+              >
                 Logout
-              </Button>
-            </>
+              </span>
+            </div>
           ) : (
-            <>
-              <Button component={Link} href="/login" color="inherit">
+            <div className="flex items-center">
+              <Link
+                href="/login"
+                className="text-sm mr-3 text-blue-600 dark:text-blue-500 hover:underline"
+              >
                 Login
-              </Button>
-              <Button component={Link} href="/signup" color="inherit">
+              </Link>
+              <Link
+                href="/signup"
+                className="text-sm text-blue-600 dark:text-blue-500 hover:underline"
+              >
                 Signup
-              </Button>
-            </>
+              </Link>
+            </div>
           )}
         </div>
-      </Toolbar>
-    </AppBar>
+      </nav>
+      <nav className="bg-gray-50 dark:bg-gray-700">
+        <div className="max-w-screen-xl px-4 py-3 mx-auto">
+          <div className="flex items-center justify-between">
+            <ul className="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
+              <li>
+                <span
+                  className="text-gray-900 dark:text-white hover:underline"
+                  aria-current="page"
+                >
+                  영화
+                </span>
+              </li>
+              <li>
+                <span className="text-gray-900 dark:text-white hover:underline">
+                  예매
+                </span>
+              </li>
+            </ul>
+            <input
+              type="text"
+              id="search-navbar"
+              className="block w-200 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="검색"
+            />
+          </div>
+        </div>
+      </nav>
+    </>
   )
 }
 
