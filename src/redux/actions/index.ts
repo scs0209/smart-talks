@@ -21,7 +21,6 @@ export const getPopularMovies = createAsyncThunk(
   'movies/getPopularMovies',
   async (page: number) => {
     const data = await api.getPopularMoviesAPI(page)
-    console.log('getpopular: ', data)
     return data
   },
 )

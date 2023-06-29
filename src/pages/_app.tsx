@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/styles'
 import theme from '@/styles/theme'
 import { Provider } from 'react-redux'
 import { wrapper } from '@/redux/store'
+import { Flowbite } from 'flowbite-react'
 
 export default function App({ Component, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest)
@@ -16,9 +17,11 @@ export default function App({ Component, ...rest }: AppProps) {
       <SessionProvider session={props.pageProps.session}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Layout>
-            <Component {...props.pageProps} />
-          </Layout>
+          <Flowbite>
+            <Layout>
+              <Component {...props.pageProps} />
+            </Layout>
+          </Flowbite>
         </ThemeProvider>
       </SessionProvider>
     </Provider>

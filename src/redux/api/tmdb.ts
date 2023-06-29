@@ -6,11 +6,19 @@ const API_URL = 'https://api.themoviedb.org/3'
 const IMG_URL = 'https://image.tmdb.org/t/p/w500'
 
 export const getPopularMoviesAPI = async (page: number) => {
+  const totalPages = 2 // 페이지 수를 2로 설정하여 총 20개의 영화를 10개씩 가져옵니다.
+  const moviesPerPage = 10 // 페이지당 영화 수를 10개로 설정합니다.
+
+  const startIndex = (page - 1) * moviesPerPage
+  const endIndex = page * moviesPerPage
+
   const { data } = await axios.get(
     `${API_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`,
   )
-  console.log(data) // Movies 인터페이스와 똑같은 형태
-  return data.results
+
+  const slicedResults = data.results.slice(startIndex, endIndex) // 결과 배열을 10개씩 자릅니다.
+
+  return slicedResults
 }
 
 export const getMovieDetailsAPI = async (id: string) => {

@@ -1,11 +1,9 @@
 import Link from 'next/link'
-import { AppBar, Toolbar, Typography, Button } from '@mui/material'
 import { signOut, useSession } from 'next-auth/react'
 import { useCallback } from 'react'
-import { useStyles } from '@/styles/NavStyle'
+import { DarkThemeToggle } from 'flowbite-react'
 
 const Nav = () => {
-  const classes = useStyles()
   const { data: session } = useSession()
 
   const handleLogout = useCallback(() => {
@@ -24,37 +22,40 @@ const Nav = () => {
               SMAX
             </Link>
           </div>
-          {session ? (
-            <div className="flex items-center">
-              <Link
-                href={`/my-page/${session.user?.email}`}
-                className="text-sm mr-3 text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                My Page
-              </Link>
-              <span
-                onClick={handleLogout}
-                className="text-sm text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                Logout
-              </span>
-            </div>
-          ) : (
-            <div className="flex items-center">
-              <Link
-                href="/login"
-                className="text-sm mr-3 text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="text-sm text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                Signup
-              </Link>
-            </div>
-          )}
+          <div className="flex items-center">
+            {session ? (
+              <div className="flex items-center">
+                <Link
+                  href={`/my-page/${session.user?.email}`}
+                  className="text-sm mr-3 text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  My Page
+                </Link>
+                <span
+                  onClick={handleLogout}
+                  className="text-sm text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  Logout
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <Link
+                  href="/login"
+                  className="text-sm mr-3 text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="text-sm text-blue-600 dark:text-blue-500 hover:underline"
+                >
+                  Signup
+                </Link>
+              </div>
+            )}
+            <DarkThemeToggle className="ml-2" />
+          </div>
         </div>
       </nav>
       <nav className="bg-gray-50 dark:bg-gray-700">

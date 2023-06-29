@@ -1,23 +1,17 @@
-import { Box, Typography } from '@mui/material'
+import { Footer } from 'flowbite-react'
 
-const Footer = () => {
+const Footers = () => {
   return (
-    <Box
-      component="footer"
-      sx={{
-        backgroundColor: '#f5f5f5',
-        padding: '20px',
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-      }}
-    >
-      <Typography variant="body2" align="center" color="textSecondary">
-        2023 SCS - All rights reserved
-      </Typography>
-    </Box>
+    <Footer container className="mt-3">
+      <Footer.Copyright by="SCS - All rights reserved" year={2023} />
+      <Footer.LinkGroup>
+        <Footer.Link href="#">About</Footer.Link>
+        <Footer.Link href="#">Privacy Policy</Footer.Link>
+        <Footer.Link href="#">Licensing</Footer.Link>
+        <Footer.Link href="#">Contact</Footer.Link>
+      </Footer.LinkGroup>
+    </Footer>
   )
 }
 
-export default Footer
+export default Footers
