@@ -3,10 +3,10 @@ import Head from '@/components/common/HeadInfo'
 
 const Signup = () => {
   return (
-    <>
+    <div className="mt-6">
       <Head title="Sign Up" />
       <SignupForm />
-    </>
+    </div>
   )
 }
 

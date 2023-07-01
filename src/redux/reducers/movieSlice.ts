@@ -50,4 +50,4 @@ const moviesSlice = createSlice({
   },
 })
 
-export default moviesSlice.reducer
+export const moviesReducer = moviesSlice.reducer

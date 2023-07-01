@@ -3,7 +3,7 @@ import Head from '@/components/common/HeadInfo'
 
 const Login = () => {
   return (
-    <div>
+    <div className="mt-6">
       <Head title="LogIn" />
       <LoginForm />
     </div>

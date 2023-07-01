@@ -6,7 +6,7 @@ import {
   Action,
 } from '@reduxjs/toolkit'
 import { createWrapper, HYDRATE } from 'next-redux-wrapper'
-import moviesReducer from './reducers'
+import { moviesReducer } from './reducers/movieSlice'
 
 const reducer = (state: any, action: PayloadAction<any>) => {
   return combineReducers({

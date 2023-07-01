@@ -1,4 +1,4 @@
-import { MovieDetails } from '../actions/types'
+import { MovieDetails } from '.'
 import { Movie } from './movie'
 
 export interface MovieState {
