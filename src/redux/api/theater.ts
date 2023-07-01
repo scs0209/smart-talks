@@ -11,3 +11,10 @@ export const createDummyTheatersAPI = async () => {
   const { data } = await axios.post(`${backUrl}/api/theater`)
   return data.theaters
 }
+
+export const getTheaterScreensAPI = async (theaterId: string) => {
+  const { data } = await axios.get(
+    `${backUrl}/api/theater/${theaterId}/screens`,
+  )
+  return data.screens
+}

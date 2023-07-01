@@ -4,7 +4,7 @@ export interface Screen {
 }
 
 export interface Theater {
-  id: string
+  _id: string
   name: string
   address: string
   screens: Array<Screen>
@@ -12,6 +12,7 @@ export interface Theater {
 
 export interface TheaterState {
   theaters: Array<Theater>
+  screens: Array<Screen>
   loading: boolean
   error: any
 }

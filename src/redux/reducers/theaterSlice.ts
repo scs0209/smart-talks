@@ -1,9 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TheaterState } from '../types/theater'
-import { createDummyTheaters, fetchTheaters } from '../actions/theater'
+import {
+  createDummyTheaters,
+  fetchScreens,
+  fetchTheaters,
+} from '../actions/theater'
 
 const initialState: TheaterState = {
   theaters: [],
+  screens: [],
   loading: false,
   error: null,
 }
@@ -41,6 +46,21 @@ const theaterSlice = createSlice({
     })
 
     builder.addCase(createDummyTheaters.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error
+    })
+
+    builder.addCase(fetchScreens.pending, (state) => {
+      state.loading = true
+      state.error = null
+    })
+
+    builder.addCase(fetchScreens.fulfilled, (state, action) => {
+      state.loading = false
+      state.screens = action.payload
+    })
+
+    builder.addCase(fetchScreens.rejected, (state, action) => {
       state.loading = false
       state.error = action.error
     })

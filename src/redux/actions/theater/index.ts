@@ -16,3 +16,15 @@ export const createDummyTheaters = createAsyncThunk(
     return theaters
   },
 )
+
+export const fetchScreens = createAsyncThunk(
+  'theater/fetchScreens',
+  async (theaterId: string, { rejectWithValue }) => {
+    try {
+      const screens = await api.getTheaterScreensAPI(theaterId)
+      return screens
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  },
+)
