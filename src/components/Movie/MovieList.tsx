@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { getPopularMovies } from '@/redux/actions'
+import { getPopularMovies } from '@/redux/actions/movie'
 import MovieCard from './MovieCard'
 import Footer from '../Footer'
-import { Movie } from '@/redux/types/movie'
 import { RootState } from '@/redux/store'
+import { Movie } from '@/redux/types/movie/movie'
 
 const MovieList = () => {
   const dispatch = useDispatch()

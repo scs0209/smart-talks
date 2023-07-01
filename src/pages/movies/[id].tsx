@@ -1,4 +1,4 @@
-import { getMovieDetails } from '@/redux/actions'
+import { getMovieDetails } from '@/redux/actions/movie'
 import { getImageUrl } from '@/redux/api'
 import { RootState } from '@/redux/store'
 import { Badge } from 'flowbite-react'

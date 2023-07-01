@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document, model } from 'mongoose'
-import Screen, { IScreen } from './Screen'
 
 export interface ITheater extends Document {
   name: string

@@ -1,5 +1,5 @@
-import { Movie } from '../types/movie'
-import { MovieDetails } from '../types'
+import { MovieDetails } from '../types/movie'
+import { Movie } from '../types/movie/movie'
 
 export enum MoviesActionTypes {
   SEARCH_MOVIES_REQUEST = 'SEARCH_MOVIES_REQUEST',

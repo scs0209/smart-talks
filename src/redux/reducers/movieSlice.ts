@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getMovieDetails, getPopularMovies, searchMovies } from '../actions'
-import initialState from '../types/state'
+import {
+  getMovieDetails,
+  getPopularMovies,
+  searchMovies,
+} from '../actions/movie'
+import initialState from '../types/movie/state'
 
 const moviesSlice = createSlice({
   name: 'movies',

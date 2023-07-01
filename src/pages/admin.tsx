@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { FormEvent, useState } from 'react'
 import { backUrl } from '../../config'
-import SeatTable from '@/components/reservation/SeatTable'
 
 const AdminPage = () => {
   const [movieId, setMovieId] = useState('')
