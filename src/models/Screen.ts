@@ -7,10 +7,6 @@ export interface IScreen extends Document {
 
 const ScreenSchema: Schema = new Schema<IScreen>({
   screen_name: { type: String, required: true },
-  seat_info: {
-    type: [Number],
-    required: true,
-  },
 })
 
 const Screen: mongoose.Model<IScreen> =

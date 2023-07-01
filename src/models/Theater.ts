@@ -4,14 +4,14 @@ import Screen, { IScreen } from './Screen'
 export interface ITheater extends Document {
   name: string
   address: string
-  screens: IScreen[]
+  screens: string[]
 }
 
 const TheaterSchema: Schema = new Schema<ITheater>({
   name: { type: String, required: true },
   address: { type: String, required: true },
   screens: {
-    type: [{ type: Schema.Types.ObjectId, ref: 'Screen' }],
+    type: [String],
     required: true,
   },
 })

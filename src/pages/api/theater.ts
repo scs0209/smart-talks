@@ -2,6 +2,37 @@ import Theater, { ITheater } from '@/models/Theater'
 import connectDB from '@/services/dbConnect'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+const createDummyTheaters = async () => {
+  const theaterLocations = [
+    {
+      name: '아산',
+      screens: ['1관', '2관', '3관', '4관'],
+    },
+    {
+      name: '서울',
+      screens: ['1관', '2관', '3관', '4관'],
+    },
+    {
+      name: '천안',
+      screens: ['1관', '2관', '3관', '4관'],
+    },
+  ]
+
+  const results: ITheater[] = []
+
+  for (const locationData of theaterLocations) {
+    const newTheater = new Theater({
+      name: '창수 영화관',
+      address: locationData.name,
+      screens: locationData.screens,
+    })
+    await newTheater.save()
+    results.push(newTheater)
+  }
+
+  return results
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -13,14 +44,10 @@ export default async function handler(
     res.status(200).json({ theaters })
   } else if (req.method === 'POST') {
     try {
-      const newTheater: ITheater = new Theater({
-        name: 'Dummy Theater',
-        // 필요한 나머지 필드를 추가하세요.
-      })
-      await newTheater.save()
+      const dummyTheaters = await createDummyTheaters()
       res.status(200).json({
         success: true,
-        theater: newTheater,
+        theaters: dummyTheaters,
       })
     } catch (error: unknown) {
       const message =
