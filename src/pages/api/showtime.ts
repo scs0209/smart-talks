@@ -1,6 +1,29 @@
-import Showtime, { IShowtime } from '@/models/Showtime'
 import connectDB from '@/services/dbConnect'
 import { NextApiRequest, NextApiResponse } from 'next'
+import Showtime, { IShowtime } from '@/models/Showtime'
+
+const getAllShowtimes = async () => {
+  try {
+    const showtimes = await Showtime.find()
+      .populate('movie_id')
+      .populate('theater_id')
+    return showtimes
+  } catch (error) {
+    console.error('Error fetching showtimes:', error)
+    return null
+  }
+}
+
+const addShowtime = async (data: IShowtime) => {
+  try {
+    const showtime = new Showtime(data)
+    await showtime.save()
+    return true
+  } catch (error) {
+    console.error('Error adding showtime:', error)
+    return false
+  }
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,27 +32,20 @@ export default async function handler(
   await connectDB()
 
   if (req.method === 'GET') {
-    const showtimes = await Showtime.find({})
-    res.status(200).json({ showtimes })
+    const showtimes = await getAllShowtimes()
+    if (showtimes) {
+      res.status(200).json(showtimes)
+    } else {
+      res.status(500).json({ error: 'Error fetching showtimes' })
+    }
   } else if (req.method === 'POST') {
-    try {
-      const newShowtime: IShowtime = new Showtime({
-        theater: 'Theater Id', // 실제 극장 ID로 변경하세요
-        movie: 'Movie Id', // 실제 영화 ID로 변경하세요
-        showDate: new Date(), // 원하는 시간대로 변경하세요
-        // 필요한 나머지 필드를 추가하세요
-      })
-      await newShowtime.save()
-      res.status(200).json({
-        success: true,
-        showtime: newShowtime,
-      })
-    } catch (error: unknown) {
-      const message =
-        error instanceof Error ? error.message : 'Unknown error occurred'
-      res.status(400).json({ success: false, message: message })
+    const success = await addShowtime(req.body)
+    if (success) {
+      res.status(201).json({ message: 'Showtime created successfully' })
+    } else {
+      res.status(500).json({ error: 'Error creating showtime' })
     }
   } else {
-    res.status(405).json({ message: 'Unsupported method.' })
+    res.status(405).json({ error: 'Method not allowed' })
   }
 }
