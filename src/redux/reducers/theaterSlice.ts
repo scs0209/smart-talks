@@ -1,23 +1,50 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Theater, TheaterState } from '../types/theater'
+import { createSlice } from '@reduxjs/toolkit'
+import { TheaterState } from '../types/theater'
+import { createDummyTheaters, fetchTheaters } from '../actions/theater'
 
 const initialState: TheaterState = {
   theaters: [],
+  loading: false,
+  error: null,
 }
 
 const theaterSlice = createSlice({
   name: 'theater',
   initialState,
-  reducers: {
-    setTheaters: (state, action: PayloadAction<Array<Theater>>) => {
+  reducers: {},
+  extraReducers: (builder) => {
+    // fetchTheaters 처리
+    builder.addCase(fetchTheaters.pending, (state) => {
+      state.loading = true
+      state.error = null
+    })
+
+    builder.addCase(fetchTheaters.fulfilled, (state, action) => {
+      state.loading = false
       state.theaters = action.payload
-    },
-    addTheaters: (state, action: PayloadAction<Array<Theater>>) => {
+    })
+
+    builder.addCase(fetchTheaters.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error
+    })
+
+    // createDummyTheaters 처리
+    builder.addCase(createDummyTheaters.pending, (state) => {
+      state.loading = true
+      state.error = null
+    })
+
+    builder.addCase(createDummyTheaters.fulfilled, (state, action) => {
+      state.loading = false
       state.theaters = [...state.theaters, ...action.payload]
-    },
+    })
+
+    builder.addCase(createDummyTheaters.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error
+    })
   },
 })
-
-export const { setTheaters, addTheaters } = theaterSlice.actions
 
 export default theaterSlice.reducer

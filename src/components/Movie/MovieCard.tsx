@@ -1,5 +1,5 @@
 import { getImageUrl } from '@/redux/api'
-import { Movie } from '@/redux/types/movie'
+import { Movie } from '@/redux/types/movie/movie'
 import { Card, CustomFlowbiteTheme } from 'flowbite-react'
 import Link from 'next/link'
 import { VFC } from 'react'

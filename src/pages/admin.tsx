@@ -1,6 +1,9 @@
 import axios from 'axios'
-import { FormEvent, useState } from 'react'
-import { backUrl } from '../../config'
+import { FormEvent, useEffect, useState } from 'react'
+import { backUrl } from '../config'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchTheaters } from '@/redux/actions/theater'
+import { AppDispatch, RootState } from '@/redux/store'
 
 const AdminPage = () => {
   const [movieId, setMovieId] = useState('')
@@ -8,6 +11,11 @@ const AdminPage = () => {
   const [screenName, setScreenName] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
+  const { theaters, loading, error } = useSelector((state: RootState) => {
+    console.log(state)
+    return state.theaters
+  })
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -27,6 +35,10 @@ const AdminPage = () => {
       alert('상영시간 생성에 실패했습니다!')
     }
   }
+
+  useEffect(() => {
+    dispatch(fetchTheaters())
+  }, [dispatch])
 
   return (
     <div>

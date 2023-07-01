@@ -12,4 +12,6 @@ export interface Theater {
 
 export interface TheaterState {
   theaters: Array<Theater>
+  loading: boolean
+  error: any
 }

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { backUrl } from '../../../config'
+
+const backUrl = 'http://localhost:3000/'
 
 export const getTheatersAPI = async () => {
   const { data } = await axios.get(`${backUrl}/api/theater`)
