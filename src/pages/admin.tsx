@@ -30,7 +30,7 @@ const AdminPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const showtimeData = {
-      movie_id: movieId,
+      movie: movieId,
       theater_id: theaterId,
       screen_name: screenName,
       start_time: new Date(startTime),
@@ -69,13 +69,13 @@ const AdminPage = () => {
         <label htmlFor="movie-id">Movie ID</label>
         <select
           id="movie-id"
-          value={movieId}
-          onChange={(e) => setMovieId(e.target.value)}
+          value={JSON.stringify(movieId)}
+          onChange={(e) => setMovieId(JSON.parse(e.target.value))}
           required
         >
           <option value="">- Select a movie -</option>
           {movies?.map((movie) => (
-            <option key={movie.id} value={movie.id}>
+            <option key={movie.id} value={JSON.stringify(movie)}>
               {movie.title} - ({movie.release_date})
             </option>
           ))}

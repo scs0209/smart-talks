@@ -5,7 +5,7 @@ import Showtime, { IShowtime } from '@/models/Showtime'
 const getAllShowtimes = async () => {
   try {
     const showtimes = await Showtime.find()
-      .populate('movie_id')
+      .populate('movie')
       .populate('theater_id')
     return showtimes
   } catch (error) {

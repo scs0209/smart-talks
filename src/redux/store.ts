@@ -8,11 +8,13 @@ import {
 import { createWrapper, HYDRATE } from 'next-redux-wrapper'
 import { moviesReducer } from './reducers/movieSlice'
 import theaterSlice from './reducers/theaterSlice'
+import showtimeSlice from './reducers/showtimeSlice'
 
 const reducer = (state: any, action: PayloadAction<any>) => {
   return combineReducers({
     movies: moviesReducer,
     theaters: theaterSlice,
+    showtimes: showtimeSlice,
     // 추가적인 리듀서들을 여기에 추가해주세요.
   })(state, action)
 }

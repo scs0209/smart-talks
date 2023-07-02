@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document, model } from 'mongoose'
+import { IMovie } from './Movie'
 
 export interface IShowtime extends Document {
-  movie_id: string
+  movie: IMovie
   theater_id: mongoose.Schema.Types.ObjectId
   screen_name: string
   start_time: Date
@@ -9,8 +10,8 @@ export interface IShowtime extends Document {
 }
 
 const ShowtimeSchema: Schema = new Schema<IShowtime>({
-  movie_id: {
-    type: String,
+  movie: {
+    type: Object,
     required: true,
   },
   theater_id: {
