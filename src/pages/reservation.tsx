@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState, AppDispatch } from '@/redux/store'
 import { fetchTheaters } from '@/redux/actions/theater'
 import { getPopularMovies } from '@/redux/actions/movie'
+import { fetchShowtimes } from '@/redux/actions/showtime'
 
 const ReservationPage = () => {
   const [movieId, setMovieId] = useState('')
@@ -15,6 +16,14 @@ const ReservationPage = () => {
     loading: theaterLoading,
     error: theaterError,
   } = useSelector((state: RootState) => state.theaters)
+  const {
+    data: showtimes,
+    loading: showtimesLoading,
+    error: showtimesError,
+  } = useSelector((state: RootState) => {
+    console.log(state)
+    return state.showtimes
+  })
 
   const {
     data: movies,
@@ -31,6 +40,11 @@ const ReservationPage = () => {
   useEffect(() => {
     dispatch(getPopularMovies(1) as any) // 첫 번째 페이지에서 인기 영화 불러오기
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(fetchShowtimes())
+  }, [dispatch])
+  console.log(movieId, theaterId, showtimes)
 
   const handleSubmit = () => {
     // 예약 데이터를 서버에 전송하는 로직
@@ -77,15 +91,26 @@ const ReservationPage = () => {
           ))}
         </select>
         {/* 상영회 선택 */}
-        <label htmlFor="showtime-select">상영회 선택</label>
         <select
           id="showtime-select"
           value={showtimeId}
           onChange={(e) => setShowtimeId(e.target.value)}
           required
         >
-          <option value="">- 상영회를 선택하세요. -</option>
-          {/* 상영회 정보를 서버에서 가져와서 하위 프로필에 매핑하는 로직이 필요합니다. */}
+          <option value="">- 상영 회를 선택하세요. -</option>
+
+          {showtimes
+            .filter(
+              (showtime) =>
+                showtime.movie.id.toString() === movieId &&
+                showtime.theater_id._id === theaterId,
+            )
+            .map((showtime, index) => (
+              <option key={showtime._id} value={showtime._id}>
+                {showtime.start_time.split('T')[1].substring(0, 5)} {''}
+                {showtime.screen_name}
+              </option>
+            ))}
         </select>
         <button type="submit">예약하기</button>
       </form>

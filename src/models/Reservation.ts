@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document, model } from 'mongoose'
-import { ISeat, SeatSchema } from './Theater'
 
 export interface IPaymentInfo extends Document {
   amount: number
@@ -16,7 +15,7 @@ const PaymentInfoSchema: Schema = new Schema<IPaymentInfo>({
 export interface IReservation extends Document {
   user_id: mongoose.Schema.Types.ObjectId
   showtime_id: mongoose.Schema.Types.ObjectId
-  seat_info: ISeat[]
+  seat_info: number[]
   payment_info: IPaymentInfo
 }
 
@@ -31,7 +30,7 @@ const ReservationSchema: Schema = new Schema<IReservation>({
     ref: 'Showtime',
     required: true,
   },
-  seat_info: { type: [SeatSchema], required: true },
+  seat_info: { type: [Number], required: true },
   payment_info: { type: PaymentInfoSchema, required: true },
 })
 
