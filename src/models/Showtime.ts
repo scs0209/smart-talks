@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, model } from 'mongoose'
 
 export interface IShowtime extends Document {
-  movie_id: mongoose.Schema.Types.ObjectId
+  movie_id: string
   theater_id: mongoose.Schema.Types.ObjectId
   screen_name: string
   start_time: Date
@@ -10,8 +10,7 @@ export interface IShowtime extends Document {
 
 const ShowtimeSchema: Schema = new Schema<IShowtime>({
   movie_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Movie',
+    type: String,
     required: true,
   },
   theater_id: {

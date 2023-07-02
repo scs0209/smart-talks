@@ -4,6 +4,7 @@ import { backUrl } from '../config'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchTheaters } from '@/redux/actions/theater'
 import { AppDispatch, RootState } from '@/redux/store'
+import { getPopularMovies } from '@/redux/actions/movie'
 
 const AdminPage = () => {
   const [movieId, setMovieId] = useState('')
@@ -11,20 +12,26 @@ const AdminPage = () => {
   const [screenName, setScreenName] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
-  const { theaters, loading, error } = useSelector((state: RootState) => {
-    console.log(state)
-    return state.theaters
-  })
+  const {
+    theaters,
+    loading: theaterLoading,
+    error: theaterError,
+  } = useSelector((state: RootState) => state.theaters)
+  const {
+    data: movies,
+    loading: movieLoading,
+    error: movieError,
+  } = useSelector((state: RootState) => state.movies)
   const dispatch = useDispatch<AppDispatch>()
   const selectedTheater = theaters.find((t) => t._id === theaterId)
-  const theaterScreens = selectedTheater ? selectedTheater.screens : []
-  console.log(theaters)
+  const theaterScreens: any = selectedTheater ? selectedTheater.screens : []
+  console.log(theaters, selectedTheater, theaterScreens)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const showtimeData = {
       movie_id: movieId,
-      theaterId: theaterId,
+      theater_id: theaterId,
       screen_name: screenName,
       start_time: new Date(startTime),
       end_time: new Date(endTime),
@@ -43,17 +50,36 @@ const AdminPage = () => {
     dispatch(fetchTheaters())
   }, [dispatch])
 
+  useEffect(() => {
+    dispatch(getPopularMovies(1) as any) // 첫 번째 페이지에서 인기 영화 불러오기
+  }, [dispatch])
+
+  if (theaterLoading || movieLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (theaterError || movieError) {
+    return <div>Error: {theaterError || movieError}</div>
+  }
+
   return (
     <div>
       <h1>Create Showtime</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="movie-id">Movie ID</label>
-        <input
+        <select
           id="movie-id"
           value={movieId}
           onChange={(e) => setMovieId(e.target.value)}
           required
-        />
+        >
+          <option value="">- Select a movie -</option>
+          {movies?.map((movie) => (
+            <option key={movie.id} value={movie.id}>
+              {movie.title} - ({movie.release_date})
+            </option>
+          ))}
+        </select>
         <label htmlFor="theater-select">Theater:</label>
         <select
           id="theater-select"
@@ -76,11 +102,11 @@ const AdminPage = () => {
           required
         >
           <option value="">- Select a screen -</option>
-          {/* {theaterScreens.map((screen) => (
-            <option key={screen.id} value={screen.id}>
+          {theaterScreens.map((screen: any, i: number) => (
+            <option key={i} value={screen.id}>
               {screen}
             </option>
-          ))} */}
+          ))}
         </select>
         <label htmlFor="start-time">Start Time</label>
         <input
