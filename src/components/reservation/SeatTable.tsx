@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { VFC, useState } from 'react'
+
+interface Props {
+  selectedSeats: number[]
+  setSelectedSeats: (selectedSeats: any) => void
+}
 
 const totalRows = 10 // 행의 수
 const totalColumns = 10 // 열의 수
 
-const SeatTable = () => {
-  const [selectedSeats, setSelectedSeats] = useState<number[]>([])
-
+const SeatTable: VFC<Props> = ({ selectedSeats, setSelectedSeats }) => {
   const generateSeats = () => {
     const seats = Array.from(
       { length: totalRows * totalColumns },
@@ -25,9 +28,9 @@ const SeatTable = () => {
   }
 
   const onClickSeat = (seatId: number) => {
-    setSelectedSeats((prevSelectedSeats) => {
+    setSelectedSeats((prevSelectedSeats: number[]) => {
       if (prevSelectedSeats.includes(seatId)) {
-        return prevSelectedSeats.filter((seat) => seat !== seatId)
+        return prevSelectedSeats.filter((seat: number) => seat !== seatId)
       } else {
         return [...prevSelectedSeats, seatId]
       }

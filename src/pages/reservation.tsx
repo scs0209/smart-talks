@@ -9,6 +9,8 @@ import { saveReservation } from '@/redux/actions/reservation'
 import useSWR from 'swr'
 import { backUrl } from '@/config'
 import fetcher from '@/utils/fetcher'
+import SeatTable from '@/components/reservation/SeatTable'
+import { useRouter } from 'next/router'
 
 const ReservationPage = () => {
   const { data: session } = useSession()
@@ -16,10 +18,13 @@ const ReservationPage = () => {
     `${backUrl}/api/user?email=${session?.user?.email}`,
     fetcher,
   )
-  const [movieId, setMovieId] = useState('')
+  // const [movieId, setMovieId] = useState('')
   const [theaterId, setTheaterId] = useState('')
   const [screenName, setScreenName] = useState('')
   const [showtimeId, setShowtimeId] = useState('')
+  const [selectedSeats, setSelectedSeats] = useState([])
+  const router = useRouter()
+  const [movieId, setMovieId] = useState(router.query.movieId?.toString() || '')
 
   const {
     theaters,
@@ -65,7 +70,6 @@ const ReservationPage = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    console.log('click')
     // 예약 데이터를 서버에 전송하는 로직
     if (movieId && theaterId && showtimeId && user.user._id) {
       const reservationData = {
@@ -73,11 +77,13 @@ const ReservationPage = () => {
         theater_id: theaterId,
         showtime_id: showtimeId,
         user_id: user.user._id,
+        seat_info: selectedSeats,
       }
 
       const actionResult = await dispatch(saveReservation(reservationData)) // 예약 데이터 저장하기
       if (saveReservation.fulfilled.match(actionResult)) {
         alert('예약이 성공적으로 생성되었습니다.')
+        setSelectedSeats([])
       } else if (saveReservation.rejected.match(actionResult)) {
         alert('예약 생성에 실패했습니다.') // 실패 시 에러 메시지 설정
       }
@@ -148,6 +154,10 @@ const ReservationPage = () => {
         </select>
         <button type="submit">예약하기</button>
       </form>
+      <SeatTable
+        selectedSeats={selectedSeats}
+        setSelectedSeats={setSelectedSeats}
+      />
     </div>
   )
 }

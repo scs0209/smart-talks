@@ -39,7 +39,10 @@ const MovieCard: VFC<Props> = ({ movie }) => {
             상세보기
           </Link>
           <Link
-            href="/movie-reservation"
+            href={{
+              pathname: '/reservation',
+              query: { movieId: movie.id },
+            }}
             className="px-4 py-2 font-bold text-white bg-red-500 rounded-md hover:bg-red-600"
           >
             예매하기
