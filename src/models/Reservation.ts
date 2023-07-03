@@ -15,8 +15,8 @@ const PaymentInfoSchema: Schema = new Schema<IPaymentInfo>({
 export interface IReservation extends Document {
   user_id: mongoose.Schema.Types.ObjectId
   showtime_id: mongoose.Schema.Types.ObjectId
-  seat_info: number[]
-  payment_info: IPaymentInfo
+  seat_info?: number[]
+  payment_info?: IPaymentInfo
 }
 
 const ReservationSchema: Schema = new Schema<IReservation>({
@@ -30,8 +30,8 @@ const ReservationSchema: Schema = new Schema<IReservation>({
     ref: 'Showtime',
     required: true,
   },
-  seat_info: { type: [Number], required: true },
-  payment_info: { type: PaymentInfoSchema, required: true },
+  seat_info: { type: [Number], required: false },
+  payment_info: { type: PaymentInfoSchema, required: false },
 })
 
 const Reservation: mongoose.Model<IReservation> =

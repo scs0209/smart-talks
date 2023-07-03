@@ -1,11 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, AppDispatch } from '@/redux/store'
 import { fetchTheaters } from '@/redux/actions/theater'
 import { getPopularMovies } from '@/redux/actions/movie'
 import { fetchShowtimes } from '@/redux/actions/showtime'
+import { useSession } from 'next-auth/react'
+import { saveReservation } from '@/redux/actions/reservation'
+import useSWR from 'swr'
+import { backUrl } from '@/config'
+import fetcher from '@/utils/fetcher'
 
 const ReservationPage = () => {
+  const { data: session } = useSession()
+  const { data: user } = useSWR(
+    `${backUrl}/api/user?email=${session?.user?.email}`,
+    fetcher,
+  )
   const [movieId, setMovieId] = useState('')
   const [theaterId, setTheaterId] = useState('')
   const [screenName, setScreenName] = useState('')
@@ -16,12 +26,12 @@ const ReservationPage = () => {
     loading: theaterLoading,
     error: theaterError,
   } = useSelector((state: RootState) => state.theaters)
+
   const {
     data: showtimes,
     loading: showtimesLoading,
     error: showtimesError,
   } = useSelector((state: RootState) => {
-    console.log(state)
     return state.showtimes
   })
 
@@ -31,6 +41,13 @@ const ReservationPage = () => {
     error: movieError,
   } = useSelector((state: RootState) => state.movies)
 
+  const {
+    reservations,
+    loading: reservationsLoading,
+    error: reservationsError,
+  } = useSelector((state: RootState) => state.reservations)
+
+  console.log(session?.user, user)
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
@@ -46,15 +63,27 @@ const ReservationPage = () => {
   }, [dispatch])
   console.log(movieId, theaterId, showtimes)
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    console.log('click')
     // 예약 데이터를 서버에 전송하는 로직
+    if (movieId && theaterId && showtimeId && user.user._id) {
+      const reservationData = {
+        movie_id: movieId,
+        theater_id: theaterId,
+        showtime_id: showtimeId,
+        user_id: user.user._id,
+      }
+
+      await dispatch(saveReservation(reservationData)) // 예약 데이터 저장하기
+    }
   }
 
-  if (theaterLoading || movieLoading) {
+  if (theaterLoading || movieLoading || reservationsLoading) {
     return <div>Loading...</div>
   }
 
-  if (theaterError || movieError) {
+  if (theaterError || movieError || reservationsError) {
     return <div>Error: {theaterError || movieError}</div>
   }
 

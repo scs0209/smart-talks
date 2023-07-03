@@ -6,6 +6,7 @@ export const saveReservation = createAsyncThunk(
   'reservation/saveReservation',
   async (reservationData: ReservationData) => {
     const response = await api.saveReservationAPI(reservationData)
+    console.log(response)
     return response
   },
 )

@@ -4,7 +4,7 @@
 import useInput from '@/hooks/useInput'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
-import { useCallback, useState } from 'react'
+import { FormEvent, useCallback, useState } from 'react'
 import FindPasswordModal from '../FindPasswordModal'
 import SocialBtn from './SocialBtn'
 
@@ -14,7 +14,7 @@ const LoginForm = () => {
 
   const [showModal, setShowModal] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const result = await signIn('credentials', {
       redirect: false,
