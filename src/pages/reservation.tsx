@@ -75,7 +75,12 @@ const ReservationPage = () => {
         user_id: user.user._id,
       }
 
-      await dispatch(saveReservation(reservationData)) // 예약 데이터 저장하기
+      const actionResult = await dispatch(saveReservation(reservationData)) // 예약 데이터 저장하기
+      if (saveReservation.fulfilled.match(actionResult)) {
+        alert('예약이 성공적으로 생성되었습니다.')
+      } else if (saveReservation.rejected.match(actionResult)) {
+        alert('예약 생성에 실패했습니다.') // 실패 시 에러 메시지 설정
+      }
     }
   }
 
