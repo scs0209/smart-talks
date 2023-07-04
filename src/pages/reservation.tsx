@@ -18,9 +18,7 @@ const ReservationPage = () => {
     `${backUrl}/api/user?email=${session?.user?.email}`,
     fetcher,
   )
-  // const [movieId, setMovieId] = useState('')
   const [theaterId, setTheaterId] = useState('')
-  const [screenName, setScreenName] = useState('')
   const [showtimeId, setShowtimeId] = useState('')
   const [selectedSeats, setSelectedSeats] = useState([])
   const router = useRouter()
@@ -99,7 +97,7 @@ const ReservationPage = () => {
   }
 
   return (
-    <div>
+    <div className="h-screen">
       <h1>예약하기</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="movie-id">영화 선택</label>

@@ -21,7 +21,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
     <Card
       imgSrc={posterUrl}
       theme={customTheme}
-      className="h-[250px] w-[200px] overflow-hidden relative group"
+      className="h-[250px] w-[200px] overflow-hidden relative group mr-4"
     >
       <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-white">
         <p>{movie.title}</p>

@@ -71,9 +71,12 @@ const Nav = () => {
                 </span>
               </li>
               <li>
-                <span className="text-gray-900 dark:text-white hover:underline">
+                <Link
+                  href="/reservation"
+                  className="text-gray-900 dark:text-white hover:underline"
+                >
                   예매
-                </span>
+                </Link>
               </li>
             </ul>
             <input
