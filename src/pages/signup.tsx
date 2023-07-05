@@ -1,7 +1,7 @@
 import SignupForm from '@/components/Signup/SignupForm'
 import Head from '@/components/common/HeadInfo'
 
-const Signup = () => {
+const SignupPage = () => {
   return (
     <div className="mt-6">
       <Head title="Sign Up" />
@@ -10,4 +10,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default SignupPage

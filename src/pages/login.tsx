@@ -1,7 +1,7 @@
 import LoginForm from '@/components/Login/LogInForm'
 import Head from '@/components/common/HeadInfo'
 
-const Login = () => {
+const LoginPage = () => {
   return (
     <div className="mt-6">
       <Head title="LogIn" />
@@ -10,4 +10,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginPage

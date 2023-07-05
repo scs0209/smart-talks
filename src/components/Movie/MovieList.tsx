@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { getPopularMovies } from '@/redux/actions/movie'
 import MovieCard from './MovieCard'
-import Footer from '../Footer'
 import { RootState } from '@/redux/store'
 import { Movie } from '@/redux/types/movie/movie'
 import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
@@ -47,7 +46,6 @@ const MovieList = () => {
         </Carousel>
         {/* </div> */}
       </div>
-      <Footer />
     </>
   )
 }

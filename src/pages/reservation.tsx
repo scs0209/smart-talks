@@ -13,6 +13,7 @@ import SeatTable from '@/components/reservation/SeatTable'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { processPayment } from '@/utils/payment'
+import { Button, Label, Select } from 'flowbite-react'
 
 const ReservationPage = () => {
   const { data: session } = useSession()
@@ -122,10 +123,10 @@ const ReservationPage = () => {
         ></script>
       </Head>
       <div className="h-screen">
-        <h1>예약하기</h1>
+        <h1 className="text-5xl font-extrabold dark:text-white m-3">예매</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="movie-id">영화 선택</label>
-          <select
+          <Label htmlFor="movie-id" value="영화 선택"></Label>
+          <Select
             id="movie-id"
             value={movieId}
             onChange={(e) => setMovieId(e.target.value)}
@@ -137,9 +138,9 @@ const ReservationPage = () => {
                 {movie.title} - ({movie.release_date})
               </option>
             ))}
-          </select>
-          <label htmlFor="theater-select">영화관 선택</label>
-          <select
+          </Select>
+          <Label htmlFor="theater-select" value="영화관 선택"></Label>
+          <Select
             id="theater-select"
             value={theaterId}
             onChange={(e) => setTheaterId(e.target.value)}
@@ -151,9 +152,10 @@ const ReservationPage = () => {
                 {theater.name}
               </option>
             ))}
-          </select>
+          </Select>
           {/* 상영회 선택 */}
-          <select
+          <Label htmlFor="showtime-id" value="상영회 선택"></Label>
+          <Select
             id="showtime-select"
             value={showtimeId}
             onChange={(e) => setShowtimeId(e.target.value)}
@@ -173,8 +175,10 @@ const ReservationPage = () => {
                   {showtime.screen_name}
                 </option>
               ))}
-          </select>
-          <button type="submit">예약하기</button>
+          </Select>
+          <Button type="submit" color="purple" className="mt-3">
+            예약하기
+          </Button>
         </form>
         <SeatTable
           selectedSeats={selectedSeats}
