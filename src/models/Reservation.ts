@@ -1,16 +1,15 @@
 import mongoose, { Schema, Document, model } from 'mongoose'
 
 export interface IPaymentInfo extends Document {
+  imp_uid: string
+  merchant_uid: string
   amount: number
   method: string
   status: string
+  paid_at: number
+  success: boolean
+  error_msg?: string
 }
-
-const PaymentInfoSchema: Schema = new Schema<IPaymentInfo>({
-  amount: { type: Number, required: true },
-  method: { type: String, required: true },
-  status: { type: String, required: true },
-})
 
 export interface IReservation extends Document {
   user_id: mongoose.Schema.Types.ObjectId
@@ -30,8 +29,11 @@ const ReservationSchema: Schema = new Schema<IReservation>({
     ref: 'Showtime',
     required: true,
   },
-  seat_info: { type: [Number], required: false },
-  payment_info: { type: PaymentInfoSchema, required: false },
+  seat_info: { type: [Number], required: true },
+  payment_info: {
+    type: Object,
+    required: true,
+  },
 })
 
 const Reservation: mongoose.Model<IReservation> =
