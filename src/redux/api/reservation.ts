@@ -16,3 +16,10 @@ export const getReservationsByUserAPI = async (userId: any) => {
   )
   return data
 }
+
+export const deleteReservationAPI = async (reservationId: string) => {
+  const { data } = await axios.delete(
+    `${backUrl}/api/reservation?reservation_id=${reservationId}`,
+  )
+  return data
+}

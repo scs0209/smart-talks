@@ -13,11 +13,26 @@ interface CastMember {
   name: string
 }
 
-interface Movie {
+export interface Video {
+  name: string
+  key: string
+  site: string
+  type: string
+}
+
+export interface Movie {
   id: number
   title: string
   director: string
   cast: string[]
+  videos: Video[]
+}
+
+const getVideos = async (movieId: number): Promise<Video[]> => {
+  const response = await axios.get(
+    `${API_URL}/movie/${movieId}/videos?api_key=${API_KEY}`,
+  )
+  return response.data.results
 }
 
 const getDirector = async (movieId: number): Promise<string> => {
@@ -59,10 +74,12 @@ const getPopularMoviesWithDetails = async (page: number): Promise<Movie[]> => {
     slicedPopularMovies.map(async (movie: Movie) => {
       const director = await getDirector(movie.id)
       const cast = await getCast(movie.id)
+      const videos = await getVideos(movie.id) // 비디오 정보 가져오기
       return {
         ...movie,
         director,
         cast,
+        videos,
       }
     }),
   )

@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { saveReservation, getReservationsByUser } from '../actions/reservation'
+import {
+  saveReservation,
+  getReservationsByUser,
+  deleteReservation,
+} from '../actions/reservation'
 import { ReservationState } from '../types/reservation'
 
 const initialState: ReservationState = {
@@ -39,6 +43,23 @@ const reservationSlice = createSlice({
     })
 
     builder.addCase(getReservationsByUser.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error
+    })
+
+    builder.addCase(deleteReservation.pending, (state) => {
+      state.loading = true
+      state.error = null
+    })
+
+    builder.addCase(deleteReservation.fulfilled, (state, action) => {
+      state.loading = false
+      state.reservations = state.reservations.filter(
+        (reservation) => reservation._id !== action.payload._id,
+      )
+    })
+
+    builder.addCase(deleteReservation.rejected, (state, action) => {
       state.loading = false
       state.error = action.error
     })

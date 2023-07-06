@@ -32,7 +32,7 @@ const SpecialHall = () => {
               theme={customTheme}
             ></Card>
           </div>
-          <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700 dark:text-white ml-3 basis-1/2 flex flex-col">
+          <ul className="max-w-md divide-y divide-gray-200 dark:text-white ml-3 basis-1/2 flex flex-col">
             <li className="p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2 flex-grow flex items-center">
               <Link
                 onMouseOver={() =>
@@ -57,7 +57,7 @@ const SpecialHall = () => {
                 CINE & LIVINGROOM
               </Link>
             </li>
-            <li className="p-3 rounded hover:border-solid hover:border-gray-400 hover:border-2 flex-grow items-center flex">
+            <li className="p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2 flex-grow items-center flex">
               <Link
                 onMouseOver={() =>
                   handleMouseOver(
@@ -69,7 +69,7 @@ const SpecialHall = () => {
                 SUITE CINEMA
               </Link>
             </li>
-            <li className="p-3 rounded hover:border-solid hover:border-gray-400 hover:border-2 flex-grow items-center flex">
+            <li className="p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2 flex-grow items-center flex">
               <Link
                 onMouseOver={() =>
                   handleMouseOver(

@@ -25,6 +25,16 @@ const getReservationsByUserId = async (user_id: string) => {
   }
 }
 
+const deleteReservationById = async (reservation_id: string) => {
+  try {
+    const result = await Reservation.findByIdAndDelete(reservation_id)
+    return result
+  } catch (error) {
+    console.error('Error deleting reservation:', error)
+    return null
+  }
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -56,6 +66,19 @@ export default async function handler(
       }
     } else {
       res.status(400).json({ error: 'Invalid user_id' })
+    }
+  } else if (req.method === 'DELETE') {
+    const { reservation_id } = req.query
+
+    if (typeof reservation_id === 'string') {
+      const deletedReservation = await deleteReservationById(reservation_id)
+      if (deletedReservation) {
+        res.status(200).json(deletedReservation)
+      } else {
+        res.status(500).json({ error: 'Error deleting reservation' })
+      }
+    } else {
+      res.status(400).json({ error: 'Invalid reservation_id' })
     }
   } else {
     res.status(405).json({ error: 'Method not allowed' })

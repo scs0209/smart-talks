@@ -1,6 +1,6 @@
 // 기존 Reservation 인터페이스 업데이트
 export interface Reservation {
-  id: string
+  _id: string
   theater_id: Object
   user_id?: string
   showtime_id: string

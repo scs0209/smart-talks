@@ -18,3 +18,11 @@ export const getReservationsByUser = createAsyncThunk(
     return reservations
   },
 )
+
+export const deleteReservation = createAsyncThunk(
+  'reservation/deleteReservation',
+  async (reservationId: string) => {
+    const response = await api.deleteReservationAPI(reservationId)
+    return response
+  },
+)
