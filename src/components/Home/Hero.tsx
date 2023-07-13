@@ -29,7 +29,7 @@ const Hero = () => {
       <div className="max-w-screen-xl h-full mx-auto lg:gap-8 xl:gap-0">
         {videoUrl && (
           <iframe
-            src={`${videoUrl}?autoplay=1`}
+            src={`${videoUrl}?autoplay=1&mute=1`}
             className="w-full h-full shadow-lg border-gray-200/5 shadow-gray-400/50"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
