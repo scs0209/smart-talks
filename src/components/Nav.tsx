@@ -2,15 +2,11 @@ import Link from 'next/link'
 import { signOut, useSession } from 'next-auth/react'
 import { FormEvent, useCallback, useState } from 'react'
 import { DarkThemeToggle } from 'flowbite-react'
-import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
-import { searchMovies } from '@/redux/actions/movie'
-import { AppDispatch } from '@/redux/store'
 
 const Nav = () => {
   const { data: session } = useSession()
   const [searchTerm, setSearchTerm] = useState('')
-  const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
 
   const handleLogout = useCallback(() => {
@@ -19,8 +15,8 @@ const Nav = () => {
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault()
-    dispatch(searchMovies(searchTerm))
-    router.push('/search-results')
+    router.push(`/search-results/${searchTerm}`)
+    setSearchTerm('')
   }
 
   return (

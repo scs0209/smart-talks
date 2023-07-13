@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const query = req.query.query as string
       const { data } = await axios.get(
-        `${API_URL}/search/movie?api_key=${API_KEY}&query=${query}`,
+        `${API_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=ko`,
       )
 
       res.status(200).json({ results: data.results })
