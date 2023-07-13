@@ -1,14 +1,27 @@
 import Link from 'next/link'
 import { signOut, useSession } from 'next-auth/react'
-import { useCallback } from 'react'
+import { FormEvent, useCallback, useState } from 'react'
 import { DarkThemeToggle } from 'flowbite-react'
+import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
+import { searchMovies } from '@/redux/actions/movie'
+import { AppDispatch } from '@/redux/store'
 
 const Nav = () => {
   const { data: session } = useSession()
+  const [searchTerm, setSearchTerm] = useState('')
+  const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter()
 
   const handleLogout = useCallback(() => {
     signOut()
   }, [])
+
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault()
+    dispatch(searchMovies(searchTerm))
+    router.push('/search-results')
+  }
 
   return (
     <>
@@ -79,12 +92,16 @@ const Nav = () => {
                 </Link>
               </li>
             </ul>
-            <input
-              type="text"
-              id="search-navbar"
-              className="block w-200 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="검색"
-            />
+            <form onSubmit={handleSearch}>
+              <input
+                type="text"
+                id="search-navbar"
+                className="block w-200 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="검색"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </form>
           </div>
         </div>
       </nav>

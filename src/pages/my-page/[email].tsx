@@ -20,11 +20,14 @@ const MyPage = () => {
     user && `${backUrl}/api/reservation?user_id=${user?.user._id}`,
     fetcher,
   )
-  const dispatch = useDispatch<AppDispatch>() // 이 부분 추가
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleDeleteReservation = async (reservationId: string) => {
     try {
-      await dispatch(deleteReservation(reservationId)) // 이 부분 수정
+      await dispatch(deleteReservation(reservationId))
+
+      // 예약이 취소되었다는 성공 알림을 추가합니다.
+      alert('예약이 성공적으로 취소되었습니다.')
     } catch (error) {
       console.error('Error deleting reservation:', error)
     }
@@ -52,7 +55,7 @@ const MyPage = () => {
   }
 
   return (
-    <div>
+    <div className="h-screen">
       <HeadInfo title={`${email}'s Page`} />
       <Typography variant="h2">My Page</Typography>
       <Typography variant="body1">Email: {session.user?.email}</Typography>

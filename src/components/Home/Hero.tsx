@@ -25,12 +25,12 @@ const Hero = () => {
   }
 
   return (
-    <section className="bg-white border-solid border-b-[1px] h-[50vh] border-b-gray-500 dark:bg-gray-900">
+    <section className="bg-black border-solid border-b-[1px] h-[50vh] border-b-gray-500">
       <div className="max-w-screen-xl h-full mx-auto lg:gap-8 xl:gap-0">
         {videoUrl && (
           <iframe
             src={`${videoUrl}?autoplay=1`}
-            className="w-full h-full"
+            className="w-full h-full shadow-lg border-gray-200/5 shadow-gray-400/50"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen

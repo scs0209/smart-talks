@@ -122,7 +122,7 @@ const ReservationPage = () => {
           src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
         ></script>
       </Head>
-      <div className="h-screen">
+      <div className="h-screen max-w-screen-lg mx-auto">
         <h1 className="text-5xl font-extrabold dark:text-white m-3">예매</h1>
         <form onSubmit={handleSubmit}>
           <Label htmlFor="movie-id" value="영화 선택"></Label>

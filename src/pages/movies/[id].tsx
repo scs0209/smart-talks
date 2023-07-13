@@ -45,8 +45,8 @@ const MovieDetail = () => {
   }
 
   return (
-    <>
-      <div className="flex items-center justify-between mx-auto max-w-screen-xl dark:bg-gray-800">
+    <section className="h-screen">
+      <div className="flex items-center justify-between mt-2 mx-auto max-w-screen-xl dark:bg-gray-800">
         <div className="flex flex-col lg:flex-row w-full items-start lg:items-center rounded bg-white shadow">
           <div className="w-full lg:w-1/3 h-64 dark:bg-gray-800">
             <img
@@ -100,7 +100,7 @@ const MovieDetail = () => {
           {movieDetails.synopsis}
         </span>
       </div>
-    </>
+    </section>
   )
 }
 
