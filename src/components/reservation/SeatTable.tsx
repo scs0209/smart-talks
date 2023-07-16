@@ -1,14 +1,10 @@
-import React, { VFC, useState } from 'react'
-
-interface Props {
-  selectedSeats: number[]
-  setSelectedSeats: (selectedSeats: any) => void
-}
+import { useReservation } from '@/contexts/ReservationContext'
 
 const totalRows = 10 // 행의 수
 const totalColumns = 10 // 열의 수
 
-const SeatTable: VFC<Props> = ({ selectedSeats, setSelectedSeats }) => {
+const SeatTable = () => {
+  const { selectedSeats, setSelectedSeats } = useReservation()
   const generateSeats = () => {
     const seats = Array.from(
       { length: totalRows * totalColumns },
@@ -31,9 +27,8 @@ const SeatTable: VFC<Props> = ({ selectedSeats, setSelectedSeats }) => {
     setSelectedSeats((prevSelectedSeats: number[]) => {
       if (prevSelectedSeats.includes(seatId)) {
         return prevSelectedSeats.filter((seat: number) => seat !== seatId)
-      } else {
-        return [...prevSelectedSeats, seatId]
       }
+      return [...prevSelectedSeats, seatId]
     })
   }
 

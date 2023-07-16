@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import {
   saveReservation,
   getReservationsByUser,
@@ -10,12 +10,31 @@ const initialState: ReservationState = {
   reservations: [],
   loading: false,
   error: null,
+  selectedReservation: {
+    movieId: '',
+    theaterId: '',
+    showtimeId: '',
+    selectedSeats: [],
+  },
 }
 
 const reservationSlice = createSlice({
   name: 'reservation',
   initialState,
-  reducers: {},
+  reducers: {
+    setMovieId: (state, action: PayloadAction<string>) => {
+      state.selectedReservation.movieId = action.payload
+    },
+    setTheaterId: (state, action: PayloadAction<string>) => {
+      state.selectedReservation.theaterId = action.payload
+    },
+    setShowtimeId: (state, action: PayloadAction<string>) => {
+      state.selectedReservation.showtimeId = action.payload
+    },
+    setSelectedSeats: (state, action: PayloadAction<any[]>) => {
+      state.selectedReservation.selectedSeats = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(saveReservation.pending, (state) => {
       state.loading = true
@@ -65,5 +84,8 @@ const reservationSlice = createSlice({
     })
   },
 })
+
+export const { setMovieId, setTheaterId, setShowtimeId, setSelectedSeats } =
+  reservationSlice.actions
 
 export default reservationSlice.reducer

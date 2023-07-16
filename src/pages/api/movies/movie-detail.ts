@@ -41,14 +41,14 @@ const getMovieData = async (movieId: string) => {
     title: response.data.title,
     genres: response.data.genres,
     popularity: response.data.popularity,
-    director: director,
+    director,
     country: response.data.production_countries[0].iso_3166_1,
     releaseDate: response.data.release_date,
     runtime: response.data.runtime,
     rating: response.data.vote_average.toString(),
     poster: response.data.poster_path,
     synopsis: response.data.overview,
-    cast: cast,
+    cast,
     status: response.data.status,
   }
 

@@ -1,23 +1,11 @@
 import { RootState } from '@/redux/store'
 import { useSelector } from 'react-redux'
 import { Select, Label } from 'flowbite-react'
-import { Dispatch, SetStateAction, VFC } from 'react'
+import { useReservation } from '@/contexts/ReservationContext'
 
-interface Props {
-  movieId: string
-  theaterId: string
-  showtimeId: string
-  setShowtimeId: Dispatch<SetStateAction<string>>
-}
-
-const ShowtimeSelect: VFC<Props> = ({
-  movieId,
-  theaterId,
-  showtimeId,
-  setShowtimeId,
-}) => {
+const ShowtimeSelect = () => {
   const { data: showtimes } = useSelector((state: RootState) => state.showtimes)
-
+  const { movieId, theaterId, showtimeId, setShowtimeId } = useReservation()
   return (
     <>
       <Label htmlFor="showtime-id" value="상영회 선택" />
@@ -37,7 +25,7 @@ const ShowtimeSelect: VFC<Props> = ({
           )
           .map((showtime, index) => (
             <option key={showtime._id} value={showtime._id}>
-              {showtime.start_time.split('T')[1].substring(0, 5)} {''}
+              {showtime.start_time.split('T')[1].substring(0, 5)}
               {showtime.screen_name}
             </option>
           ))}

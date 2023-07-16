@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import * as api from '../../api'
 import { ReservationData } from '@/redux/types/reservation'
+import * as api from '../../api'
 
 export const saveReservation = createAsyncThunk(
   'reservation/saveReservation',

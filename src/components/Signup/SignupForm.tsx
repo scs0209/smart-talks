@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import signUp from '@/services/authService'
-import useInput from '../../hooks/useInput'
 import Link from 'next/link'
+import useInput from '../../hooks/useInput'
 import InputWithLabel from './InputWithLabel'
 
 const SignupForm = () => {

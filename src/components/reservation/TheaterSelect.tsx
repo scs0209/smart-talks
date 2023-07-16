@@ -1,16 +1,11 @@
 import { RootState } from '@/redux/store'
 import { useSelector } from 'react-redux'
 import { Select, Label } from 'flowbite-react'
-import { Dispatch, SetStateAction, VFC } from 'react'
+import { useReservation } from '@/contexts/ReservationContext'
 
-interface Props {
-  theaterId: string
-  setTheaterId: Dispatch<SetStateAction<string>>
-}
-
-const TheaterSelect: VFC<Props> = ({ theaterId, setTheaterId }) => {
+const TheaterSelect = () => {
   const { theaters } = useSelector((state: RootState) => state.theaters)
-
+  const { theaterId, setTheaterId } = useReservation()
   return (
     <>
       <Label htmlFor="theater-select" value="영화관 선택" />

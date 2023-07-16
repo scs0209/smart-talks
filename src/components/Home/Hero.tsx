@@ -35,7 +35,7 @@ const Hero = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title="Movie Video"
-          ></iframe>
+          />
         )}
       </div>
     </section>

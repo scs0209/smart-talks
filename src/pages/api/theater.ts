@@ -52,7 +52,7 @@ export default async function handler(
     } catch (error: unknown) {
       const message =
         error instanceof Error ? error.message : 'Unknown error occurred'
-      res.status(400).json({ success: false, message: message })
+      res.status(400).json({ success: false, message })
     }
   } else {
     res.status(405).json({ message: 'Unsupported method.' })

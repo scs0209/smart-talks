@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { FormEvent, useEffect, useState } from 'react'
-import { backUrl } from '../config'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchTheaters } from '@/redux/actions/theater'
 import { AppDispatch, RootState } from '@/redux/store'
 import { getPopularMovies } from '@/redux/actions/movie'
+import { backUrl } from '../config'
 
 const AdminPage = () => {
   const [movieId, setMovieId] = useState('')

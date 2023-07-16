@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getPopularMovies } from '@/redux/actions/movie'
-import MovieCard from './MovieCard'
 import { RootState } from '@/redux/store'
 import { Movie } from '@/redux/types/movie/movie'
 import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
+import MovieCard from './MovieCard'
 
 const customTheme: CustomFlowbiteTheme['carousel'] = {
   root: {
@@ -33,20 +32,20 @@ const MovieList = () => {
   if (error) return <div>Error: {error}</div>
 
   return (
-    <>
-      <div className="max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] overflow-auto">
-        <div className="text-2xl font-semibold pt-4 pb-2">영화 목록</div>
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> */}
-        <Carousel slide={false} theme={customTheme}>
-          {movies?.map((movie: Movie) => (
-            <div key={movie.id} className="w-full">
-              <MovieCard movie={movie} />
-            </div>
-          ))}
-        </Carousel>
-        {/* </div> */}
+    <div className="max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] overflow-auto">
+      <div className="text-2xl font-semibold pt-4 pb-2 dark:text-white">
+        영화 목록
       </div>
-    </>
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> */}
+      <Carousel slide={false} theme={customTheme}>
+        {movies?.map((movie: Movie) => (
+          <div key={movie.id} className="w-full">
+            <MovieCard movie={movie} />
+          </div>
+        ))}
+      </Carousel>
+      {/* </div> */}
+    </div>
   )
 }
 

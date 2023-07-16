@@ -1,15 +1,11 @@
+import { useReservation } from '@/contexts/ReservationContext'
 import { RootState } from '@/redux/store'
 import { Label, Select } from 'flowbite-react'
-import { Dispatch, SetStateAction, VFC } from 'react'
 import { useSelector } from 'react-redux'
 
-interface Props {
-  movieId: string
-  setMovieId: Dispatch<SetStateAction<string>>
-}
-
-const MovieSelect: VFC<Props> = ({ movieId, setMovieId }) => {
+const MovieSelect = () => {
   const { data: movies } = useSelector((state: RootState) => state.movies)
+  const { movieId, setMovieId } = useReservation()
 
   return (
     <>

@@ -3,21 +3,12 @@ import { AppDispatch } from '@/redux/store'
 import { fetchTheaters } from '@/redux/actions/theater'
 import { getPopularMovies } from '@/redux/actions/movie'
 import { fetchShowtimes } from '@/redux/actions/showtime'
-import { useSession } from 'next-auth/react'
-import useSWR from 'swr'
-import { backUrl } from '@/config'
-import fetcher from '@/utils/fetcher'
 import Head from 'next/head'
 import useFetchData from '@/hooks/useFetchData'
-import ReservationInput from '@/components/reservation/ReservationInput'
+import ReservationForm from '@/components/reservation/ReservationForm'
+import { ReservationProvider } from '@/contexts/ReservationContext'
 
 const ReservationPage = () => {
-  const { data: session } = useSession()
-  const { data: user } = useSWR(
-    `${backUrl}/api/user?email=${session?.user?.email}`,
-    fetcher,
-  )
-
   const dispatch = useDispatch<AppDispatch>()
 
   const { isFetched: isTheatersFetched } = useFetchData({
@@ -41,15 +32,17 @@ const ReservationPage = () => {
         <script
           type="text/javascript"
           src="https://code.jquery.com/jquery-1.12.4.min.js"
-        ></script>
+        />
         <script
           type="text/javascript"
           src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
-        ></script>
+        />
       </Head>
       <div className="h-screen max-w-screen-lg mx-auto">
         <h1 className="text-5xl font-extrabold dark:text-white m-3">예매</h1>
-        <ReservationInput user={user} dispatch={dispatch} />
+        <ReservationProvider>
+          <ReservationForm />
+        </ReservationProvider>
       </div>
     </>
   )

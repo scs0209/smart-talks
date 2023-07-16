@@ -1,7 +1,7 @@
 import { Card, CustomFlowbiteTheme } from 'flowbite-react'
-import Footer from '../Footer'
 import { useState } from 'react'
 import Link from 'next/link'
+import Footer from '../Footer'
 
 const customTheme: CustomFlowbiteTheme['card'] = {
   root: {
@@ -30,7 +30,7 @@ const SpecialHall = () => {
               className="max-w-full"
               imgSrc={currentImage}
               theme={customTheme}
-            ></Card>
+            />
           </div>
           <ul className="max-w-md divide-y divide-gray-200 dark:text-white ml-3 basis-1/2 flex flex-col">
             <li className="p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2 flex-grow flex items-center">
