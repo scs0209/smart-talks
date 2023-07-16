@@ -8,6 +8,7 @@ import theme from '@/styles/theme'
 import { Provider } from 'react-redux'
 import { wrapper } from '@/redux/store'
 import { Flowbite } from 'flowbite-react'
+import { AdminPageProvider } from '@/contexts/AdminContext'
 
 export default function App({ Component, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest)
@@ -18,9 +19,11 @@ export default function App({ Component, ...rest }: AppProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Flowbite>
-            <Layout>
-              <Component {...props.pageProps} />
-            </Layout>
+            <AdminPageProvider>
+              <Layout>
+                <Component {...props.pageProps} />
+              </Layout>
+            </AdminPageProvider>
           </Flowbite>
         </ThemeProvider>
       </SessionProvider>
