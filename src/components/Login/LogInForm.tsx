@@ -1,10 +1,7 @@
-'use client'
-
-/* eslint-disable */
 import useInput from '@/hooks/useInput'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
-import { FormEvent, useCallback, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import FindPasswordModal from '../FindPasswordModal'
 import SocialBtn from './SocialBtn'
 
@@ -27,13 +24,13 @@ const LoginForm = () => {
       window.location.href = '/'
     }
   }
-  const handleForgotPasswordClick = useCallback(() => {
+  const handleForgotPasswordClick = () => {
     setShowModal(true)
-  }, [])
+  }
 
-  const handleCloseModal = useCallback(() => {
+  const handleCloseModal = () => {
     setShowModal(false)
-  }, [])
+  }
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
