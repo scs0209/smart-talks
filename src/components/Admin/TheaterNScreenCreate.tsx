@@ -1,5 +1,6 @@
 import { useAdminPage } from '@/contexts/AdminContext'
 import { RootState } from '@/redux/store'
+import { Label, Select } from 'flowbite-react'
 import { useSelector } from 'react-redux'
 
 const TheaterNScreenCreate = () => {
@@ -23,8 +24,8 @@ const TheaterNScreenCreate = () => {
 
   return (
     <>
-      <label htmlFor="theater-select">Theater:</label>
-      <select
+      <Label htmlFor="theater-select" value="Theater:" />
+      <Select
         id="theater-select"
         value={theaterId}
         onChange={(e) => setTheaterId(e.target.value)}
@@ -36,9 +37,9 @@ const TheaterNScreenCreate = () => {
             {theater.name}
           </option>
         ))}
-      </select>
-      <label htmlFor="screen-select">Screen:</label>
-      <select
+      </Select>
+      <Label htmlFor="screen-select" value="Screen:" />
+      <Select
         id="screen-select"
         value={screenName}
         onChange={(e) => setScreenName(e.target.value)}
@@ -50,7 +51,7 @@ const TheaterNScreenCreate = () => {
             {screen}
           </option>
         ))}
-      </select>
+      </Select>
     </>
   )
 }

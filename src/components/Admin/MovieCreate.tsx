@@ -1,5 +1,6 @@
 import { useAdminPage } from '@/contexts/AdminContext'
 import { RootState } from '@/redux/store'
+import { Label, Select } from 'flowbite-react'
 import { useSelector } from 'react-redux'
 
 const MovieCreate = () => {
@@ -20,8 +21,8 @@ const MovieCreate = () => {
 
   return (
     <>
-      <label htmlFor="movie-id">Movie ID</label>
-      <select
+      <Label htmlFor="movie-id" value="Movie ID" />
+      <Select
         id="movie-id"
         value={JSON.stringify(movieId)}
         onChange={(e) => setMovieId(JSON.parse(e.target.value))}
@@ -33,7 +34,7 @@ const MovieCreate = () => {
             {movie.title} - ({movie.release_date})
           </option>
         ))}
-      </select>
+      </Select>
     </>
   )
 }
