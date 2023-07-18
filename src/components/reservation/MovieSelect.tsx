@@ -1,7 +1,8 @@
-import { useReservation } from '@/contexts/ReservationContext'
-import { RootState } from '@/redux/store'
 import { Label, Select } from 'flowbite-react'
 import { useSelector } from 'react-redux'
+
+import { useReservation } from '@/contexts/ReservationContext'
+import { RootState } from '@/redux/store'
 
 const MovieSelect = () => {
   const { data: movies } = useSelector((state: RootState) => state.movies)

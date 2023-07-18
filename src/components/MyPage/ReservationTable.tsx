@@ -1,5 +1,6 @@
-import { useMyPage } from '@/contexts/MyPageContext'
 import { Button, CustomFlowbiteTheme, Table } from 'flowbite-react'
+
+import { useMyPage } from '@/contexts/MyPageContext'
 
 const customTheme: CustomFlowbiteTheme['table'] = {
   root: {

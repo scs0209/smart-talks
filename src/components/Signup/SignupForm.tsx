@@ -1,6 +1,8 @@
-import { useRouter } from 'next/router'
-import signUp from '@/services/authService'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+import signUp from '@/services/authService'
+
 import useInput from '../../hooks/useInput'
 import InputWithLabel from './InputWithLabel'
 

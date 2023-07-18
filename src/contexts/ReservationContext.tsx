@@ -1,19 +1,20 @@
-import { backUrl } from '@/config'
-import { saveReservation } from '@/redux/actions/reservation'
-import { AppDispatch } from '@/redux/store'
-import fetcher from '@/utils/fetcher'
-import { processPayment } from '@/utils/payment'
 import { useSession } from 'next-auth/react'
 import {
+  createContext,
   FC,
   FormEvent,
   ReactNode,
-  createContext,
   useContext,
   useState,
 } from 'react'
 import { useDispatch } from 'react-redux'
 import useSWR from 'swr'
+
+import { backUrl } from '@/config'
+import { saveReservation } from '@/redux/actions/reservation'
+import { AppDispatch } from '@/redux/store'
+import fetcher from '@/utils/fetcher'
+import { processPayment } from '@/utils/payment'
 
 interface ReservationContextProps {
   movieId: string
@@ -40,6 +41,7 @@ export const useReservation = () => {
   if (!context) {
     throw new Error('useReservation must be used within a ReservationProvider')
   }
+
   return context
 }
 

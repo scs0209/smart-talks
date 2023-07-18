@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+
 import Theater, { ITheater } from '@/models/Theater'
 import connectDB from '@/services/dbConnect'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 const createDummyTheaters = async () => {
   const theaterLocations = [

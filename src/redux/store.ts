@@ -1,15 +1,16 @@
 import {
+  Action,
   combineReducers,
   configureStore,
   PayloadAction,
   ThunkAction,
-  Action,
 } from '@reduxjs/toolkit'
 import { createWrapper, HYDRATE } from 'next-redux-wrapper'
+
 import { moviesReducer } from './reducers/movieSlice'
-import theaterSlice from './reducers/theaterSlice'
-import showtimeSlice from './reducers/showtimeSlice'
 import reservationSlice from './reducers/reservationSlice'
+import showtimeSlice from './reducers/showtimeSlice'
+import theaterSlice from './reducers/theaterSlice'
 
 const reducer = (state: any, action: PayloadAction<any>) => {
   return combineReducers({

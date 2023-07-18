@@ -1,7 +1,8 @@
-import { useAdminPage } from '@/contexts/AdminContext'
-import { RootState } from '@/redux/store'
 import { Label, Select } from 'flowbite-react'
 import { useSelector } from 'react-redux'
+
+import { useAdminPage } from '@/contexts/AdminContext'
+import { RootState } from '@/redux/store'
 
 const MovieCreate = () => {
   const { movieId, setMovieId } = useAdminPage()

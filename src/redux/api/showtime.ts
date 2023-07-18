@@ -1,5 +1,6 @@
-import { backUrl } from '@/config'
 import axios from 'axios'
+
+import { backUrl } from '@/config'
 
 export const getShowtimesAPI = async () => {
   const { data } = await axios.get(`${backUrl}/api/showtime`)

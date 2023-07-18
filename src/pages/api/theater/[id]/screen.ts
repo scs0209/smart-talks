@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+
 import Theater from '@/models/Theater'
 import connectDB from '@/services/dbConnect'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 const screensHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {

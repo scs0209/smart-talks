@@ -1,7 +1,8 @@
 import { compare, hash } from 'bcrypt'
-import connectDB from '@/services/dbConnect'
-import User from '@/models/User'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+import User from '@/models/User'
+import connectDB from '@/services/dbConnect'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   await connectDB()

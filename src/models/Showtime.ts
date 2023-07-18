@@ -1,4 +1,5 @@
-import mongoose, { Schema, Document, model } from 'mongoose'
+import mongoose, { Document, model, Schema } from 'mongoose'
+
 import { IMovie } from './Movie'
 
 export interface IShowtime extends Document {

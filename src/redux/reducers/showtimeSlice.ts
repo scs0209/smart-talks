@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ShowtimesState } from '../types/showtime'
+
 import { fetchShowtimes } from '../actions/showtime'
+import { ShowtimesState } from '../types/showtime'
 
 const initialState: ShowtimesState = {
   data: [],

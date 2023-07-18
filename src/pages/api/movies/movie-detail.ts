@@ -1,5 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const API_KEY = process.env.TMDB_API_KEY
 const API_URL = 'https://api.themoviedb.org/3'

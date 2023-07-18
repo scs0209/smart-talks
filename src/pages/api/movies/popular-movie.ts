@@ -75,6 +75,7 @@ const getPopularMoviesWithDetails = async (page: number): Promise<Movie[]> => {
       const director = await getDirector(movie.id)
       const cast = await getCast(movie.id)
       const videos = await getVideos(movie.id) // 비디오 정보 가져오기
+
       return {
         ...movie,
         director,

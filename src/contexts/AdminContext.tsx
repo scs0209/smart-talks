@@ -1,4 +1,3 @@
-import { backUrl } from '@/config'
 import axios from 'axios'
 import {
   createContext,
@@ -8,6 +7,8 @@ import {
   useContext,
   useState,
 } from 'react'
+
+import { backUrl } from '@/config'
 
 interface AdminPageContextProps {
   movieId: string

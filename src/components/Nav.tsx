@@ -1,8 +1,8 @@
+import { DarkThemeToggle } from 'flowbite-react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
 import { FormEvent, useCallback, useState } from 'react'
-import { DarkThemeToggle } from 'flowbite-react'
-import { useRouter } from 'next/router'
 
 const Nav = () => {
   const { data: session } = useSession()

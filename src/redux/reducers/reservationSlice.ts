@@ -1,8 +1,9 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
 import {
-  saveReservation,
-  getReservationsByUser,
   deleteReservation,
+  getReservationsByUser,
+  saveReservation,
 } from '../actions/reservation'
 import { ReservationState } from '../types/reservation'
 

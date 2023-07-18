@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { TheaterState } from '../types/theater'
+
 import {
   createDummyTheaters,
   fetchScreens,
   fetchTheaters,
 } from '../actions/theater'
+import { TheaterState } from '../types/theater'
 
 const initialState: TheaterState = {
   theaters: [],

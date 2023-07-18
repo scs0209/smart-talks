@@ -1,12 +1,13 @@
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/redux/store'
-import { fetchTheaters } from '@/redux/actions/theater'
-import { getPopularMovies } from '@/redux/actions/movie'
-import { fetchShowtimes } from '@/redux/actions/showtime'
 import Head from 'next/head'
-import useFetchData from '@/hooks/useFetchData'
+import { useDispatch } from 'react-redux'
+
 import ReservationForm from '@/components/reservation/ReservationForm'
 import { ReservationProvider } from '@/contexts/ReservationContext'
+import useFetchData from '@/hooks/useFetchData'
+import { getPopularMovies } from '@/redux/actions/movie'
+import { fetchShowtimes } from '@/redux/actions/showtime'
+import { fetchTheaters } from '@/redux/actions/theater'
+import { AppDispatch } from '@/redux/store'
 
 const ReservationPage = () => {
   const dispatch = useDispatch<AppDispatch>()

@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+
+import AdminForm from '@/components/Admin/AdminForm'
+import { getPopularMovies } from '@/redux/actions/movie'
 import { fetchTheaters } from '@/redux/actions/theater'
 import { AppDispatch } from '@/redux/store'
-import { getPopularMovies } from '@/redux/actions/movie'
-import AdminForm from '@/components/Admin/AdminForm'
 
 const AdminPage = () => {
   const dispatch = useDispatch<AppDispatch>()

@@ -1,11 +1,12 @@
+import { Button } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
+
 import ChangePasswordModal from '@/components/ChangePasswordModal'
 import HeadInfo from '@/components/common/HeadInfo'
-import { Button } from 'flowbite-react'
-import useModal from '@/hooks/useModal'
-import { MyPageProvider } from '@/contexts/MyPageContext'
 import ReservationTable from '@/components/MyPage/ReservationTable'
+import { MyPageProvider } from '@/contexts/MyPageContext'
+import useModal from '@/hooks/useModal'
 
 const MyPage = () => {
   const router = useRouter()

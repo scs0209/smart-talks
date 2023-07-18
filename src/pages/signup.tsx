@@ -1,5 +1,5 @@
-import SignupForm from '@/components/Signup/SignupForm'
 import Head from '@/components/common/HeadInfo'
+import SignupForm from '@/components/Signup/SignupForm'
 
 const SignupPage = () => {
   return (

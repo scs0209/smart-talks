@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getPopularMovies } from '@/redux/actions/movie'
-import { RootState } from '@/redux/store'
-import { Movie } from '@/redux/types/movie/movie'
 import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { AppDispatch, RootState } from '@/redux/store'
+
 import MovieCard from './MovieCard'
+import { fetchShowtimes } from '@/redux/actions/showtime'
+import { Showtime } from '@/redux/types/showtime'
 
 const customTheme: CustomFlowbiteTheme['carousel'] = {
   root: {
@@ -17,16 +19,26 @@ const customTheme: CustomFlowbiteTheme['carousel'] = {
 }
 
 const MovieList = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const {
-    data: movies,
+    data: showtimes,
     loading,
     error,
-  } = useSelector((state: RootState) => state.movies)
+  } = useSelector((state: RootState) => state.showtimes)
 
   useEffect(() => {
-    dispatch(getPopularMovies(1) as any) // 첫 번째 페이지에서 인기 영화 불러오기
-  }, [dispatch])
+    dispatch(fetchShowtimes())
+  }, [])
+
+  const movieSeen = new Set()
+  const uniqueMoviesArray = showtimes.filter((showtime) => {
+    const movieId = showtime.movie.id
+    if (!movieSeen.has(movieId)) {
+      movieSeen.add(movieId)
+      return true
+    }
+    return false
+  })
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
@@ -36,15 +48,13 @@ const MovieList = () => {
       <div className="text-2xl font-semibold pt-4 pb-2 dark:text-white">
         영화 목록
       </div>
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> */}
       <Carousel slide={false} theme={customTheme}>
-        {movies?.map((movie: Movie) => (
-          <div key={movie.id} className="w-full">
-            <MovieCard movie={movie} />
+        {uniqueMoviesArray.map((showtime: Showtime) => (
+          <div key={showtime._id} className="w-full">
+            <MovieCard showtime={showtime} />
           </div>
         ))}
       </Carousel>
-      {/* </div> */}
     </div>
   )
 }

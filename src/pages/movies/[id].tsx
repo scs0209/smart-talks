@@ -1,11 +1,12 @@
-import { getMovieDetails } from '@/redux/actions/movie'
-import { getImageUrl } from '@/redux/api'
-import { RootState } from '@/redux/store'
 import { Badge } from 'flowbite-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { getMovieDetails } from '@/redux/actions/movie'
+import { getImageUrl } from '@/redux/api'
+import { RootState } from '@/redux/store'
 
 interface Genre {
   id: number

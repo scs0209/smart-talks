@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+
 import Reservation, { IReservation } from '@/models/Reservation'
 import connectDB from '@/services/dbConnect'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 const saveReservation = async (reservationData: IReservation) => {
   try {

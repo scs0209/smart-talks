@@ -1,6 +1,7 @@
 import { Card, CustomFlowbiteTheme } from 'flowbite-react'
-import { useState } from 'react'
 import Link from 'next/link'
+import { useState } from 'react'
+
 import Footer from '../Footer'
 
 const customTheme: CustomFlowbiteTheme['card'] = {

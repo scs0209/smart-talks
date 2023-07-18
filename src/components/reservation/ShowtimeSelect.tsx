@@ -1,7 +1,8 @@
-import { RootState } from '@/redux/store'
+import { Label, Select } from 'flowbite-react'
 import { useSelector } from 'react-redux'
-import { Select, Label } from 'flowbite-react'
+
 import { useReservation } from '@/contexts/ReservationContext'
+import { RootState } from '@/redux/store'
 
 const ShowtimeSelect = () => {
   const { data: showtimes } = useSelector((state: RootState) => state.showtimes)

@@ -1,7 +1,8 @@
 import React from 'react'
-import MovieList from '@/components/Movie/MovieList'
+
 import Hero from '@/components/Home/Hero'
 import SpecialHall from '@/components/Home/SpecialFeature'
+import MovieList from '@/components/Movie/MovieList'
 
 export default function Home() {
   return (

@@ -1,6 +1,7 @@
-import connectDB from '@/services/dbConnect'
 import { NextApiRequest, NextApiResponse } from 'next'
+
 import Showtime, { IShowtime } from '@/models/Showtime'
+import connectDB from '@/services/dbConnect'
 
 const getAllShowtimes = async () => {
   try {

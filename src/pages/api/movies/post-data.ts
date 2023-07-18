@@ -1,6 +1,7 @@
-import connectDB from '@/services/dbConnect'
 import { NextApiRequest, NextApiResponse } from 'next'
+
 import Movie, { IMovie } from '@/models/Movie'
+import connectDB from '@/services/dbConnect'
 
 const saveMovieData = async (movieData: IMovie) => {
   try {

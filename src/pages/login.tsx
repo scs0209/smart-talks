@@ -1,5 +1,5 @@
-import LoginForm from '@/components/Login/LogInForm'
 import Head from '@/components/common/HeadInfo'
+import LoginForm from '@/components/Login/LogInForm'
 
 const LoginPage = () => {
   return (

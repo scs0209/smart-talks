@@ -1,9 +1,11 @@
-import { useReservation } from '@/contexts/ReservationContext'
 import { Button } from 'flowbite-react'
+
+import { useReservation } from '@/contexts/ReservationContext'
+
 import MovieSelect from './MovieSelect'
+import SeatTable from './SeatTable'
 import ShowtimeSelect from './ShowtimeSelect'
 import TheaterSelect from './TheaterSelect'
-import SeatTable from './SeatTable'
 
 const ReservationForm = () => {
   const { handleSubmit } = useReservation()

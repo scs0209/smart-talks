@@ -1,14 +1,16 @@
 import '@/styles/globals.css'
+
+import { CssBaseline } from '@mui/material'
+import { ThemeProvider } from '@mui/styles'
+import { Flowbite } from 'flowbite-react'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
-import { CssBaseline } from '@mui/material'
-import Layout from '@/components/Layout'
-import { ThemeProvider } from '@mui/styles'
-import theme from '@/styles/theme'
 import { Provider } from 'react-redux'
-import { wrapper } from '@/redux/store'
-import { Flowbite } from 'flowbite-react'
+
+import Layout from '@/components/Layout'
 import { AdminPageProvider } from '@/contexts/AdminContext'
+import { wrapper } from '@/redux/store'
+import theme from '@/styles/theme'
 
 export default function App({ Component, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest)

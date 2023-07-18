@@ -1,7 +1,8 @@
+import { Button, Grid, Modal, TextField, Typography } from '@mui/material'
 import { FC } from 'react'
-import { Modal, Grid, Typography, Button, TextField } from '@mui/material'
-import { sendTempPasswordEmail } from '@/services/apiServices'
+
 import useInput from '@/hooks/useInput'
+import { sendTempPasswordEmail } from '@/services/apiServices'
 import { useStyles } from '@/styles/FindPasswordStyle'
 
 interface Props {

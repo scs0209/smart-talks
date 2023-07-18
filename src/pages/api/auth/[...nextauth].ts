@@ -1,13 +1,12 @@
-/* eslint-disable */
 import bcrypt, { compare } from 'bcrypt'
+import { NextApiHandler } from 'next'
 import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 
-import connectDB from '@/services/dbConnect'
 import User, { IUser } from '@/models/User'
-import { NextApiHandler } from 'next'
+import connectDB from '@/services/dbConnect'
 
 export const authOptions: AuthOptions = {
   secret: process.env.JWT_SECRET,
@@ -36,8 +35,9 @@ export const authOptions: AuthOptions = {
             throw new Error('Invalid password')
           }
 
-          return { ...user.toJSON() } //session에 이메일이 들어감
+          return { ...user.toJSON() } // session에 이메일이 들어감
         }
+
         return null
       },
     }),
@@ -66,6 +66,7 @@ export const authOptions: AuthOptions = {
       if (account) {
         token.accessToken = account.access_token
       }
+
       return token
     },
     async session({ session, token, user }) {

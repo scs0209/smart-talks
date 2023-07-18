@@ -1,8 +1,9 @@
-import { Typography, Button, Modal, Box, TextField } from '@mui/material'
+import { Box, Button, Modal, TextField, Typography } from '@mui/material'
+import { useSession } from 'next-auth/react'
 import { FC, useState } from 'react'
+
 import useInput from '@/hooks/useInput'
 import { changePassword } from '@/services/apiServices'
-import { useSession } from 'next-auth/react'
 
 interface Props {
   open: boolean

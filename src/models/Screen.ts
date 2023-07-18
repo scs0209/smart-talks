@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, model } from 'mongoose'
+import mongoose, { Document, model, Schema } from 'mongoose'
 
 export interface IScreen extends Document {
   screen_name: string

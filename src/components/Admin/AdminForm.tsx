@@ -1,8 +1,10 @@
-import { useAdminPage } from '@/contexts/AdminContext'
-import MovieCreate from './MovieCreate'
-import TheaterNScreenCreate from './TheaternScreenCreate'
-import StartEndCreate from './StartEndCreate'
 import { Button } from 'flowbite-react'
+
+import { useAdminPage } from '@/contexts/AdminContext'
+
+import MovieCreate from './MovieCreate'
+import StartEndCreate from './StartEndCreate'
+import TheaterNScreenCreate from './TheaterNScreenCreate'
 
 const AdminForm = () => {
   const { handleSubmit } = useAdminPage()

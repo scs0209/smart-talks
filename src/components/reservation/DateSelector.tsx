@@ -1,4 +1,4 @@
-import { VFC, useCallback, useState } from 'react'
+import { useCallback, useState, VFC } from 'react'
 
 interface Props {
   onDateSelect: (date: Date) => void

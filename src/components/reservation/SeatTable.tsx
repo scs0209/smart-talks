@@ -28,6 +28,7 @@ const SeatTable = () => {
       if (prevSelectedSeats.includes(seatId)) {
         return prevSelectedSeats.filter((seat: number) => seat !== seatId)
       }
+
       return [...prevSelectedSeats, seatId]
     })
   }
