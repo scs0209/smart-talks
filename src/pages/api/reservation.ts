@@ -19,6 +19,7 @@ const getReservationsByUserId = async (user_id: string) => {
     const reservations = await Reservation.find({ user_id }).populate(
       'showtime_id',
     )
+    console.log(reservations)
     return reservations
   } catch (error) {
     console.error('Error fetching reservations:', error)

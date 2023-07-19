@@ -27,7 +27,7 @@ const ShowtimeSchema: Schema = new Schema<IShowtime>({
         ref: 'Theater',
         required: true,
       },
-      branch_address: { type: String, required: true },
+      address: { type: String, required: true },
       screen_name: { type: String, required: true },
       start_time: { type: Date, required: true },
       end_time: { type: Date, required: true },

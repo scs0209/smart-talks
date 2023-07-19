@@ -23,6 +23,8 @@ interface ReservationContextProps {
   setTheaterId: (id: string) => void
   showtimeId: string
   setShowtimeId: (id: string) => void
+  branchAddress: string
+  setBranchAddress: React.Dispatch<React.SetStateAction<string>>
   selectedSeats: number[]
   setSelectedSeats: (selectedSeats: any) => void
   user: any
@@ -50,6 +52,7 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
   const [theaterId, setTheaterId] = useState('')
   const [showtimeId, setShowtimeId] = useState('')
   const [selectedSeats, setSelectedSeats] = useState<any[]>([])
+  const [branchAddress, setBranchAddress] = useState('')
   const dispatch = useDispatch<AppDispatch>()
   const { data: session } = useSession()
   const { data: user } = useSWR(
@@ -93,6 +96,8 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
     setTheaterId,
     showtimeId,
     setShowtimeId,
+    branchAddress,
+    setBranchAddress,
     selectedSeats,
     setSelectedSeats,
     user,

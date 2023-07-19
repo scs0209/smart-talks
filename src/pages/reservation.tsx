@@ -4,23 +4,11 @@ import { useDispatch } from 'react-redux'
 import ReservationForm from '@/components/reservation/ReservationForm'
 import { ReservationProvider } from '@/contexts/ReservationContext'
 import useFetchData from '@/hooks/useFetchData'
-import { getPopularMovies } from '@/redux/actions/movie'
 import { fetchShowtimes } from '@/redux/actions/showtime'
-import { fetchTheaters } from '@/redux/actions/theater'
 import { AppDispatch } from '@/redux/store'
 
 const ReservationPage = () => {
   const dispatch = useDispatch<AppDispatch>()
-
-  const { isFetched: isTheatersFetched } = useFetchData({
-    dispatch,
-    action: fetchTheaters,
-  })
-
-  const { isFetched: isMoviesFetched } = useFetchData({
-    dispatch,
-    action: () => getPopularMovies(1) as any,
-  })
 
   const { isFetched: isShowtimesFetched } = useFetchData({
     dispatch,

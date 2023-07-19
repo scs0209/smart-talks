@@ -32,6 +32,7 @@ export const MyPageProvider: FC<Props> = ({ email, children }) => {
   )
   const dispatch = useDispatch<AppDispatch>()
 
+  console.log(reservations)
   const handleDeleteReservation = async (reservationId: string) => {
     try {
       await dispatch(deleteReservation(reservationId))

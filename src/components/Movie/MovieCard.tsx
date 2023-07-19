@@ -17,6 +17,7 @@ interface Props {
 
 const MovieCard: VFC<Props> = ({ showtime }) => {
   const posterUrl = getImageUrl(showtime.movie.poster_path)
+  console.log(showtime)
 
   return (
     <Card
@@ -34,7 +35,7 @@ const MovieCard: VFC<Props> = ({ showtime }) => {
       <div className="absolute inset-0 flex items-center justify-center opacity-0 bg-black bg-opacity-50 group-hover:opacity-100 transition-opacity">
         <div className="flex flex-col space-y-4">
           <Link
-            href={`/movies/${showtime._id}`}
+            href={`/movies/${showtime.movie.id}`}
             className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
           >
             상세보기

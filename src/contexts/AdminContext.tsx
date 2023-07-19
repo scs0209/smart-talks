@@ -55,7 +55,7 @@ export const AdminPageProvider = ({ children }: Props) => {
 
     const showtime = {
       theater: theaterId,
-      branch_address: branchAddress,
+      address: branchAddress,
       screen_name: screenName,
       start_time: new Date(startTime),
       end_time: new Date(endTime),

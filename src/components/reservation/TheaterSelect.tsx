@@ -5,8 +5,12 @@ import { useReservation } from '@/contexts/ReservationContext'
 import { RootState } from '@/redux/store'
 
 const TheaterSelect = () => {
-  const { theaters } = useSelector((state: RootState) => state.theaters)
-  const { theaterId, setTheaterId } = useReservation()
+  const { data: showtimes } = useSelector((state: RootState) => state.showtimes)
+  const { movieId, theaterId, setTheaterId, branchAddress, setBranchAddress } =
+    useReservation()
+
+  const selectedTheater = showtimes.find((theater) => theater._id === movieId)
+
   return (
     <>
       <Label htmlFor="theater-select" value="영화관 선택" />
@@ -17,9 +21,23 @@ const TheaterSelect = () => {
         required
       >
         <option value="">- 영화관을 선택하세요. -</option>
-        {theaters.map((theater) => (
-          <option key={theater._id} value={theater._id}>
-            {theater.name}
+        {selectedTheater?.showtimes.map((showtime) => (
+          <option key={showtime.theater._id} value={showtime.theater._id}>
+            {showtime.theater.name}
+          </option>
+        ))}
+      </Select>
+      <Label htmlFor="address-select" value="지점 선택" />
+      <Select
+        id="address-select"
+        value={branchAddress}
+        onChange={(e) => setBranchAddress(e.target.value)}
+        required
+      >
+        <option value="">- 지점을 선택하세요. -</option>
+        {selectedTheater?.showtimes.map((showtime) => (
+          <option key={showtime.theater._id} value={showtime.address}>
+            {showtime.address}
           </option>
         ))}
       </Select>
