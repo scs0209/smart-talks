@@ -17,6 +17,8 @@ interface AdminPageContextProps {
   setTheaterId: Dispatch<string>
   screenName: string
   setScreenName: Dispatch<string>
+  branchAddress: string
+  setBranchAddress: Dispatch<string>
   startTime: string
   setStartTime: Dispatch<string>
   endTime: string
@@ -44,17 +46,24 @@ export const AdminPageProvider = ({ children }: Props) => {
   const [movieId, setMovieId] = useState('')
   const [theaterId, setTheaterId] = useState('')
   const [screenName, setScreenName] = useState('')
+  const [branchAddress, setBranchAddress] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    const showtimeData = {
-      movie: movieId,
-      theater_id: theaterId,
+
+    const showtime = {
+      theater: theaterId,
+      branch_address: branchAddress,
       screen_name: screenName,
       start_time: new Date(startTime),
       end_time: new Date(endTime),
+    }
+
+    const showtimeData = {
+      movie: movieId,
+      showtimes: [showtime],
     }
 
     try {
@@ -73,6 +82,8 @@ export const AdminPageProvider = ({ children }: Props) => {
     setTheaterId,
     screenName,
     setScreenName,
+    branchAddress,
+    setBranchAddress,
     startTime,
     setStartTime,
     endTime,

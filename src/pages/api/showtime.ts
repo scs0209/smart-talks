@@ -5,9 +5,10 @@ import connectDB from '@/services/dbConnect'
 
 const getAllShowtimes = async () => {
   try {
-    const showtimes = await Showtime.find()
-      .populate('movie')
-      .populate('theater_id')
+    const showtimes = await Showtime.find().populate('movie').populate({
+      path: 'showtimes.theater',
+      select: 'name',
+    })
     return showtimes
   } catch (error) {
     console.error('Error fetching showtimes:', error)
@@ -17,8 +18,19 @@ const getAllShowtimes = async () => {
 
 const addShowtime = async (data: IShowtime) => {
   try {
-    const showtime = new Showtime(data)
-    await showtime.save()
+    const movieData = data.movie
+    const existingShowtime = await Showtime.findOne({
+      movie: movieData,
+    })
+
+    if (existingShowtime) {
+      existingShowtime.showtimes.push(data.showtimes[0])
+      await existingShowtime.save()
+    } else {
+      const showtime = new Showtime(data)
+      await showtime.save()
+    }
+
     return true
   } catch (error) {
     console.error('Error adding showtime:', error)

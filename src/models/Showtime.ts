@@ -5,10 +5,14 @@ import { ITheater } from './Theater'
 
 export interface IShowtime extends Document {
   movie: IMovie
-  theater: ITheater
-  screen_name: string
-  start_time: Date
-  end_time: Date
+  showtimes: [
+    {
+      theater: ITheater['_id']
+      screen_name: string
+      start_time: Date
+      end_time: Date
+    },
+  ]
 }
 
 const ShowtimeSchema: Schema = new Schema<IShowtime>({
@@ -16,13 +20,19 @@ const ShowtimeSchema: Schema = new Schema<IShowtime>({
     type: Object,
     required: true,
   },
-  theater: {
-    type: Object,
-    required: true,
-  },
-  screen_name: { type: String, required: true },
-  start_time: { type: Date, required: true },
-  end_time: { type: Date, required: true },
+  showtimes: [
+    {
+      theater: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Theater',
+        required: true,
+      },
+      branch_address: { type: String, required: true },
+      screen_name: { type: String, required: true },
+      start_time: { type: Date, required: true },
+      end_time: { type: Date, required: true },
+    },
+  ],
 })
 
 const Showtime: mongoose.Model<IShowtime> =

@@ -1,3 +1,5 @@
+import { ITheaterBranch } from '@/models/Theater'
+
 export interface Screen {
   id: string
   name: string
@@ -6,13 +8,11 @@ export interface Screen {
 export interface Theater {
   _id: string
   name: string
-  address: string
-  screens: Array<Screen>
+  branches: ITheaterBranch[]
 }
 
 export interface TheaterState {
   theaters: Array<Theater>
-  screens: Array<Screen>
   loading: boolean
   error: any
 }

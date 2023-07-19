@@ -1,6 +1,6 @@
 import mongoose, { Document, model, Schema } from 'mongoose'
 
-interface ITheaterBranch {
+export interface ITheaterBranch {
   _id: mongoose.Types.ObjectId
   address: string
   screens: string[]
