@@ -3,29 +3,46 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import Theater, { ITheater } from '@/models/Theater'
 import connectDB from '@/services/dbConnect'
 
-const createDummyTheaters = async () => {
-  const theaterLocations = [
-    {
-      name: '아산',
-      screens: ['1관', '2관', '3관', '4관'],
-    },
-    {
-      name: '서울',
-      screens: ['1관', '2관', '3관', '4관'],
-    },
-    {
-      name: '천안',
-      screens: ['1관', '2관', '3관', '4관'],
-    },
-  ]
+const theaterLocations = [
+  {
+    name: '창수 영화관',
+    branches: [
+      {
+        address: '아산',
+        screens: ['1관', '2관', '3관', '4관'],
+      },
+      {
+        address: '서울',
+        screens: ['1관', '2관', '3관', '4관'],
+      },
+      {
+        address: '천안',
+        screens: ['1관', '2관', '3관', '4관'],
+      },
+    ],
+  },
+  {
+    name: 'cgv',
+    branches: [
+      {
+        address: '서울',
+        screens: ['1관', '2관', '3관', '4관'],
+      },
+      {
+        address: '천안',
+        screens: ['1관', '2관', '3관', '4관'],
+      },
+    ],
+  },
+]
 
+const createDummyTheaters = async () => {
   const results: ITheater[] = []
 
-  for (const locationData of theaterLocations) {
+  for (const theaterData of theaterLocations) {
     const newTheater = new Theater({
-      name: '창수 영화관',
-      address: locationData.name,
-      screens: locationData.screens,
+      name: theaterData.name,
+      branches: theaterData.branches,
     })
     await newTheater.save()
     results.push(newTheater)

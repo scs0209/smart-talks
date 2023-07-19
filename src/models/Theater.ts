@@ -1,16 +1,28 @@
 import mongoose, { Document, model, Schema } from 'mongoose'
 
-export interface ITheater extends Document {
-  name: string
+interface ITheaterBranch {
+  _id: mongoose.Types.ObjectId
   address: string
   screens: string[]
 }
 
-const TheaterSchema: Schema = new Schema<ITheater>({
-  name: { type: String, required: true },
+const TheaterBranchSchema: Schema = new Schema<ITheaterBranch>({
   address: { type: String, required: true },
   screens: {
     type: [String],
+    required: true,
+  },
+})
+
+export interface ITheater extends Document {
+  name: string
+  branches: ITheaterBranch[]
+}
+
+const TheaterSchema: Schema = new Schema<ITheater>({
+  name: { type: String, required: true },
+  branches: {
+    type: [TheaterBranchSchema],
     required: true,
   },
 })
