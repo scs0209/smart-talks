@@ -24,6 +24,10 @@ FilmFinder는 React와 TypeScript, Redux Toolkit을 사용하여 영화 검색 �
 |                                       [🙎🏻‍♂️ FE 팀원 : 창수](https://github.com/scs0209)                                        |
 |                                                                                                                              |
 
+## 데모
+
+![영화 예매](https://github.com/scs0209/myBlog/assets/110822847/ebdfc9fb-596d-433b-9251-bbfd708533c5)
+
 ## 🔧 설치 및 실행
 
 ```
