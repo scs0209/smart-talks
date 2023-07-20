@@ -1,8 +1,11 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { RootState } from '@/redux/store'
+import { AppDispatch, RootState } from '@/redux/store'
+import useFetchData from '@/hooks/useFetchData'
+import { getPopularMovies } from '@/redux/actions/movie'
 
 const Hero = () => {
+  const dispatch = useDispatch<AppDispatch>()
   const {
     data: movies,
     loading,
@@ -16,6 +19,11 @@ const Hero = () => {
     movies[0].videos.length &&
     movies[0].videos[0] &&
     `https://www.youtube.com/embed/${movies[0].videos[0].key}`
+
+  const { isFetched: isMoviesFetchd } = useFetchData({
+    dispatch,
+    action: getPopularMovies,
+  })
 
   if (loading) {
     return <div>Loading...</div>

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import Reservation, { IReservation } from '@/models/Reservation'
 import connectDB from '@/services/dbConnect'
+import Showtime from '@/models/Showtime'
 
 const saveReservation = async (reservationData: IReservation) => {
   try {
@@ -16,11 +17,30 @@ const saveReservation = async (reservationData: IReservation) => {
 
 const getReservationsByUserId = async (user_id: string) => {
   try {
-    const reservations = await Reservation.find({ user_id }).populate(
-      'showtime_id',
+    const reservations = await Reservation.find({ user_id }).populate({
+      path: 'showtimes_id',
+      model: 'Showtime',
+    })
+
+    const reservationShowtimes = await Promise.all(
+      reservations.map(async (reservation) => {
+        const showtime = await Showtime.findById(reservation.showtimes_id)
+        const matchingShowtime = showtime?.showtimes.find(
+          (timeSlot) =>
+            timeSlot._id.toString() === reservation.showtime_id.toString(),
+        )
+
+        return {
+          ...reservation.toObject(),
+          start_time: matchingShowtime?.start_time,
+          end_time: matchingShowtime?.end_time,
+          screen_name: matchingShowtime?.screen_name,
+        }
+      }),
     )
-    console.log(reservations)
-    return reservations
+
+    console.log(reservationShowtimes)
+    return reservationShowtimes
   } catch (error) {
     console.error('Error fetching reservations:', error)
     return null

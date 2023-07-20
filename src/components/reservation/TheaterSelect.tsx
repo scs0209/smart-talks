@@ -10,6 +10,7 @@ const TheaterSelect = () => {
     useReservation()
 
   const selectedTheater = showtimes.find((theater) => theater._id === movieId)
+  console.log(selectedTheater)
 
   return (
     <>

@@ -7,6 +7,7 @@ const getAllShowtimes = async () => {
   try {
     const showtimes = await Showtime.find().populate('movie').populate({
       path: 'showtimes.theater',
+      model: 'Theater',
       select: 'name',
     })
     return showtimes

@@ -1,4 +1,7 @@
 import mongoose, { Document, model, Schema } from 'mongoose'
+import User from './User'
+import Showtime from './Showtime'
+import Theater from './Theater'
 
 export interface IPaymentInfo extends Document {
   imp_uid: string
@@ -14,6 +17,8 @@ export interface IPaymentInfo extends Document {
 export interface IReservation extends Document {
   user_id: mongoose.Schema.Types.ObjectId
   showtime_id: mongoose.Schema.Types.ObjectId
+  theater_id: mongoose.Schema.Types.ObjectId
+  showtimes_id: mongoose.Schema.Types.ObjectId
   seat_info?: number[]
   payment_info?: IPaymentInfo
 }
@@ -21,12 +26,22 @@ export interface IReservation extends Document {
 const ReservationSchema: Schema = new Schema<IReservation>({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: User,
     required: true,
   },
   showtime_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Showtime',
+    ref: Showtime,
+    required: true,
+  },
+  theater_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Theater,
+    required: true,
+  },
+  showtimes_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Showtime,
     required: true,
   },
   seat_info: { type: [Number], required: true },

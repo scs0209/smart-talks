@@ -73,10 +73,11 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
 
     if (movieId && theaterId && showtimeId && user.user._id) {
       const reservationData = {
-        movie_id: movieId,
         theater_id: theaterId,
+        showtimes_id: movieId,
         showtime_id: showtimeId,
         user_id: user.user._id,
+        seat_info: selectedSeats,
         payment_info: paymentResponse,
       }
 

@@ -12,7 +12,7 @@ const ShowtimeSelect = () => {
     .find((showtime) => showtime._id === movieId)
     ?.showtimes.filter((s) => s.theater._id === theaterId)
 
-  console.log(showtimesData, theaterId)
+  console.log(showtimesData, theaterId, showtimeId, movieId)
 
   return (
     <>
