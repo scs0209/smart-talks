@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import MovieCard from '@/components/Movie/MovieCard'
+import MovieCard from '@/components/Search/MovieCard'
 import { searchMovies } from '@/redux/actions/movie'
 import { AppDispatch, RootState } from '@/redux/store'
 
