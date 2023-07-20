@@ -176,3 +176,171 @@ Context API는 전역 상태 대신 지역 상태를 컴포넌트 계층에 걸�
 ## 🤞 프로젝트하면서 깨달은 점
 
 영화 데이터를 실시간으로 유지하는 것이 중요하기 때문에 TMDB API 등 외부 API를 활용하면 업데이트된 정보를 사용자에게 제공하는데 도움이 됨을 깨달았습니다. 사용자의 기기, 환경에 따라 다른 화면 크기와 해상도를 고려한 반응형 디자인이 중요하다는 것을 알게 되었습니다. 중복 데이터 처리와 에러 처리를 통해 안정적인 기능 구현이 가능함을 이해하였습니다.
+
+## 📂 디렉토리 구조
+
+<details>
+<summary>디렉토리 구조</summary>
+<div markdown="1">
+
+```
+📦.next
+📦node_modules
+📦publice
+📦src
+┣ 📂@types
+┃ ┗ 📜mongodb.ts
+┣ 📂components
+┃ ┣ 📂Admin
+┃ ┃ ┣ 📜AdminForm.tsx
+┃ ┃ ┣ 📜MovieCreate.tsx
+┃ ┃ ┣ 📜StartEndCreate.tsx
+┃ ┃ ┗ 📜TheaterNScreenCreate.tsx
+┃ ┣ 📂common
+┃ ┃ ┣ 📜Button.tsx
+┃ ┃ ┣ 📜HeadInfo.tsx
+┃ ┃ ┣ 📜Input.tsx
+┃ ┃ ┗ 📜Loading.tsx
+┃ ┣ 📂Home
+┃ ┃ ┣ 📜Hero.tsx
+┃ ┃ ┗ 📜SpecialFeature.tsx
+┃ ┣ 📂Login
+┃ ┃ ┣ 📜LogInForm.tsx
+┃ ┃ ┗ 📜SocialBtn.tsx
+┃ ┣ 📂Movie
+┃ ┃ ┣ 📜MovieCard.tsx
+┃ ┃ ┗ 📜MovieList.tsx
+┃ ┣ 📂MyPage
+┃ ┃ ┗ 📜ReservationTable.tsx
+┃ ┣ 📂reservation
+┃ ┃ ┣ 📜DateSelector.tsx
+┃ ┃ ┣ 📜MovieSelect.tsx
+┃ ┃ ┣ 📜ReservationForm.tsx
+┃ ┃ ┣ 📜SeatTable.tsx
+┃ ┃ ┣ 📜ShowtimeSelect.tsx
+┃ ┃ ┗ 📜TheaterSelect.tsx
+┃ ┣ 📂Signup
+┃ ┃ ┣ 📜InputWithLabel.tsx
+┃ ┃ ┗ 📜SignupForm.tsx
+┃ ┣ 📜ChangePasswordModal.tsx
+┃ ┣ 📜FindPasswordModal.tsx
+┃ ┣ 📜Footer.tsx
+┃ ┣ 📜Layout.tsx
+┃ ┗ 📜Nav.tsx
+┣ 📂config
+┃ ┗ 📜index.ts
+┣ 📂contexts
+┃ ┣ 📜AdminContext.tsx
+┃ ┣ 📜MyPageContext.tsx
+┃ ┗ 📜ReservationContext.tsx
+┣ 📂hooks
+┃ ┣ 📜useAppSelector.ts
+┃ ┣ 📜useFetchData.ts
+┃ ┣ 📜useInput.ts
+┃ ┗ 📜useModal.ts
+┣ 📂models
+┃ ┣ 📜Movie.ts
+┃ ┣ 📜Reservation.ts
+┃ ┣ 📜Screen.ts
+┃ ┣ 📜Showtime.ts
+┃ ┣ 📜Theater.ts
+┃ ┗ 📜User.ts
+┣ 📂pages
+┃ ┣ 📂api
+┃ ┃ ┣ 📂auth
+┃ ┃ ┃ ┗ 📜[...nextauth].ts
+┃ ┃ ┣ 📂movies
+┃ ┃ ┃ ┣ 📜movie-detail.ts
+┃ ┃ ┃ ┣ 📜movie-search.ts
+┃ ┃ ┃ ┣ 📜popular-movie.ts
+┃ ┃ ┃ ┗ 📜post-data.ts
+┃ ┃ ┣ 📂theater
+┃ ┃ ┃ ┗ 📂[id]
+┃ ┃ ┃ ┃ ┗ 📜screen.ts
+┃ ┃ ┣ 📜change-password.ts
+┃ ┃ ┣ 📜find-password.ts
+┃ ┃ ┣ 📜reservation.ts
+┃ ┃ ┣ 📜showtime.ts
+┃ ┃ ┣ 📜theater.ts
+┃ ┃ ┗ 📜user.ts
+┃ ┣ 📂movies
+┃ ┃ ┗ 📜[id].tsx
+┃ ┣ 📂my-page
+┃ ┃ ┗ 📜[email].tsx
+┃ ┣ 📂search-results
+┃ ┃ ┗ 📜[query].tsx
+┃ ┣ 📜admin.tsx
+┃ ┣ 📜index.tsx
+┃ ┣ 📜login.tsx
+┃ ┣ 📜reservation.tsx
+┃ ┣ 📜signup.tsx
+┃ ┣ 📜_app.tsx
+┃ ┣ 📜_document.tsx
+┃ ┗ 📜_error.tsx
+┣ 📂redux
+┃ ┣ 📂actions
+┃ ┃ ┣ 📂movie
+┃ ┃ ┃ ┗ 📜index.ts
+┃ ┃ ┣ 📂reservation
+┃ ┃ ┃ ┗ 📜index.ts
+┃ ┃ ┣ 📂showtime
+┃ ┃ ┃ ┗ 📜index.ts
+┃ ┃ ┗ 📂theater
+┃ ┃ ┃ ┗ 📜index.ts
+┃ ┣ 📂api
+┃ ┃ ┣ 📜index.ts
+┃ ┃ ┣ 📜reservation.ts
+┃ ┃ ┣ 📜showtime.ts
+┃ ┃ ┣ 📜theater.ts
+┃ ┃ ┗ 📜tmdb.ts
+┃ ┣ 📂reducers
+┃ ┃ ┣ 📜movieSlice.ts
+┃ ┃ ┣ 📜reservationSlice.ts
+┃ ┃ ┣ 📜showtimeSlice.ts
+┃ ┃ ┗ 📜theaterSlice.ts
+┃ ┣ 📂types
+┃ ┃ ┣ 📂movie
+┃ ┃ ┃ ┣ 📜index.ts
+┃ ┃ ┃ ┣ 📜movie.ts
+┃ ┃ ┃ ┗ 📜state.ts
+┃ ┃ ┣ 📂reservation
+┃ ┃ ┃ ┗ 📜index.ts
+┃ ┃ ┣ 📂showtime
+┃ ┃ ┃ ┗ 📜index.ts
+┃ ┃ ┗ 📂theater
+┃ ┃ ┃ ┗ 📜index.ts
+┃ ┗ 📜store.ts
+┣ 📂services
+┃ ┣ 📜apiServices.ts
+┃ ┣ 📜authService.ts
+┃ ┣ 📜dbConnect.ts
+┃ ┗ 📜mailer.ts
+┣ 📂styles
+┃ ┣ 📜FindPasswordStyle.tsx
+┃ ┣ 📜globals.css
+┃ ┣ 📜Home.module.css
+┃ ┣ 📜ServiceCardStyle.tsx
+┃ ┗ 📜theme.tsx
+┗ 📂utils
+┃ ┣ 📜fetcher.ts
+┃ ┗ 📜payment.ts
+┃ pakage.json
+┃ ts.config.json
+┗ tailwind.config.js
+```
+
+</div>
+</details>
+
+## ❤ git commit message 컨벤션
+
+| 커밋 유형 | 의미                       |
+| --------- | -------------------------- |
+| feat      | 새로운 기능 추가           |
+| fix       | 버그, 기능 수정            |
+| Docs      | 문서 수정                  |
+| style     | 스타일 코드 추가           |
+| refactor  | 코드 리팩토링              |
+| chore     | 기능과 관련 없는 내용 수정 |
+
+---
