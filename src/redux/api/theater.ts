@@ -1,20 +1,16 @@
-import axios from 'axios'
-
-const backUrl = 'http://localhost:3000/'
+import { client } from './client'
 
 export const getTheatersAPI = async () => {
-  const { data } = await axios.get(`${backUrl}/api/theater`)
+  const { data } = await client.get('/api/theater')
   return data.theaters
 }
 
 export const createDummyTheatersAPI = async () => {
-  const { data } = await axios.post(`${backUrl}/api/theater`)
+  const { data } = await client.post('/api/theater')
   return data.theaters
 }
 
 export const getTheaterScreensAPI = async (theaterId: string) => {
-  const { data } = await axios.get(
-    `${backUrl}/api/theater/${theaterId}/screens`,
-  )
+  const { data } = await client.get(`/api/theater/${theaterId}/screens`)
   return data.screens
 }

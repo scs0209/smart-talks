@@ -17,7 +17,6 @@ interface Props {
 
 const MovieCard: VFC<Props> = ({ movie }) => {
   const posterUrl = getImageUrl(movie.poster_path)
-  console.log(movie)
 
   return (
     <Card

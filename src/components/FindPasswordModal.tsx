@@ -2,7 +2,7 @@ import { Button, Grid, Modal, TextField, Typography } from '@mui/material'
 import { FC } from 'react'
 
 import useInput from '@/hooks/useInput'
-import { sendTempPasswordEmail } from '@/services/apiServices'
+import { sendTempPasswordEmail } from '@/redux/api/user'
 import { useStyles } from '@/styles/FindPasswordStyle'
 
 interface Props {

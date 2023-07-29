@@ -66,12 +66,8 @@ const getPopularMoviesWithDetails = async (page: number): Promise<Movie[]> => {
 
   const popularMovies = popularMoviesResponse.data.results
 
-  const startIndex = (page - 1) * 10
-  const endIndex = page * 10
-  const slicedPopularMovies = popularMovies.slice(startIndex, endIndex)
-
   const popularMoviesWithDetails: Movie[] = await Promise.all(
-    slicedPopularMovies.map(async (movie: Movie) => {
+    popularMovies.map(async (movie: Movie) => {
       const director = await getDirector(movie.id)
       const cast = await getCast(movie.id)
       const videos = await getVideos(movie.id) // 비디오 정보 가져오기

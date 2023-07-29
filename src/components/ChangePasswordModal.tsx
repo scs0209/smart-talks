@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import { FC, useState } from 'react'
 
 import useInput from '@/hooks/useInput'
-import { changePassword } from '@/services/apiServices'
+import { changePassword } from '@/redux/api/user'
 
 interface Props {
   open: boolean

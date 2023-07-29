@@ -45,7 +45,12 @@ const moviesSlice = createSlice({
       .addCase(getPopularMovies.fulfilled, (state, action) => {
         state.loading = false
         state.error = undefined
-        state.data = action.payload
+        if (state.data === null) {
+          state.data = action.payload
+        } else {
+          // Use the immer's `Array.prototype.push` method instead of array spread syntax
+          state.data.push(...action.payload)
+        }
       })
       .addCase(getPopularMovies.rejected, (state, action) => {
         state.loading = false

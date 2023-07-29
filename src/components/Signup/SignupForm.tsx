@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import signUp from '@/services/authService'
+import { signUp } from '@/redux/api/auth'
 
 import useInput from '../../hooks/useInput'
 import InputWithLabel from './InputWithLabel'
+import { FormEvent } from 'react'
 
 const SignupForm = () => {
   const username = useInput('')
@@ -14,7 +15,7 @@ const SignupForm = () => {
   const lastName = useInput('')
   const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     try {
