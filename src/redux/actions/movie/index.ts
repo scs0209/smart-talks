@@ -4,8 +4,8 @@ import * as api from '../../api'
 
 export const searchMovies = createAsyncThunk(
   'movies/searchMovies',
-  async (query: string) => {
-    const data = await api.searchMoviesAPI(query)
+  async ({ query, page }: { query: string | undefined; page: number }) => {
+    const data = await api.searchMoviesAPI(query, page)
     return data
   },
 )

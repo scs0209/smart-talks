@@ -12,8 +12,13 @@ export const getMovieDetailsAPI = async (id: string) => {
   return data
 }
 
-export const searchMoviesAPI = async (query: string) => {
-  const { data } = await client.get(`/api/movies/movie-search?query=${query}`)
+export const searchMoviesAPI = async (
+  query: string | undefined,
+  page: number,
+) => {
+  const { data } = await client.get(
+    `/api/movies/movie-search?query=${query}&page=${page}`,
+  )
   return data.results
 }
 

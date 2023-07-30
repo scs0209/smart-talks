@@ -19,12 +19,16 @@ const moviesSlice = createSlice({
       .addCase(searchMovies.fulfilled, (state, action) => {
         state.loading = false
         state.error = undefined
-        state.data = action.payload
+        if (action.meta.arg.page === 1) {
+          state.searchResult = action.payload
+        } else if (state.searchResult !== null) {
+          state.searchResult = [...state.searchResult, ...action.payload]
+        }
       })
       .addCase(searchMovies.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message
-        state.data = null
+        state.searchResult = null
       })
       .addCase(getMovieDetails.pending, (state) => {
         state.loading = true
@@ -48,9 +52,9 @@ const moviesSlice = createSlice({
         if (state.data === null) {
           state.data = action.payload
         } else {
-          // Use the immer's `Array.prototype.push` method instead of array spread syntax
           state.data.push(...action.payload)
         }
+        state.currentPage += 1 // 이 줄을 추가하세요
       })
       .addCase(getPopularMovies.rejected, (state, action) => {
         state.loading = false

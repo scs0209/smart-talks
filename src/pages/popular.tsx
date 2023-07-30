@@ -3,7 +3,6 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 
 import { getPopularMovies } from '@/redux/actions/movie'
 import { AppDispatch, RootState } from '@/redux/store'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const PopularMoviePage = () => {
@@ -11,25 +10,18 @@ const PopularMoviePage = () => {
     data: movies,
     loading,
     error,
+    currentPage,
   } = useSelector((state: RootState) => state.movies)
   const dispatch = useDispatch<AppDispatch>()
 
-  const [currentPage, setCurrentPage] = useState(0)
-
   const fetchMoreMovies = () => {
-    setCurrentPage((prevPage) => {
-      const nextPage = prevPage + 1
-      dispatch(getPopularMovies(nextPage))
-      return nextPage
-    })
+    dispatch(getPopularMovies(currentPage + 1))
   }
 
   const observerRef = useInfiniteScroll(fetchMoreMovies, {
     threshold: 0.1,
     loading,
   })
-
-  console.log(movies)
 
   return (
     <div className="h-screen max-w-screen-lg mx-auto px-4 py-16 ">
