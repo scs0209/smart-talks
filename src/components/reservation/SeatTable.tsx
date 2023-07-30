@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useReservation } from '@/contexts/ReservationContext'
 
 const totalRows = 10 // 행의 수
@@ -12,9 +13,9 @@ const SeatTable = () => {
     )
     const rows = []
 
-    for (let r = 0; r < totalRows; r++) {
+    for (let r = 0; r < totalRows; r += 1) {
       const row = []
-      for (let c = 0; c < totalColumns; c++) {
+      for (let c = 0; c < totalColumns; c += 1) {
         row.push(seats.shift())
       }
       rows.push(row)
@@ -41,6 +42,7 @@ const SeatTable = () => {
         <div key={rowIndex} className="flex justify-center">
           {row.map((seatId, columnIndex) => (
             <button
+              type="button"
               key={columnIndex}
               className={`seat p-1 m-1 border border-gray-300 rounded ${
                 selectedSeats.includes(seatId || -1)

@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@/redux/store'
 
-import MovieCard from './MovieCard'
 import { fetchShowtimes } from '@/redux/actions/showtime'
 import { Showtime } from '@/redux/types/showtime'
+import MovieCard from './MovieCard'
 
 const customTheme: CustomFlowbiteTheme['carousel'] = {
   root: {

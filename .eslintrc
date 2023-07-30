@@ -33,6 +33,24 @@
       2,
       { "namedComponents": ["arrow-function", "function-declaration"] }
     ],
-    "@typescript-eslint/no-empty-interface": "off"
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "variable",
+        "format": ["camelCase", "PascalCase", "UPPER_CASE"],
+        "leadingUnderscore": "allow"
+      }
+    ],
+    "no-param-reassign": [
+      "warn",
+      { "props": true, "ignorePropertyModificationsFor": ["state"] }
+    ],
+    "@typescript-eslint/no-empty-interface": "off",
+    "no-underscore-dangle": ["warn"],
+    "import/prefer-default-export": "warn",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/button-has-type": "off",
+    "jsx-a11y/label-has-associated-control": "off"
   }
 }

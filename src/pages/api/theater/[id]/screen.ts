@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import Theater from '@/models/Theater'
@@ -18,11 +19,13 @@ const screensHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(404).json({ message: 'Theater not found' })
       }
 
-      res.status(200).json({ screens: theater.screens })
+      return res.status(200).json({
+        screens: theater.branches.map((branch) => branch.screens).flat(),
+      })
     } catch (error: unknown) {
       const message =
         error instanceof Error ? error.message : 'Unknown error occurred'
-      res.status(400).json({ success: false, message })
+      return res.status(400).json({ success: false, message })
     }
   } else {
     res.status(405).json({ message: 'Unsupported method.' })

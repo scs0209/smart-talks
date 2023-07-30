@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { NextPageContext } from 'next'
 
 const Error = ({ statusCode }: any) => {

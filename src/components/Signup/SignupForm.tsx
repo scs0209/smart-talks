@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 
 import { signUp } from '@/redux/api/auth'
 
+import { FormEvent } from 'react'
 import useInput from '../../hooks/useInput'
 import InputWithLabel from './InputWithLabel'
-import { FormEvent } from 'react'
 
 const SignupForm = () => {
   const username = useInput('')

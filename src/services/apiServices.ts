@@ -1,10 +1,7 @@
 import axios from 'axios'
 
-// API 서버의 기본 URL
-const API_BASE_URL = 'http://api.example.com'
-
 // API 요청을 보내는 함수들
-export const apiService = {
+const apiService = {
   // GET 요청
   get: async (url: string) => {
     try {
@@ -49,3 +46,5 @@ export const apiService = {
     }
   },
 }
+
+export default apiService

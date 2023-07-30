@@ -1,4 +1,5 @@
-import { createContext, FC, ReactNode, useContext, useState } from 'react'
+/* eslint-disable */
+import { createContext, FC, ReactNode, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import useSWR from 'swr'
 

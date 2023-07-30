@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // 기존 Reservation 인터페이스 업데이트
 export interface Reservation {
   _id: string

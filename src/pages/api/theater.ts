@@ -37,18 +37,16 @@ const theaterLocations = [
 ]
 
 const createDummyTheaters = async () => {
-  const results: ITheater[] = []
-
-  for (const theaterData of theaterLocations) {
-    const newTheater = new Theater({
-      name: theaterData.name,
-      branches: theaterData.branches,
-    })
-    await newTheater.save()
-    results.push(newTheater)
-  }
-
-  return results
+  return Promise.all(
+    theaterLocations.map(async (theaterData) => {
+      const newTheater = new Theater({
+        name: theaterData.name,
+        branches: theaterData.branches,
+      })
+      await newTheater.save()
+      return newTheater
+    }),
+  )
 }
 
 export default async function handler(

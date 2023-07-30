@@ -31,7 +31,7 @@ const PopularMoviePage = () => {
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
-      <div ref={observerRef}></div>
+      <div ref={observerRef} />
       {loading && <div>Loading...</div>}
     </div>
   )
