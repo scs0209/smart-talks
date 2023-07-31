@@ -1,4 +1,3 @@
-import { Input } from '@mui/material'
 import { Label } from 'flowbite-react'
 
 import { useAdminPage } from '@/contexts/AdminContext'
@@ -9,7 +8,7 @@ const StartEndCreate = () => {
   return (
     <div className="flex justify-between mt-4">
       <Label htmlFor="start-time" value="Start Time" />
-      <Input
+      <input
         type="datetime-local"
         id="start-time"
         value={startTime}
@@ -17,7 +16,7 @@ const StartEndCreate = () => {
         required
       />
       <Label htmlFor="end-time" value="End Time" />
-      <Input
+      <input
         type="datetime-local"
         id="end-time"
         value={endTime}
