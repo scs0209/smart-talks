@@ -3,7 +3,7 @@ import axios from 'axios'
 const BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://smart-talks-neqg4mnpx-scs0209.vercel.app'
+    : 'https://port-0-smart-talks-p8xrq2mlfsc6kg2.sel3.cloudtype.app'
 
 export const client = axios.create({
   baseURL: BASE_URL,
