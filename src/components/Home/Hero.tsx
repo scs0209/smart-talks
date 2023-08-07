@@ -15,10 +15,9 @@ const Hero = () => {
   const videoUrl =
     movies &&
     movies.length &&
-    movies[0].videos &&
-    movies[0].videos.length &&
-    movies[0].videos[0] &&
-    `https://www.youtube.com/embed/${movies[0].videos[0].key}`
+    `https://www.youtube.com/embed/${movies[0].video.key}`
+
+  console.log(videoUrl, movies)
 
   const { isFetched: isMoviesFetchd } = useFetchData({
     dispatch,
@@ -35,7 +34,7 @@ const Hero = () => {
 
   return (
     <section className="bg-black border-solid border-b-[1px] h-[50vh] border-b-gray-500">
-      <div className="max-w-screen-xl h-full mx-auto lg:gap-8 xl:gap-0">
+      <div className="h-full max-w-screen-xl mx-auto lg:gap-8 xl:gap-0">
         {videoUrl && (
           <iframe
             src={`${videoUrl}?autoplay=1&mute=1`}

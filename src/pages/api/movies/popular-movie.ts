@@ -1,3 +1,5 @@
+import Movie, { IMovie } from '@/models/Movie'
+import connectDB from '@/services/dbConnect'
 import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -20,19 +22,11 @@ export interface Video {
   type: string
 }
 
-export interface Movie {
-  id: number
-  title: string
-  director: string
-  cast: string[]
-  videos: Video[]
-}
-
-const getVideos = async (movieId: number): Promise<Video[]> => {
+const getVideos = async (movieId: number): Promise<Video> => {
   const response = await axios.get(
     `${API_URL}/movie/${movieId}/videos?api_key=${API_KEY}`,
   )
-  return response.data.results
+  return response.data.results[0]
 }
 
 const getDirector = async (movieId: number): Promise<string> => {
@@ -59,33 +53,51 @@ const getCast = async (movieId: number): Promise<string[]> => {
   return castMembers
 }
 
-const getPopularMoviesWithDetails = async (page: number): Promise<Movie[]> => {
+const getPopularMoviesWithDetails = async (page: number): Promise<IMovie[]> => {
   const popularMoviesResponse = await axios.get(
     `${API_URL}/movie/popular?api_key=${API_KEY}&language=ko-KR&page=${page}`,
   )
 
   const popularMovies = popularMoviesResponse.data.results
 
-  const popularMoviesWithDetails: Movie[] = await Promise.all(
-    popularMovies.map(async (movie: Movie) => {
+  const popularMoviesWithDetails: IMovie[] = await Promise.all(
+    popularMovies.map(async (movie: IMovie) => {
       const director = await getDirector(movie.id)
       const cast = await getCast(movie.id)
-      const videos = await getVideos(movie.id) // 비디오 정보 가져오기
+      const video = await getVideos(movie.id) // 비디오 정보 가져오기
+
+      console.log(movie)
 
       return {
         ...movie,
         director,
         cast,
-        videos,
+        video,
       }
     }),
   )
 
+  // console.log('popularMoviesWithDetails', popularMoviesWithDetails)
   return popularMoviesWithDetails
+}
+
+const savePopularMoviesToDB = async (popularMovies: IMovie[]) => {
+  await Promise.all(
+    popularMovies.map(async (movie) => {
+      const existingMovie = await Movie.findOne({ id: movie.id })
+
+      if (!existingMovie) {
+        const newMovie = new Movie(movie)
+        await newMovie.save()
+      }
+    }),
+  )
 }
 
 // URL에서 쿼리로 페이지 번호를 가져옵니다.
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  await connectDB()
+
   if (req.method === 'GET') {
     try {
       const page = Number(req.query.page) || 1 // 페이지 번호가 쿼리에 없으면 기본값은 1입니다.
@@ -93,6 +105,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json({ results: popularMoviesWithDetails })
     } catch (error) {
       res.status(500).json({ error: 'Error fetching popular movies' })
+    }
+  } else if (req.method === 'POST') {
+    try {
+      const page = Number(req.query.page) || 1
+      const popularMoviesWithDetails = await getPopularMoviesWithDetails(page)
+
+      console.log('popularMoviesWithDetails', popularMoviesWithDetails)
+
+      // Save popularMoviesWithDetails to the Movie schema
+      await savePopularMoviesToDB(popularMoviesWithDetails)
+
+      res.status(200).json({ message: 'Popular movies saved successfully' })
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ error: 'Error saving popular movies' })
     }
   } else {
     res.status(405).json({ error: 'Method not allowed' })

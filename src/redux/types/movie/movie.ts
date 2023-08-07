@@ -7,5 +7,5 @@ export interface Movie {
   release_date: string
   vote_average: number
   vote_count: number
-  videos: Video[]
+  video: Video
 }
