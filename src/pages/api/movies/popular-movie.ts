@@ -66,8 +66,6 @@ const getPopularMoviesWithDetails = async (page: number): Promise<IMovie[]> => {
       const cast = await getCast(movie.id)
       const video = await getVideos(movie.id) // 비디오 정보 가져오기
 
-      console.log(movie)
-
       return {
         ...movie,
         director,
@@ -77,21 +75,7 @@ const getPopularMoviesWithDetails = async (page: number): Promise<IMovie[]> => {
     }),
   )
 
-  // console.log('popularMoviesWithDetails', popularMoviesWithDetails)
   return popularMoviesWithDetails
-}
-
-const savePopularMoviesToDB = async (popularMovies: IMovie[]) => {
-  await Promise.all(
-    popularMovies.map(async (movie) => {
-      const existingMovie = await Movie.findOne({ id: movie.id })
-
-      if (!existingMovie) {
-        const newMovie = new Movie(movie)
-        await newMovie.save()
-      }
-    }),
-  )
 }
 
 // URL에서 쿼리로 페이지 번호를 가져옵니다.
@@ -105,21 +89,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json({ results: popularMoviesWithDetails })
     } catch (error) {
       res.status(500).json({ error: 'Error fetching popular movies' })
-    }
-  } else if (req.method === 'POST') {
-    try {
-      const page = Number(req.query.page) || 1
-      const popularMoviesWithDetails = await getPopularMoviesWithDetails(page)
-
-      console.log('popularMoviesWithDetails', popularMoviesWithDetails)
-
-      // Save popularMoviesWithDetails to the Movie schema
-      await savePopularMoviesToDB(popularMoviesWithDetails)
-
-      res.status(200).json({ message: 'Popular movies saved successfully' })
-    } catch (error) {
-      console.log(error)
-      res.status(500).json({ error: 'Error saving popular movies' })
     }
   } else {
     res.status(405).json({ error: 'Method not allowed' })

@@ -1,0 +1,94 @@
+import { createScreen } from '@/redux/actions/screen'
+import { fetchTheaters } from '@/redux/actions/theater'
+import { AppDispatch, RootState } from '@/redux/store'
+import { Theater } from '@/redux/types/theater'
+import React, { useState, useEffect, FormEvent } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+const CreateScreen = () => {
+  const { theaters } = useSelector((state: RootState) => state.theaters)
+  const [screenName, setScreenName] = useState('')
+  const [theaterId, setTheaterId] = useState('')
+  const [locationId, setLocationId] = useState('')
+  const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null)
+  const dispatch = useDispatch<AppDispatch>()
+
+  console.log(theaters)
+
+  useEffect(() => {
+    dispatch(fetchTheaters())
+  }, [])
+
+  const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTheaterId(e.target.value)
+    const chosenTheater = theaters.find((t) => t._id === e.target.value)
+    setSelectedTheater(chosenTheater || null)
+  }
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocationId(e.target.value)
+    console.log(locationId)
+  }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (selectedTheater) {
+      dispatch(
+        createScreen({
+          screenName,
+          locationId,
+        }),
+      )
+
+      // Screen created successfully
+      setScreenName('')
+      setTheaterId('')
+      setLocationId('')
+      alert('Screen created!')
+    }
+  }
+
+  return (
+    <div>
+      <h2>Create Screen</h2>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="screenName">Screen Name</label>
+        <input
+          type="text"
+          id="screenName"
+          value={screenName}
+          onChange={(e) => setScreenName(e.target.value)}
+        />
+
+        <label htmlFor="theaterId">Select Theater</label>
+        <select id="theaterId" value={theaterId} onChange={handleTheaterChange}>
+          <option value="">-- Select Theater --</option>
+          {theaters.map((theater) => (
+            <option key={theater._id} value={theater._id}>
+              {theater._id}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor="addressId">Select Address</label>
+        <select
+          id="addressId"
+          onChange={handleLocationChange}
+          value={locationId}
+        >
+          <option value="">-- Select Address --</option>
+          {selectedTheater?.locations.map((location) => (
+            <option key={location.id} value={location.id}>
+              {location.address}
+            </option>
+          ))}
+        </select>
+
+        <button type="submit">Create Screen</button>
+      </form>
+    </div>
+  )
+}
+
+export default CreateScreen

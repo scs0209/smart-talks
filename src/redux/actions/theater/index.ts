@@ -6,14 +6,15 @@ export const fetchTheaters = createAsyncThunk(
   'theaters/fetchTheaters',
   async () => {
     const theaters = await api.getTheatersAPI()
+    console.log(theaters)
     return theaters
   },
 )
 
-export const createDummyTheaters = createAsyncThunk(
-  'theaters/createDummyTheaters',
-  async () => {
-    const theaters = await api.createDummyTheatersAPI()
+export const createTheaterAPI = createAsyncThunk(
+  'theaters/createTheater',
+  async (data: { name: string; address: string }) => {
+    const theaters = await api.createTheaterAPI(data.name, data.address)
     return theaters
   },
 )

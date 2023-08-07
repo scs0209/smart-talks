@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { createDummyTheaters, fetchTheaters } from '../actions/theater'
+import { createTheaterAPI, fetchTheaters } from '../actions/theater'
 import { TheaterState } from '../types/theater'
 
 const initialState: TheaterState = {
@@ -31,17 +31,17 @@ const theaterSlice = createSlice({
     })
 
     // createDummyTheaters 처리
-    builder.addCase(createDummyTheaters.pending, (state) => {
+    builder.addCase(createTheaterAPI.pending, (state) => {
       state.loading = true
       state.error = null
     })
 
-    builder.addCase(createDummyTheaters.fulfilled, (state, action) => {
+    builder.addCase(createTheaterAPI.fulfilled, (state, action) => {
       state.loading = false
-      state.theaters = [...state.theaters, ...action.payload]
+      state.theaters = [...state.theaters, action.payload]
     })
 
-    builder.addCase(createDummyTheaters.rejected, (state, action) => {
+    builder.addCase(createTheaterAPI.rejected, (state, action) => {
       state.loading = false
       state.error = action.error
     })

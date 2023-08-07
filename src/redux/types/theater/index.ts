@@ -1,14 +1,12 @@
-import { ITheaterBranch } from '@/models/Theater'
-
-export interface Screen {
+export interface TheaterLocation {
   id: string
-  name: string
+  address: string
 }
 
 export interface Theater {
   _id: string
   name: string
-  branches: ITheaterBranch[]
+  locations: TheaterLocation[]
 }
 
 export interface TheaterState {

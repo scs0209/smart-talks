@@ -1,12 +1,16 @@
 import mongoose, { Document, model, Schema } from 'mongoose'
+import Theater, { ITheater } from './Theater'
 
 export interface IScreen extends Document {
-  screen_name: string
-  seat_info: number[]
+  screenName: string
+  theater: ITheater
+  address: string
 }
 
 const ScreenSchema: Schema = new Schema<IScreen>({
-  screen_name: { type: String, required: true },
+  screenName: { type: String, required: true },
+  theater: { type: mongoose.Types.ObjectId, ref: Theater, required: true },
+  address: { type: String, required: true },
 })
 
 const Screen: mongoose.Model<IScreen> =

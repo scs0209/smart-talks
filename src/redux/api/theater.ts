@@ -2,12 +2,13 @@ import { client } from './client'
 
 export const getTheatersAPI = async () => {
   const { data } = await client.get('/api/theater')
-  return data.theaters
+  console.log(data)
+  return data
 }
 
-export const createDummyTheatersAPI = async () => {
-  const { data } = await client.post('/api/theater')
-  return data.theaters
+export const createTheaterAPI = async (name: string, address: string) => {
+  const { data } = await client.post('/api/theater', { name, address })
+  return data
 }
 
 export const getTheaterScreensAPI = async (theaterId: string) => {

@@ -11,6 +11,7 @@ import { moviesReducer } from './reducers/movieSlice'
 import reservationSlice from './reducers/reservationSlice'
 import showtimeSlice from './reducers/showtimeSlice'
 import theaterSlice from './reducers/theaterSlice'
+import screenSlice from './reducers/screenSlice'
 
 const reducer = (state: any, action: PayloadAction<any>) => {
   return combineReducers({
@@ -18,6 +19,7 @@ const reducer = (state: any, action: PayloadAction<any>) => {
     theaters: theaterSlice,
     showtimes: showtimeSlice,
     reservations: reservationSlice,
+    screens: screenSlice,
     // 추가적인 리듀서들을 여기에 추가해주세요.
   })(state, action)
 }
