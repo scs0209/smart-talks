@@ -10,16 +10,19 @@ import {
 } from 'react'
 
 import { backUrl } from '@/config'
+import { Theater } from '@/redux/types/theater'
 
 interface AdminPageContextProps {
   movieId: string
   setMovieId: Dispatch<string>
   theaterId: string
   setTheaterId: Dispatch<string>
-  screenName: string
-  setScreenName: Dispatch<string>
-  branchAddress: string
-  setBranchAddress: Dispatch<string>
+  locationId: string
+  setLocationId: Dispatch<string>
+  screenId: string
+  setScreenId: Dispatch<string>
+  selectedTheater: Theater | null
+  setSelectedTheater: Dispatch<Theater | null>
   startTime: string
   setStartTime: Dispatch<string>
   endTime: string
@@ -46,8 +49,9 @@ interface Props {
 export const AdminPageProvider = ({ children }: Props) => {
   const [movieId, setMovieId] = useState('')
   const [theaterId, setTheaterId] = useState('')
-  const [screenName, setScreenName] = useState('')
-  const [branchAddress, setBranchAddress] = useState('')
+  const [locationId, setLocationId] = useState('')
+  const [screenId, setScreenId] = useState('')
+  const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null)
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
 
@@ -55,20 +59,15 @@ export const AdminPageProvider = ({ children }: Props) => {
     e.preventDefault()
 
     const showtime = {
-      theater: theaterId,
-      address: branchAddress,
-      screen_name: screenName,
-      start_time: new Date(startTime),
-      end_time: new Date(endTime),
-    }
-
-    const showtimeData = {
       movie: movieId,
-      showtimes: [showtime],
+      theater: locationId,
+      screen: screenId,
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
     }
 
     try {
-      await axios.post(`${backUrl}/api/showtime`, showtimeData)
+      await axios.post(`${backUrl}/api/showtime`, showtime)
       alert('상영시간 생성 완성!')
     } catch (error) {
       console.error('생성 중 에러가 발생했습니다.', error)
@@ -81,10 +80,12 @@ export const AdminPageProvider = ({ children }: Props) => {
     setMovieId,
     theaterId,
     setTheaterId,
-    screenName,
-    setScreenName,
-    branchAddress,
-    setBranchAddress,
+    locationId,
+    setLocationId,
+    screenId,
+    setScreenId,
+    selectedTheater,
+    setSelectedTheater,
     startTime,
     setStartTime,
     endTime,

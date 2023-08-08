@@ -1,4 +1,5 @@
 interface Screen {
+  _id: string
   id: number
   screenName: string
   locationId: string

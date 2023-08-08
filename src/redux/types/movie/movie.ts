@@ -9,3 +9,13 @@ export interface Movie {
   vote_count: number
   video: Video
 }
+
+export interface MovieList {
+  _id: string
+  id: number
+  title: string
+  poster: string
+  releaseDate: string
+  rating: string
+  synopsis: string
+}

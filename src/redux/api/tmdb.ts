@@ -2,6 +2,12 @@ import { client } from './client'
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w500'
 
+export const getMovieList = async () => {
+  const { data } = await client.get('/api/movie-list')
+
+  return data
+}
+
 export const getPopularMoviesAPI = async (page: number) => {
   const { data } = await client.get(`/api/movies/popular-movie?page=${page}`)
   return data.results

@@ -33,7 +33,6 @@ const screensHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { screenName, locationId } = req.body
 
     try {
-      // Find a theater with a given _id matching the theaterId
       const theater = await Theater.findById(locationId)
 
       if (!theater) {

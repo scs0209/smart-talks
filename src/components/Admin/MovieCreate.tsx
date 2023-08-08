@@ -7,10 +7,12 @@ import { RootState } from '@/redux/store'
 const MovieCreate = () => {
   const { movieId, setMovieId } = useAdminPage()
   const {
-    data: movies,
+    movieList,
     loading: movieLoading,
     error: movieError,
   } = useSelector((state: RootState) => state.movies)
+
+  console.log(movieList, movieId)
 
   if (movieLoading) {
     return <div>Loading...</div>
@@ -25,14 +27,14 @@ const MovieCreate = () => {
       <Label htmlFor="movie-id" value="Movie ID" />
       <Select
         id="movie-id"
-        value={JSON.stringify(movieId)}
-        onChange={(e) => setMovieId(JSON.parse(e.target.value))}
+        value={movieId}
+        onChange={(e) => setMovieId(e.target.value)}
         required
       >
         <option value="">- Select a movie -</option>
-        {movies?.map((movie) => (
-          <option key={movie.id} value={JSON.stringify(movie)}>
-            {movie.title} - ({movie.release_date})
+        {movieList?.map((movie) => (
+          <option key={movie.id} value={movie._id}>
+            {movie.title} - ({movie.releaseDate})
           </option>
         ))}
       </Select>

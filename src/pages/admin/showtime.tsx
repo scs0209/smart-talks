@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import AdminForm from '@/components/Admin/AdminForm'
-import { getPopularMovies } from '@/redux/actions/movie'
+import { getMovieList } from '@/redux/actions/movie'
 import { fetchTheaters } from '@/redux/actions/theater'
 import { AppDispatch } from '@/redux/store'
 
@@ -14,7 +14,7 @@ const AdminPage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(getPopularMovies(1) as any) // 첫 번째 페이지에서 인기 영화 불러오기
+    dispatch(getMovieList()) // 첫 번째 페이지에서 인기 영화 불러오기
   }, [dispatch])
 
   return (

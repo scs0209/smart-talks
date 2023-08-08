@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import {
   getMovieDetails,
+  getMovieList,
   getPopularMovies,
   searchMovies,
 } from '../actions/movie'
@@ -29,6 +30,19 @@ const moviesSlice = createSlice({
         state.loading = false
         state.error = action.error.message
         state.searchResult = null
+      })
+      .addCase(getMovieList.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getMovieList.fulfilled, (state, action) => {
+        state.loading = false
+        state.error = undefined
+        state.movieList = action.payload
+      })
+      .addCase(getMovieList.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message
+        state.movieList = null
       })
       .addCase(getMovieDetails.pending, (state) => {
         state.loading = true

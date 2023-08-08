@@ -2,6 +2,15 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import * as api from '../../api'
 
+export const getMovieList = createAsyncThunk(
+  'movies/getMovieList',
+  async () => {
+    const data = await api.getMovieList()
+
+    return data
+  },
+)
+
 export const searchMovies = createAsyncThunk(
   'movies/searchMovies',
   async ({ query, page }: { query: string | undefined; page: number }) => {
