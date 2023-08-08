@@ -1,65 +1,79 @@
+/* eslint-disable */
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import Showtime, { IShowtime } from '@/models/Showtime'
 import connectDB from '@/services/dbConnect'
+import Showtime from '@/models/Showtime'
+import Theater from '@/models/Theater'
+import Screen from '@/models/Screen'
+import Movie from '@/models/Movie'
 
-const getAllShowtimes = async () => {
-  try {
-    const showtimes = await Showtime.find().populate('movie').populate({
-      path: 'showtimes.theater',
-      model: 'Theater',
-      select: 'name',
-    })
-    return showtimes
-  } catch (error) {
-    console.error('Error fetching showtimes:', error)
-    return null
-  }
-}
-
-const addShowtime = async (data: IShowtime) => {
-  try {
-    const movieData = data.movie
-    const existingShowtime = await Showtime.findOne({
-      movie: movieData,
-    })
-
-    if (existingShowtime) {
-      existingShowtime.showtimes.push(data.showtimes[0])
-      await existingShowtime.save()
-    } else {
-      const showtime = new Showtime(data)
-      await showtime.save()
-    }
-
-    return true
-  } catch (error) {
-    console.error('Error adding showtime:', error)
-    return false
-  }
-}
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+const showsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   await connectDB()
 
   if (req.method === 'GET') {
-    const showtimes = await getAllShowtimes()
-    if (showtimes) {
-      res.status(200).json(showtimes)
-    } else {
-      res.status(500).json({ error: 'Error fetching showtimes' })
+    try {
+      const theaterId = req.query.theaterId
+
+      if (!theaterId) {
+        res.status(400).json({ error: 'Theater ID is required' })
+        return
+      }
+
+      const theater = await Theater.findById(theaterId)
+
+      if (!theater) {
+        res.status(400).json({ error: 'Invalid theater ID' })
+        return
+      }
+
+      const shows = await Showtime.find({ theater })
+        .populate('movie')
+        .populate('screen')
+      res.status(200).json(shows)
+    } catch (error) {
+      res.status(500).json({ error: 'Error fetching shows' })
     }
   } else if (req.method === 'POST') {
-    const success = await addShowtime(req.body)
-    if (success) {
+    const { movieId, locationId, screenId, startTime, endTime } = req.body
+
+    try {
+      const movie = await Movie.findById(movieId)
+
+      if (!movie) {
+        res.status(400).json({ error: 'Invalid movie ID' })
+        return
+      }
+
+      const theater = await Theater.findById(locationId)
+
+      if (!theater) {
+        res.status(400).json({ error: 'Invalid theater ID' })
+        return
+      }
+
+      const screen = await Screen.findById(screenId)
+
+      if (!screen) {
+        res.status(400).json({ error: 'Invalid screen ID' })
+        return
+      }
+
+      const showtime = new Showtime({
+        movie,
+        theater,
+        screen,
+        startTime,
+        endTime,
+      })
+
+      await showtime.save()
       res.status(201).json({ message: 'Showtime created successfully' })
-    } else {
+    } catch (error) {
       res.status(500).json({ error: 'Error creating showtime' })
     }
   } else {
-    res.status(405).json({ error: 'Method not allowed' })
+    res.status(405).json({ message: 'Unsupported method.' })
   }
 }
+
+export default showsHandler

@@ -9,3 +9,17 @@ export const fetchShowtimes = createAsyncThunk(
     return showtimes
   },
 )
+
+export const createShowtime = createAsyncThunk(
+  'showtimes/createShowtime',
+  async (showtime: {
+    movieId: string
+    locationId: string
+    screenId: string
+    startTime: Date
+    endTime: Date
+  }) => {
+    const showtimes = await api.createShowtimeAPI(showtime)
+    return showtimes
+  },
+)

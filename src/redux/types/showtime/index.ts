@@ -21,5 +21,5 @@ export interface Showtime {
 export interface ShowtimesState {
   data: Showtime[]
   loading: boolean
-  error?: string
+  error?: string | null
 }

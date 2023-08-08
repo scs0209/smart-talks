@@ -11,6 +11,9 @@ import {
 
 import { backUrl } from '@/config'
 import { Theater } from '@/redux/types/theater'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
+import { createShowtime } from '@/redux/actions/showtime'
 
 interface AdminPageContextProps {
   movieId: string
@@ -54,20 +57,21 @@ export const AdminPageProvider = ({ children }: Props) => {
   const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null)
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
     const showtime = {
-      movie: movieId,
-      theater: locationId,
-      screen: screenId,
+      movieId,
+      locationId,
+      screenId,
       startTime: new Date(startTime),
       endTime: new Date(endTime),
     }
 
     try {
-      await axios.post(`${backUrl}/api/showtime`, showtime)
+      await dispatch(createShowtime(showtime))
       alert('상영시간 생성 완성!')
     } catch (error) {
       console.error('생성 중 에러가 발생했습니다.', error)
