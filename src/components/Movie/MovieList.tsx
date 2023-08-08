@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@/redux/store'
 
-import { fetchShowtimes } from '@/redux/actions/showtime'
-import { Showtime } from '@/redux/types/showtime'
 import MovieCard from './MovieCard'
+import { getMovieList } from '@/redux/actions/movie'
 
 const customTheme: CustomFlowbiteTheme['carousel'] = {
   root: {
@@ -20,25 +19,13 @@ const customTheme: CustomFlowbiteTheme['carousel'] = {
 
 const MovieList = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const {
-    data: showtimes,
-    loading,
-    error,
-  } = useSelector((state: RootState) => state.showtimes)
+  const { movieList, loading, error } = useSelector(
+    (state: RootState) => state.movies,
+  )
 
   useEffect(() => {
-    dispatch(fetchShowtimes())
+    dispatch(getMovieList())
   }, [])
-
-  const movieSeen = new Set()
-  const uniqueMoviesArray = showtimes.filter((showtime) => {
-    const movieId = showtime.movie.id
-    if (!movieSeen.has(movieId)) {
-      movieSeen.add(movieId)
-      return true
-    }
-    return false
-  })
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
@@ -49,9 +36,9 @@ const MovieList = () => {
         영화 목록
       </div>
       <Carousel slide={false} theme={customTheme}>
-        {uniqueMoviesArray.map((showtime: Showtime) => (
-          <div key={showtime._id} className="w-full">
-            <MovieCard showtime={showtime} />
+        {movieList?.map((movie) => (
+          <div key={movie.id} className="w-full">
+            <MovieCard movie={movie} />
           </div>
         ))}
       </Carousel>

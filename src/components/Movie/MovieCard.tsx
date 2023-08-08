@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { VFC } from 'react'
 
 import { getImageUrl } from '@/redux/api'
-import { Showtime } from '@/redux/types/showtime'
+import { MovieList } from '@/redux/types/movie/movie'
 
 const customTheme: CustomFlowbiteTheme['card'] = {
   img: {
@@ -12,12 +12,12 @@ const customTheme: CustomFlowbiteTheme['card'] = {
 }
 
 interface Props {
-  showtime: Showtime
+  movie: MovieList
 }
 
-const MovieCard: VFC<Props> = ({ showtime }) => {
-  const posterUrl = getImageUrl(showtime.movie.poster_path)
-  console.log(showtime)
+const MovieCard: VFC<Props> = ({ movie }) => {
+  const posterUrl = getImageUrl(movie.poster)
+  console.log(movie)
 
   return (
     <Card
@@ -26,16 +26,16 @@ const MovieCard: VFC<Props> = ({ showtime }) => {
       className="h-[250px] w-[200px] overflow-hidden relative group mr-4"
     >
       <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-white">
-        <p>{showtime.movie.title}</p>
+        <p>{movie.title}</p>
       </h5>
       <p className="text-xs font-normal text-gray-700 dark:text-gray-400">
-        <p>평점: {showtime.movie.vote_average}</p>
+        <p>평점: {movie.rating}</p>
       </p>
 
       <div className="absolute inset-0 flex items-center justify-center opacity-0 bg-black bg-opacity-50 group-hover:opacity-100 transition-opacity">
         <div className="flex flex-col space-y-4">
           <Link
-            href={`/movies/${showtime.movie.id}`}
+            href={`/movies/${movie.id}`}
             className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
           >
             상세보기
@@ -43,7 +43,7 @@ const MovieCard: VFC<Props> = ({ showtime }) => {
           <Link
             href={{
               pathname: '/reservation',
-              query: { movieId: showtime.movie.id },
+              query: { movieId: movie._id },
             }}
             className="px-4 py-2 font-bold text-white bg-red-500 rounded-md hover:bg-red-600"
           >
