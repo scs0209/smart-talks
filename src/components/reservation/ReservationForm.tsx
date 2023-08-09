@@ -6,6 +6,7 @@ import MovieSelect from './MovieSelect'
 import SeatTable from './SeatTable'
 import ShowtimeSelect from './ShowtimeSelect'
 import TheaterSelect from './TheaterSelect'
+import ScreenSelect from './ScreenSelect'
 
 const ReservationForm = () => {
   const { handleSubmit } = useReservation()
@@ -15,6 +16,7 @@ const ReservationForm = () => {
       <form onSubmit={handleSubmit}>
         <MovieSelect />
         <TheaterSelect />
+        <ScreenSelect />
         <ShowtimeSelect />
         <Button type="submit" color="purple" className="mt-3">
           예약하기

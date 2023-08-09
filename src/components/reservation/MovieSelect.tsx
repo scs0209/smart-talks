@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux'
 
 import { useReservation } from '@/contexts/ReservationContext'
 import { RootState } from '@/redux/store'
-import { Showtime } from '@/redux/types/showtime'
+import { MovieList } from '@/redux/types/movie/movie'
 
 const MovieSelect = () => {
-  const { data: showtimes } = useSelector((state: RootState) => state.showtimes)
+  const { movieList } = useSelector((state: RootState) => state.movies)
   const { movieId, setMovieId } = useReservation()
+
+  console.log(movieId, movieList)
 
   return (
     <>
@@ -19,9 +21,9 @@ const MovieSelect = () => {
         required
       >
         <option value="">- 영화를 선택하세요. -</option>
-        {showtimes?.map((movie: Showtime) => (
+        {movieList?.map((movie: MovieList) => (
           <option key={movie._id} value={movie._id}>
-            {movie.movie.title} - ({movie.movie.release_date})
+            {movie.title}
           </option>
         ))}
       </Select>

@@ -17,14 +17,14 @@ export interface IReservation extends Document {
   user: mongoose.Schema.Types.ObjectId
   showtime: mongoose.Schema.Types.ObjectId
   seatInfo: number[]
-  payment_info?: IPaymentInfo
+  paymentInfo?: IPaymentInfo
 }
 
 const ReservationSchema: Schema = new Schema<IReservation>({
   user: { type: mongoose.Types.ObjectId, ref: User, required: true },
   showtime: { type: mongoose.Types.ObjectId, ref: Showtime, required: true },
   seatInfo: { type: [Number], required: true },
-  payment_info: {
+  paymentInfo: {
     type: Object,
     required: true,
   },

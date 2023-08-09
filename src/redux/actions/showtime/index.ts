@@ -2,10 +2,16 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import * as api from '../../api'
 
+interface FetchShowtimesArgs {
+  movieId: string
+  locationId: string
+  screenId: string
+}
+
 export const fetchShowtimes = createAsyncThunk(
   'showtimes/fetchShowtimes',
-  async () => {
-    const showtimes = await api.getShowtimesAPI()
+  async ({ movieId, locationId, screenId }: FetchShowtimesArgs) => {
+    const showtimes = await api.getShowtimesAPI(movieId, locationId, screenId)
     return showtimes
   },
 )

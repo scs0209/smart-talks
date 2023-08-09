@@ -3,42 +3,55 @@ import { useSelector } from 'react-redux'
 
 import { useReservation } from '@/contexts/ReservationContext'
 import { RootState } from '@/redux/store'
+import { useState } from 'react'
+import { Theater } from '@/redux/types/theater'
 
 const TheaterSelect = () => {
-  const { data: showtimes } = useSelector((state: RootState) => state.showtimes)
-  const { movieId, theaterId, setTheaterId, branchAddress, setBranchAddress } =
+  const { theaters } = useSelector((state: RootState) => state.theaters)
+  const { theaterId, setTheaterId, locationId, setLocationId } =
     useReservation()
+  const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null)
 
-  const selectedTheater = showtimes.find((theater) => theater._id === movieId)
-  console.log(selectedTheater)
+  console.log(theaters, theaterId)
+
+  const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTheaterId(e.target.value)
+    const chosenTheater = theaters.find((t) => t._id === e.target.value)
+    setSelectedTheater(chosenTheater || null)
+  }
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocationId(e.target.value)
+    console.log(locationId)
+  }
 
   return (
     <>
-      <Label htmlFor="theater-select" value="영화관 선택" />
+      <Label htmlFor="theater-id" value="극장 선택" />
       <Select
-        id="theater-select"
+        id="theater-id"
         value={theaterId}
-        onChange={(e) => setTheaterId(e.target.value)}
+        onChange={handleTheaterChange}
         required
       >
-        <option value="">- 영화관을 선택하세요. -</option>
-        {selectedTheater?.showtimes.map((showtime) => (
-          <option key={showtime.theater._id} value={showtime.theater._id}>
-            {showtime.theater.name}
+        <option value="">- 극장을 선택하세요. -</option>
+        {theaters.map((theater) => (
+          <option key={theater._id} value={theater._id}>
+            {theater._id}
           </option>
         ))}
       </Select>
-      <Label htmlFor="address-select" value="지점 선택" />
+      <Label htmlFor="addressId" value="지점 선택" />
       <Select
-        id="address-select"
-        value={branchAddress}
-        onChange={(e) => setBranchAddress(e.target.value)}
+        id="addressId"
+        value={locationId}
+        onChange={handleLocationChange}
         required
       >
         <option value="">- 지점을 선택하세요. -</option>
-        {selectedTheater?.showtimes.map((showtime) => (
-          <option key={showtime.theater._id} value={showtime.address}>
-            {showtime.address}
+        {selectedTheater?.locations.map((location) => (
+          <option key={location.id} value={location.id}>
+            {location.address}
           </option>
         ))}
       </Select>

@@ -1,4 +1,3 @@
-import CreateScreen from '@/components/Admin/createScreen'
 import { createTheaterAPI } from '@/redux/actions/theater'
 import { AppDispatch } from '@/redux/store'
 import React, { FormEvent, useState } from 'react'

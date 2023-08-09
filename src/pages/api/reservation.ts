@@ -2,50 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import Reservation, { IReservation } from '@/models/Reservation'
 import connectDB from '@/services/dbConnect'
-import Showtime from '@/models/Showtime'
-
-const saveReservation = async (reservationData: IReservation) => {
-  try {
-    const reservation = new Reservation(reservationData)
-    await reservation.save()
-    return reservation
-  } catch (error) {
-    console.error('Error saving reservation data:', error)
-    return null
-  }
-}
-
-const getReservationsByUserId = async (user_id: string) => {
-  try {
-    const reservations = await Reservation.find({ user_id }).populate({
-      path: 'showtimes_id',
-      model: 'Showtime',
-    })
-
-    const reservationShowtimes = await Promise.all(
-      reservations.map(async (reservation) => {
-        const showtime = await Showtime.findById(reservation.showtimes_id)
-        const matchingShowtime = showtime?.showtimes.find(
-          (timeSlot) =>
-            timeSlot._id.toString() === reservation.showtime_id.toString(),
-        )
-
-        return {
-          ...reservation.toObject(),
-          start_time: matchingShowtime?.start_time,
-          end_time: matchingShowtime?.end_time,
-          screen_name: matchingShowtime?.screen_name,
-        }
-      }),
-    )
-
-    console.log(reservationShowtimes)
-    return reservationShowtimes
-  } catch (error) {
-    console.error('Error fetching reservations:', error)
-    return null
-  }
-}
 
 const deleteReservationById = async (reservation_id: string) => {
   try {
@@ -63,31 +19,24 @@ export default async function handler(
 ) {
   await connectDB()
 
-  if (req.method === 'POST') {
-    const reservationData = req.body as IReservation
-
+  if (req.method === 'GET') {
     try {
-      const savedReservation = await saveReservation(reservationData)
-      if (savedReservation) {
-        res.status(200).json(savedReservation)
-      } else {
-        res.status(500).json({ error: 'Error saving reservation data' })
-      }
-    } catch (error) {
-      res.status(500).json({ error: 'Error saving reservation data' })
-    }
-  } else if (req.method === 'GET') {
-    const { user_id } = req.query
+      const reservations = await Reservation.find({})
+        .populate('user')
+        .populate('showtime')
 
-    if (typeof user_id === 'string') {
-      const reservations = await getReservationsByUserId(user_id)
-      if (reservations) {
-        res.status(200).json(reservations)
-      } else {
-        res.status(500).json({ error: 'Error fetching reservations' })
-      }
-    } else {
-      res.status(400).json({ error: 'Invalid user_id' })
+      res.status(200).json(reservations)
+    } catch (error) {
+      res.status(500).json({ error: 'Error fetching reservations data' })
+    }
+  } else if (req.method === 'POST') {
+    try {
+      const newReservation: IReservation = new Reservation(req.body)
+      await newReservation.save()
+
+      res.status(201).json(newReservation)
+    } catch (error) {
+      res.status(500).json({ error: 'Error creating new reservation' })
     }
   } else if (req.method === 'DELETE') {
     const { reservation_id } = req.query

@@ -2,9 +2,11 @@
 import { useSession } from 'next-auth/react'
 import {
   createContext,
+  Dispatch,
   FC,
   FormEvent,
   ReactNode,
+  SetStateAction,
   useContext,
   useState,
 } from 'react'
@@ -24,8 +26,10 @@ interface ReservationContextProps {
   setTheaterId: (id: string) => void
   showtimeId: string
   setShowtimeId: (id: string) => void
-  branchAddress: string
-  setBranchAddress: React.Dispatch<React.SetStateAction<string>>
+  screenId: string
+  setScreenId: Dispatch<SetStateAction<string>>
+  locationId: string
+  setLocationId: Dispatch<SetStateAction<string>>
   selectedSeats: number[]
   setSelectedSeats: (selectedSeats: any) => void
   user: any
@@ -52,8 +56,9 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
   const [movieId, setMovieId] = useState('')
   const [theaterId, setTheaterId] = useState('')
   const [showtimeId, setShowtimeId] = useState('')
-  const [selectedSeats, setSelectedSeats] = useState<any[]>([])
-  const [branchAddress, setBranchAddress] = useState('')
+  const [selectedSeats, setSelectedSeats] = useState<number[]>([])
+  const [screenId, setScreenId] = useState('')
+  const [locationId, setLocationId] = useState('')
   const dispatch = useDispatch<AppDispatch>()
   const { data: session } = useSession()
   const { data: user } = useSWR(
@@ -74,12 +79,10 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
 
     if (movieId && theaterId && showtimeId && user.user._id) {
       const reservationData = {
-        theater_id: theaterId,
-        showtimes_id: movieId,
-        showtime_id: showtimeId,
-        user_id: user.user._id,
-        seat_info: selectedSeats,
-        payment_info: paymentResponse,
+        user: user.user._id,
+        showtime: showtimeId,
+        seatInfo: selectedSeats,
+        paymentInfo: paymentResponse,
       }
 
       const actionResult = await dispatch(saveReservation(reservationData))
@@ -98,8 +101,10 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
     setTheaterId,
     showtimeId,
     setShowtimeId,
-    branchAddress,
-    setBranchAddress,
+    screenId,
+    setScreenId,
+    locationId,
+    setLocationId,
     selectedSeats,
     setSelectedSeats,
     user,

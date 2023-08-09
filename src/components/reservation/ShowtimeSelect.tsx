@@ -1,18 +1,22 @@
 import { Label, Select } from 'flowbite-react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { useReservation } from '@/contexts/ReservationContext'
-import { RootState } from '@/redux/store'
+import { AppDispatch, RootState } from '@/redux/store'
+import { useEffect } from 'react'
+import { fetchShowtimes } from '@/redux/actions/showtime'
 
 const ShowtimeSelect = () => {
   const { data: showtimes } = useSelector((state: RootState) => state.showtimes)
-  const { movieId, theaterId, showtimeId, setShowtimeId } = useReservation()
+  const { movieId, locationId, screenId, showtimeId, setShowtimeId } =
+    useReservation()
+  const dispatch = useDispatch<AppDispatch>()
 
-  const showtimesData = showtimes
-    .find((showtime) => showtime._id === movieId)
-    ?.showtimes.filter((s) => s.theater._id === theaterId)
+  useEffect(() => {
+    dispatch(fetchShowtimes({ movieId, locationId, screenId }))
+  }, [movieId, locationId, screenId])
 
-  console.log(showtimesData, theaterId, showtimeId, movieId)
+  console.log(showtimes, showtimeId)
 
   return (
     <>
@@ -25,14 +29,14 @@ const ShowtimeSelect = () => {
       >
         <option value="">- 시간을 선택하세요. -</option>
 
-        {showtimesData?.map((showtime, index) => (
+        {showtimes?.map((showtime) => (
           <option key={showtime._id} value={showtime._id}>
-            {new Date(showtime.start_time).toLocaleTimeString([], {
+            {new Date(showtime.startTime).toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit',
             })}{' '}
             -{' '}
-            {new Date(showtime.end_time).toLocaleTimeString([], {
+            {new Date(showtime.endTime).toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit',
             })}

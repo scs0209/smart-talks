@@ -12,21 +12,47 @@ const showsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     try {
-      const theaterId = req.query.theaterId
+      const locationId = req.query.locationId
+      const movieId = req.query.movieId
+      const screenId = req.query.screenId
 
-      if (!theaterId) {
+      if (!locationId) {
         res.status(400).json({ error: 'Theater ID is required' })
         return
       }
 
-      const theater = await Theater.findById(theaterId)
+      if (!movieId) {
+        res.status(400).json({ error: 'Movie ID is required' })
+        return
+      }
+
+      if (!screenId) {
+        res.status(400).json({ error: 'Screen ID is required' })
+        return
+      }
+
+      const theater = await Theater.findById(locationId)
 
       if (!theater) {
         res.status(400).json({ error: 'Invalid theater ID' })
         return
       }
 
-      const shows = await Showtime.find({ theater })
+      const movie = await Movie.findById(movieId)
+
+      if (!movie) {
+        res.status(400).json({ error: 'Invalid movie ID' })
+        return
+      }
+
+      const screen = await Screen.findById(screenId)
+
+      if (!screen) {
+        res.status(400).json({ error: 'Invalid screen ID' })
+        return
+      }
+
+      const shows = await Showtime.find({ theater, movie, screen })
         .populate('movie')
         .populate('screen')
       res.status(200).json(shows)

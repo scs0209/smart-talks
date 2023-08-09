@@ -27,9 +27,8 @@ export interface ReservationState {
 
 // 기존 ReservationData 인터페이스 업데이트
 export interface ReservationData {
-  user_id?: string
-  theater_id: Object
-  showtime_id: string
-  seat_info?: number[]
-  payment_info?: any
+  user: string
+  showtime: string
+  seatInfo: number[]
+  paymentInfo: any
 }
