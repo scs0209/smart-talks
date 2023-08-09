@@ -20,10 +20,20 @@ export default async function handler(
   await connectDB()
 
   if (req.method === 'GET') {
+    const { user_id } = req.query
+
     try {
-      const reservations = await Reservation.find({})
+      const query = user_id ? { user: user_id } : {}
+      const reservations = await Reservation.find(query)
         .populate('user')
-        .populate('showtime')
+        .populate({
+          path: 'showtime',
+          populate: [
+            { path: 'movie', select: 'title' },
+            { path: 'theater', select: '-__v' },
+            { path: 'screen', select: '-__v' },
+          ],
+        })
 
       res.status(200).json(reservations)
     } catch (error) {

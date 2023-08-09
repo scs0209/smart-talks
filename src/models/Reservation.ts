@@ -17,7 +17,7 @@ export interface IReservation extends Document {
   user: mongoose.Schema.Types.ObjectId
   showtime: mongoose.Schema.Types.ObjectId
   seatInfo: number[]
-  paymentInfo?: IPaymentInfo
+  paymentInfo: IPaymentInfo
 }
 
 const ReservationSchema: Schema = new Schema<IReservation>({

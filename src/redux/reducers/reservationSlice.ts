@@ -22,20 +22,7 @@ const initialState: ReservationState = {
 const reservationSlice = createSlice({
   name: 'reservation',
   initialState,
-  reducers: {
-    setMovieId: (state, action: PayloadAction<string>) => {
-      state.selectedReservation.movieId = action.payload
-    },
-    setTheaterId: (state, action: PayloadAction<string>) => {
-      state.selectedReservation.theaterId = action.payload
-    },
-    setShowtimeId: (state, action: PayloadAction<string>) => {
-      state.selectedReservation.showtimeId = action.payload
-    },
-    setSelectedSeats: (state, action: PayloadAction<any[]>) => {
-      state.selectedReservation.selectedSeats = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(saveReservation.pending, (state) => {
       state.loading = true
@@ -85,8 +72,5 @@ const reservationSlice = createSlice({
     })
   },
 })
-
-export const { setMovieId, setTheaterId, setShowtimeId, setSelectedSeats } =
-  reservationSlice.actions
 
 export default reservationSlice.reducer

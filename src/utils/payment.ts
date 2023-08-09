@@ -5,6 +5,7 @@ export async function processPayment(paymentData: {
   movieName: string
   userEmail: string
   userName: string
+  paymentDate: string
 }) {
   return new Promise((resolve, reject) => {
     const { IMP } = window
@@ -18,8 +19,8 @@ export async function processPayment(paymentData: {
       buyer_tel: '01012341234',
       buyer_email: paymentData.userEmail,
       buyer_name: paymentData.userName,
-      buyer_addr: '신사동 661-16',
       buyer_postcode: '06018',
+      paymentDate: paymentData.paymentDate,
     }
 
     IMP.request_pay(data, (response: any) => {

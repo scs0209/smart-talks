@@ -14,6 +14,8 @@ const customTheme: CustomFlowbiteTheme['table'] = {
 const ReservationTable = () => {
   const { reservations, handleDeleteReservation } = useMyPage()
 
+  console.log(reservations)
+
   return (
     <Table theme={customTheme}>
       <Table.HeadCell>영화 제목</Table.HeadCell>
@@ -25,32 +27,38 @@ const ReservationTable = () => {
         <span className="sr-only">Delete</span>
       </Table.HeadCell>
       <Table.Body>
-        {reservations?.map((reservation: any) => {
+        {reservations?.map((reservation) => {
           return (
             <Table.Row
               className="bg-white dark:border-gray-700 dark:bg-gray-800"
               key={reservation._id}
             >
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {reservation.showtimes_id?.movie.title}
+                {reservation.showtime.movie.title}
               </Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {new Date(reservation.start_time).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
+                {new Date(reservation.showtime.startTime).toLocaleTimeString(
+                  [],
+                  {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  },
+                )}
               </Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {new Date(reservation.end_time).toLocaleString('ko-KR', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
+                {new Date(reservation.showtime.endTime).toLocaleTimeString(
+                  'ko-KR',
+                  {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  },
+                )}
               </Table.Cell>
               <Table.Cell className="font-medium text-gray-900 dark:text-white w-20">
-                {reservation.screen_name}
+                {reservation.showtime.screen.screenName}
               </Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {`${reservation.payment_info.paid_amount} KRW`}
+                {`${reservation.paymentInfo.paid_amount} KRW`}
               </Table.Cell>
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                 <Button

@@ -18,6 +18,7 @@ import { saveReservation } from '@/redux/actions/reservation'
 import { AppDispatch } from '@/redux/store'
 import fetcher from '@/utils/fetcher'
 import { processPayment } from '@/utils/payment'
+import { getFormattedDate } from '@/utils/formDate'
 
 interface ReservationContextProps {
   movieId: string
@@ -69,10 +70,13 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
+    const paymentDate = getFormattedDate(new Date())
+
     const paymentData = {
       movieName: '영화 이름',
       userEmail: user.user.email,
-      userName: user.user.name,
+      userName: user.user.username,
+      paymentDate,
     }
 
     const paymentResponse = await processPayment(paymentData)
