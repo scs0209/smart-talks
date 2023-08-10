@@ -3,34 +3,40 @@ import { useRouter } from 'next/router'
 
 import { signUp } from '@/redux/api/auth'
 
-import { FormEvent } from 'react'
-import useInput from '../../hooks/useInput'
-import InputWithLabel from './InputWithLabel'
+import { useForm } from 'react-hook-form'
+
+interface FormValue {
+  email: string
+  password: string
+  lastName: string
+  firstName: string
+  username: string
+}
 
 const SignupForm = () => {
-  const username = useInput('')
-  const email = useInput('')
-  const password = useInput('')
-  const firstName = useInput('')
-  const lastName = useInput('')
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValue>({ mode: 'onChange' })
   const router = useRouter()
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
+  const onSubmit = handleSubmit(async (formData) => {
+    // Change handleSubmit to onSubmit
     try {
       await signUp({
-        username: username.value,
-        email: email.value,
-        password: password.value,
-        firstName: firstName.value,
-        lastName: lastName.value,
+        username: formData.username, // Replace with formData
+        email: formData.email, // Replace with formData
+        password: formData.password, // Replace with formData
+        firstName: formData.firstName, // Replace with formData
+        lastName: formData.lastName, // Replace with formData
       })
+      alert('회원가입 완료!')
       router.push('/login')
     } catch (error) {
       console.error(error)
     }
-  }
+  })
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -40,42 +46,99 @@ const SignupForm = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               회원가입
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              <InputWithLabel
-                labelName="이름"
-                inputType="text"
-                inputValue={firstName.value}
-                inputOnChange={firstName.onChange}
-                placeholderText="사용자 이름"
-              />
-              <InputWithLabel
-                labelName="성"
-                inputType="text"
-                inputValue={lastName.value}
-                inputOnChange={lastName.onChange}
-                placeholderText="성"
-              />
-              <InputWithLabel
-                labelName="닉네임"
-                inputType="text"
-                inputValue={username.value}
-                inputOnChange={username.onChange}
-                placeholderText="닉네임"
-              />
-              <InputWithLabel
-                labelName="Email"
-                inputType="email"
-                inputValue={email.value}
-                inputOnChange={email.onChange}
-                placeholderText="eamil"
-              />
-              <InputWithLabel
-                labelName="Password"
-                inputType="password"
-                inputValue={password.value}
-                inputOnChange={password.onChange}
-                placeholderText="password"
-              />
+            <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  이름
+                </label>
+                <input
+                  type="text"
+                  placeholder="사용자 이름"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  {...register('firstName', {
+                    required: '이름은 필수입니다.',
+                  })}
+                />
+                {errors.firstName && (
+                  <p className="text-red-500">{errors.firstName.message}</p>
+                )}
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  성
+                </label>
+                <input
+                  type="text"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  {...register('lastName', {
+                    required: '성은 필수 입력입니다.',
+                  })}
+                  placeholder="성"
+                />
+                {errors.lastName && (
+                  <p className="text-red-500">{errors.lastName.message}</p>
+                )}
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  닉네임
+                </label>
+                <input
+                  type="text"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  {...register('username', {
+                    required: '닉네임은 필수입니다.',
+                    pattern: {
+                      value: /^[a-zA-Z0-9_]+$/,
+                      message: '닉네임은 알파벳, 숫자, 밑줄만 허용합니다.',
+                    },
+                  })}
+                  placeholder="Nickname"
+                />
+                {errors.username && (
+                  <p className="text-red-500">{errors.username.message}</p>
+                )}
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  {...register('email', {
+                    required: '이메일은 필수입니다.',
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: '이메일 형식이 올바르지 않습니다.',
+                    },
+                  })}
+                  placeholder="name@company.com"
+                />
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
+                )}
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="password"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  {...register('password', {
+                    required: '비밀번호는 필수입니다.',
+                    minLength: {
+                      value: 8,
+                      message: '비밀번호는 최소 8자리 이상이어야 합니다.',
+                    },
+                  })}
+                />
+                {errors.password && (
+                  <p className="text-red-500">{errors.password.message}</p>
+                )}
+              </div>
               <button
                 type="submit"
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"

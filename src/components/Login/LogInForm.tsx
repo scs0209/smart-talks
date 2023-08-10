@@ -1,31 +1,36 @@
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 
-import useInput from '@/hooks/useInput'
-
+import { useForm } from 'react-hook-form'
 import FindPasswordModal from '../FindPasswordModal'
 import SocialBtn from './SocialBtn'
 
-const LoginForm = () => {
-  const email = useInput('')
-  const password = useInput('')
+interface FormValue {
+  email: string
+  password: string
+}
 
+const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValue>({ mode: 'onChange' })
   const [showModal, setShowModal] = useState(false)
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
+  const onSubmit = handleSubmit(async (formData) => {
     const result = await signIn('credentials', {
       redirect: false,
-      email: email.value,
-      password: password.value,
+      email: formData.email,
+      password: formData.password,
     })
     if (result?.error) {
       console.log('Error:', result.error)
     } else {
       window.location.href = '/'
     }
-  }
+  })
   const handleForgotPasswordClick = () => {
     setShowModal(true)
   }
@@ -42,7 +47,7 @@ const LoginForm = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
               <div>
                 <label
                   htmlFor="email"
@@ -52,13 +57,20 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="email"
-                  name="email"
                   id="email"
-                  value={email.value}
-                  onChange={email.onChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  {...register('email', {
+                    required: '이메일은 필수입니다.',
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: '이메일 형식이 올바르지 않습니다.',
+                    },
+                  })}
                   placeholder="name@company.com"
                 />
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
+                )}
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -66,13 +78,20 @@ const LoginForm = () => {
                 </label>
                 <input
                   type="password"
-                  name="password"
                   id="password"
-                  value={password.value}
-                  onChange={password.onChange}
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  {...register('password', {
+                    required: '비밀번호는 필수입니다.',
+                    minLength: {
+                      value: 8,
+                      message: '비밀번호는 최소 8자리 이상이어야 합니다.',
+                    },
+                  })}
                 />
+                {errors.password && (
+                  <p className="text-red-500">{errors.password.message}</p>
+                )}
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
