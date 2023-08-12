@@ -1,20 +1,29 @@
-import { createTheaterAPI } from '@/redux/actions/theater'
-import { AppDispatch } from '@/redux/store'
+import { useCreateTheaterMutation } from '@/redux/api/theaterApi'
 import React, { FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 const CreateTheater = () => {
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
-  const dispatch = useDispatch<AppDispatch>()
+  const [createTheater, { isLoading, isError, isSuccess }] =
+    useCreateTheaterMutation()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    dispatch(createTheaterAPI({ name, address }))
+    try {
+      await createTheater({ name, address })
+      alert('createTheater success')
+    } catch (isError) {
+      alert(isError)
+    }
+
     setName('')
     setAddress('')
   }
+
+  if (isLoading) return <div>Loading...</div>
+
+  if (isError) return <div>{isError}</div>
 
   return (
     <div>

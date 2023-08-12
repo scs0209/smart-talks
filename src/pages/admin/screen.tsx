@@ -1,28 +1,27 @@
-import { createScreen } from '@/redux/actions/screen'
-import { fetchTheaters } from '@/redux/actions/theater'
-import { AppDispatch, RootState } from '@/redux/store'
+import { useCreateScreenMutation } from '@/redux/api/screenApi'
+import { useGetTheatersQuery } from '@/redux/api/theaterApi'
 import { Theater } from '@/redux/types/theater'
-import React, { useState, useEffect, FormEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState, FormEvent } from 'react'
 
 const CreateScreen = () => {
-  const { theaters } = useSelector((state: RootState) => state.theaters)
+  const { data: theaters, isLoading, isError } = useGetTheatersQuery()
   const [screenName, setScreenName] = useState('')
   const [theaterId, setTheaterId] = useState('')
   const [locationId, setLocationId] = useState('')
   const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null)
-  const dispatch = useDispatch<AppDispatch>()
+  const [
+    createScreen,
+    { isLoading: createScreenLoading, error: createScreenError },
+  ] = useCreateScreenMutation()
 
   console.log(theaters)
 
-  useEffect(() => {
-    dispatch(fetchTheaters())
-  }, [])
-
   const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTheaterId(e.target.value)
-    const chosenTheater = theaters.find((t) => t._id === e.target.value)
-    setSelectedTheater(chosenTheater || null)
+    if (theaters) {
+      const chosenTheater = theaters.find((t) => t._id === e.target.value)
+      setSelectedTheater(chosenTheater || null)
+    }
   }
 
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -34,12 +33,10 @@ const CreateScreen = () => {
     e.preventDefault()
 
     if (selectedTheater) {
-      dispatch(
-        createScreen({
-          screenName,
-          locationId,
-        }),
-      )
+      await createScreen({
+        screenName,
+        locationId,
+      })
 
       // Screen created successfully
       setScreenName('')
@@ -64,7 +61,7 @@ const CreateScreen = () => {
         <label htmlFor="theaterId">Select Theater</label>
         <select id="theaterId" value={theaterId} onChange={handleTheaterChange}>
           <option value="">-- Select Theater --</option>
-          {theaters.map((theater) => (
+          {theaters?.map((theater) => (
             <option key={theater._id} value={theater._id}>
               {theater._id}
             </option>

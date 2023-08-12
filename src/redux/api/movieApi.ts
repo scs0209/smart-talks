@@ -12,9 +12,6 @@ const movieApi = createApi({
     >({
       query: ({ query, page }) =>
         `/movies/movie-search?query=${query}&page=${page}`,
-      transformResponse: (items: { results: any[] }) => {
-        return { results: items.results }
-      },
     }),
     getMovieDetails: builder.query<any, string | undefined>({
       query: (id) => `/movies/movie-detail?movieId=${id}`,

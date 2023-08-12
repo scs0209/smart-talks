@@ -1,13 +1,12 @@
 import { Label, Select } from 'flowbite-react'
-import { useSelector } from 'react-redux'
 
 import { useReservation } from '@/contexts/ReservationContext'
-import { RootState } from '@/redux/store'
 import { useState } from 'react'
 import { Theater } from '@/redux/types/theater'
+import { useGetTheatersQuery } from '@/redux/api/theaterApi'
 
 const TheaterSelect = () => {
-  const { theaters } = useSelector((state: RootState) => state.theaters)
+  const { data: theaters, isLoading, isError } = useGetTheatersQuery()
   const { theaterId, setTheaterId, locationId, setLocationId } =
     useReservation()
   const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null)
@@ -16,8 +15,10 @@ const TheaterSelect = () => {
 
   const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTheaterId(e.target.value)
-    const chosenTheater = theaters.find((t) => t._id === e.target.value)
-    setSelectedTheater(chosenTheater || null)
+    if (theaters) {
+      const chosenTheater = theaters.find((t) => t._id === e.target.value)
+      setSelectedTheater(chosenTheater || null)
+    }
   }
 
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -35,7 +36,7 @@ const TheaterSelect = () => {
         required
       >
         <option value="">- 극장을 선택하세요. -</option>
-        {theaters.map((theater) => (
+        {theaters?.map((theater) => (
           <option key={theater._id} value={theater._id}>
             {theater._id}
           </option>

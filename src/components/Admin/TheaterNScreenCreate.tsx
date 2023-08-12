@@ -1,10 +1,8 @@
 import { Label, Select } from 'flowbite-react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { useAdminPage } from '@/contexts/AdminContext'
-import { AppDispatch, RootState } from '@/redux/store'
-import { useEffect } from 'react'
-import { getScreens } from '@/redux/actions/screen'
+import { useGetTheatersQuery } from '@/redux/api/theaterApi'
+import { useGetScreensQuery } from '@/redux/api/screenApi'
 
 const TheaterNScreenCreate = () => {
   const {
@@ -18,28 +16,29 @@ const TheaterNScreenCreate = () => {
     setSelectedTheater,
   } = useAdminPage()
   const {
-    theaters,
-    loading: theaterLoading,
-    error: theaterError,
-  } = useSelector((state: RootState) => state.theaters)
-  const { screens, loading, error } = useSelector(
-    (state: RootState) => state.screens,
-  )
-  const dispatch = useDispatch<AppDispatch>()
+    data: theaters,
+    isLoading: theaterLoading,
+    isError: theaterError,
+  } = useGetTheatersQuery()
+
+  const {
+    data: screens,
+    isLoading: screenLoading,
+    isError: screenError,
+  } = useGetScreensQuery(locationId)
 
   const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTheaterId(e.target.value)
-    const chosenTheater = theaters.find((t) => t._id === e.target.value)
-    setSelectedTheater(chosenTheater || null)
+    if (theaters) {
+      const chosenTheater = theaters.find((t) => t._id === e.target.value)
+      setSelectedTheater(chosenTheater || null)
+    }
   }
 
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLocationId(e.target.value)
   }
 
-  useEffect(() => {
-    dispatch(getScreens(locationId))
-  }, [locationId])
   console.log(screens)
 
   if (theaterLoading) {
@@ -60,7 +59,7 @@ const TheaterNScreenCreate = () => {
         required
       >
         <option value="">- Select a theater -</option>
-        {theaters.map((theater) => (
+        {theaters?.map((theater) => (
           <option key={theater._id} value={theater._id}>
             {theater._id}
           </option>
