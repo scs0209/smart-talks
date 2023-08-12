@@ -1,5 +1,4 @@
 /* eslint-disable */
-import axios from 'axios'
 import {
   createContext,
   Dispatch,
@@ -9,7 +8,6 @@ import {
   useState,
 } from 'react'
 
-import { backUrl } from '@/config'
 import { Theater } from '@/redux/types/theater'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/redux/store'

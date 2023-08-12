@@ -1,35 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux'
-
-import { AppDispatch, RootState } from '@/redux/store'
-import useFetchData from '@/hooks/useFetchData'
-import { getPopularMovies } from '@/redux/actions/movie'
+import { useGetPopularMoviesQuery } from '@/redux/api/movieApi'
 
 const Hero = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const {
-    data: movies,
-    loading,
-    error,
-  } = useSelector((state: RootState) => state.movies)
+  const { data: movies, isFetching, isError } = useGetPopularMoviesQuery(1)
 
-  const videoUrl =
-    movies &&
-    movies.length &&
-    `https://www.youtube.com/embed/${movies[0].video.key}`
+  const videoUrl = `https://www.youtube.com/embed/${movies?.results[0].video.key}`
 
-  console.log(videoUrl, movies)
-
-  const { isFetched: isMoviesFetchd } = useFetchData({
-    dispatch,
-    action: getPopularMovies,
-  })
-
-  if (loading) {
+  if (isFetching) {
     return <div>Loading...</div>
   }
 
-  if (error) {
-    return <div>Error: {error}</div>
+  if (isError) {
+    return <div>Error: {isError}</div>
   }
 
   return (

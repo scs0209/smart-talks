@@ -1,11 +1,7 @@
 import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { AppDispatch, RootState } from '@/redux/store'
-
-import { getMovieList } from '@/redux/actions/movie'
 import MovieCard from './MovieCard'
+import { useGetMovieListQuery } from '@/redux/api/movieApi'
 
 const customTheme: CustomFlowbiteTheme['carousel'] = {
   root: {
@@ -18,21 +14,14 @@ const customTheme: CustomFlowbiteTheme['carousel'] = {
 }
 
 const MovieList = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const { movieList, loading, error } = useSelector(
-    (state: RootState) => state.movies,
-  )
+  const { data: movieList, isLoading, isError } = useGetMovieListQuery()
 
-  useEffect(() => {
-    dispatch(getMovieList())
-  }, [])
-
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error}</div>
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error: {isError}</div>
 
   return (
     <div className="max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] overflow-auto">
-      <div className="text-2xl font-semibold pt-4 pb-2 dark:text-white">
+      <div className="pt-4 pb-2 text-2xl font-semibold dark:text-white">
         영화 목록
       </div>
       <Carousel slide={false} theme={customTheme}>

@@ -1,25 +1,20 @@
 import { Label, Select } from 'flowbite-react'
-import { useSelector } from 'react-redux'
 
 import { useAdminPage } from '@/contexts/AdminContext'
-import { RootState } from '@/redux/store'
+import { useGetMovieListQuery } from '@/redux/api/movieApi'
 
 const MovieCreate = () => {
   const { movieId, setMovieId } = useAdminPage()
-  const {
-    movieList,
-    loading: movieLoading,
-    error: movieError,
-  } = useSelector((state: RootState) => state.movies)
+  const { data: movieList, isLoading, isError } = useGetMovieListQuery()
 
   console.log(movieList, movieId)
 
-  if (movieLoading) {
+  if (isLoading) {
     return <div>Loading...</div>
   }
 
-  if (movieError) {
-    return <div>Error: {movieError}</div>
+  if (isError) {
+    return <div>Error: {isError}</div>
   }
 
   return (

@@ -1,15 +1,18 @@
 import { Label, Select } from 'flowbite-react'
-import { useSelector } from 'react-redux'
 
 import { useReservation } from '@/contexts/ReservationContext'
-import { RootState } from '@/redux/store'
 import { MovieList } from '@/redux/types/movie/movie'
+import { useGetMovieListQuery } from '@/redux/api/movieApi'
 
 const MovieSelect = () => {
-  const { movieList } = useSelector((state: RootState) => state.movies)
+  const { data: movieList, isFetching, isError } = useGetMovieListQuery()
   const { movieId, setMovieId } = useReservation()
 
   console.log(movieId, movieList)
+
+  if (isFetching) return <div>Loading...</div>
+
+  if (isError) return <div>{isError}</div>
 
   return (
     <>

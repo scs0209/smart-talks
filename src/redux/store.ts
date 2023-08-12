@@ -12,9 +12,11 @@ import reservationSlice from './reducers/reservationSlice'
 import showtimeSlice from './reducers/showtimeSlice'
 import theaterSlice from './reducers/theaterSlice'
 import screenSlice from './reducers/screenSlice'
+import movieApi from './api/movieApi'
 
 const reducer = (state: any, action: PayloadAction<any>) => {
   return combineReducers({
+    [movieApi.reducerPath]: movieApi.reducer,
     movies: moviesReducer,
     theaters: theaterSlice,
     showtimes: showtimeSlice,
@@ -27,7 +29,8 @@ const reducer = (state: any, action: PayloadAction<any>) => {
 const makeStore = () =>
   configureStore({
     reducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(movieApi.middleware),
     devTools: process.env.NODE_ENV !== 'production',
   })
 

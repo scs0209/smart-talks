@@ -1,81 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import {
-  getMovieDetails,
-  getMovieList,
-  getPopularMovies,
-  searchMovies,
-} from '../actions/movie'
-import initialState from '../types/movie/state'
+interface SearchState {
+  allResults: any[]
+  page: number
+  popularMovies: any[]
+  popularPage: number
+}
+
+const initialState: SearchState = {
+  allResults: [],
+  page: 1,
+  popularMovies: [],
+  popularPage: 1,
+}
 
 const moviesSlice = createSlice({
   name: 'movies',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(searchMovies.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(searchMovies.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = undefined
-        if (action.meta.arg.page === 1) {
-          state.searchResult = action.payload
-        } else if (state.searchResult !== null) {
-          state.searchResult = [...state.searchResult, ...action.payload]
-        }
-      })
-      .addCase(searchMovies.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message
-        state.searchResult = null
-      })
-      .addCase(getMovieList.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getMovieList.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = undefined
-        state.movieList = action.payload
-      })
-      .addCase(getMovieList.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message
-        state.movieList = null
-      })
-      .addCase(getMovieDetails.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getMovieDetails.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = undefined
-        state.movieDetails = action.payload
-      })
-      .addCase(getMovieDetails.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message
-        state.movieDetails = null
-      })
-      .addCase(getPopularMovies.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getPopularMovies.fulfilled, (state, action) => {
-        state.loading = false
-        state.error = undefined
-        if (state.data === null) {
-          state.data = action.payload
-        } else {
-          state.data.push(...action.payload)
-        }
-        state.currentPage += 1 // 이 줄을 추가하세요
-      })
-      .addCase(getPopularMovies.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message
-        state.data = null
-      })
+  reducers: {
+    setAllResults: (state, action: PayloadAction<any[]>) => {
+      if (state.page === 1) {
+        state.allResults = action.payload
+      } else if (state.page > 1) {
+        state.allResults = [...state.allResults, ...action.payload]
+      }
+    },
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload
+    },
+    setPopularMovies: (state, action: PayloadAction<any[]>) => {
+      if (state.popularPage === 1) {
+        state.popularMovies = action.payload
+      } else if (state.popularPage > 1) {
+        state.popularMovies = [...state.popularMovies, ...action.payload]
+      }
+    },
+    setPopularPage: (state, action: PayloadAction<number>) => {
+      state.popularPage = action.payload
+    },
   },
 })
+export const { setAllResults, setPage, setPopularMovies, setPopularPage } =
+  moviesSlice.actions
 
 export const moviesReducer = moviesSlice.reducer

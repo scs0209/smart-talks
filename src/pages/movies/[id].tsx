@@ -1,12 +1,9 @@
 import { Badge } from 'flowbite-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { getMovieDetails } from '@/redux/actions/movie'
 import { getImageUrl } from '@/redux/api'
-import { RootState } from '@/redux/store'
+import { useGetMovieDetailsQuery } from '@/redux/api/movieApi'
 
 interface Genre {
   id: number
@@ -15,12 +12,15 @@ interface Genre {
 
 const MovieDetail = () => {
   const router = useRouter()
-  const { id } = router.query
+  const movieId = Array.isArray(router.query.id)
+    ? router.query.id[0]
+    : router.query.id
+  const {
+    data: movieDetails,
+    isFetching,
+    isError,
+  } = useGetMovieDetailsQuery(movieId)
 
-  const dispatch = useDispatch()
-  const { movieDetails, loading, error } = useSelector((state: RootState) => {
-    return state.movies
-  })
   const posterUrl = movieDetails?.poster
     ? getImageUrl(movieDetails.poster)
     : undefined
@@ -30,35 +30,29 @@ const MovieDetail = () => {
   const percent = movieDetails?.popularity
     ? Math.floor(movieDetails.popularity / 100)
     : undefined
-  useEffect(() => {
-    if (id) {
-      const movieId = Array.isArray(id) ? id[0] : id
-      dispatch(getMovieDetails(movieId) as any)
-    }
-  }, [id, dispatch])
 
-  if (loading) {
+  if (isFetching) {
     return <div>Loading...</div>
   }
 
-  if (error || !movieDetails) {
-    return <div>Error: {error || 'Movie details not available'}</div>
+  if (isError || !movieDetails) {
+    return <div>Error: {isError || 'Movie details not available'}</div>
   }
 
   return (
     <section className="h-screen">
-      <div className="flex items-center justify-between mt-2 mx-auto max-w-screen-xl dark:bg-gray-800">
-        <div className="flex flex-col lg:flex-row w-full items-start lg:items-center rounded bg-white shadow">
-          <div className="w-full lg:w-1/3 h-64 dark:bg-gray-800">
+      <div className="flex items-center justify-between max-w-screen-xl mx-auto mt-2 dark:bg-gray-800">
+        <div className="flex flex-col items-start w-full bg-white rounded shadow lg:flex-row lg:items-center">
+          <div className="w-full h-64 lg:w-1/3 dark:bg-gray-800">
             <img
-              className="object-contain h-full w-full"
+              className="object-contain w-full h-full"
               src={posterUrl}
               alt={`${movieDetails.title} poster`}
             />
           </div>
-          <div className="p-4 w-full lg:w-2/3 h-24 dark:border-gray-700 lg:h-64 border-t lg:border-t-0 lg:border-r lg:border-l lg:rounded-r dark:bg-gray-700 bg-gray-100">
+          <div className="w-full h-24 p-4 bg-gray-100 border-t lg:w-2/3 dark:border-gray-700 lg:h-64 lg:border-t-0 lg:border-r lg:border-l lg:rounded-r dark:bg-gray-700">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold dark:text-white mb-2">
+              <h1 className="mb-2 text-2xl font-bold dark:text-white">
                 {movieDetails.title}
               </h1>
               <Badge color="indigo" size="xs" className="ml-3">
@@ -66,18 +60,18 @@ const MovieDetail = () => {
               </Badge>
             </div>
             <div className="flex items-center mb-2 border-solid border-b-[1px] border-gray-400">
-              <span className="text-xs text-gray-400 mb-3">
+              <span className="mb-3 text-xs text-gray-400">
                 {movieDetails.releaseDate}
               </span>
-              <Badge color="pink" className="ml-3 mb-3">
+              <Badge color="pink" className="mb-3 ml-3">
                 popularity: {percent}%
               </Badge>
             </div>
             <div className="flex flex-col mb-4">
-              <span className="text-sm font-semibold font-sans">
+              <span className="font-sans text-sm font-semibold">
                 감독: {movieDetails.director}
               </span>
-              <span className="text-sm font-semibold font-sans">
+              <span className="font-sans text-sm font-semibold">
                 장르:{' '}
                 {movieDetails?.genres
                   .map((genre: Genre) => genre.name)
