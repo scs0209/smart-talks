@@ -1,7 +1,7 @@
 import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
 
-import MovieCard from './MovieCard'
 import { useGetMovieListQuery } from '@/redux/api/movieApi'
+import MovieCard from './MovieCard'
 
 const customTheme: CustomFlowbiteTheme['carousel'] = {
   root: {

@@ -16,7 +16,7 @@ export const screenApi = createApi({
       }),
       providesTags: (result, error, theaterId) =>
         result
-          ? result.map(({ id }) => ({ type: 'Screen', id: id }))
+          ? result.map(({ id }) => ({ type: 'Screen', id }))
           : [{ type: 'Screen', id: 'LIST' }],
     }),
     createScreen: builder.mutation<

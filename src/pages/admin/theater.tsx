@@ -13,8 +13,8 @@ const CreateTheater = () => {
     try {
       await createTheater({ name, address })
       alert('createTheater success')
-    } catch (isError) {
-      alert(isError)
+    } catch (error: any) {
+      alert(error)
     }
 
     setName('')
