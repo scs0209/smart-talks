@@ -33,16 +33,22 @@ const CreateScreen = () => {
     e.preventDefault()
 
     if (selectedTheater) {
-      await createScreen({
-        screenName,
-        locationId,
-      })
+      try {
+        await createScreen({
+          screenName,
+          locationId,
+        })
 
-      // Screen created successfully
-      setScreenName('')
-      setTheaterId('')
-      setLocationId('')
-      alert('Screen created!')
+        alert('Screen created!')
+      } catch (error: any) {
+        // Handle error, e.g., show an error message
+        alert(`Error creating screen: ${error.message}`)
+      } finally {
+        // Screen created successfully
+        setScreenName('')
+        setTheaterId('')
+        setLocationId('')
+      }
     }
   }
 
