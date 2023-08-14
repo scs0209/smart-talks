@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { createTheaterAPI, fetchTheaters } from '../actions/theater'
 import { TheaterState } from '../types/theater'
 
 const initialState: TheaterState = {
@@ -13,39 +12,7 @@ const theaterSlice = createSlice({
   name: 'theater',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
-    // fetchTheaters 처리
-    builder.addCase(fetchTheaters.pending, (state) => {
-      state.loading = true
-      state.error = null
-    })
-
-    builder.addCase(fetchTheaters.fulfilled, (state, action) => {
-      state.loading = false
-      state.theaters = action.payload
-    })
-
-    builder.addCase(fetchTheaters.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.error
-    })
-
-    // createDummyTheaters 처리
-    builder.addCase(createTheaterAPI.pending, (state) => {
-      state.loading = true
-      state.error = null
-    })
-
-    builder.addCase(createTheaterAPI.fulfilled, (state, action) => {
-      state.loading = false
-      state.theaters = [...state.theaters, action.payload]
-    })
-
-    builder.addCase(createTheaterAPI.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.error
-    })
-  },
+  extraReducers: (builder) => {},
 })
 
 export default theaterSlice.reducer

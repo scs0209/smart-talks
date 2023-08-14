@@ -8,8 +8,15 @@ import { Provider } from 'react-redux'
 import Layout from '@/components/Layout'
 import { AdminPageProvider } from '@/contexts/AdminContext'
 import { wrapper } from '@/redux/store'
+import ProtectedLayout from '@/components/ProtecetedLayout'
 
-export default function App({ Component, ...rest }: AppProps) {
+type AppPropsWithAuth = AppProps & {
+  Component: {
+    requireAuth?: boolean
+  }
+}
+
+export default function App({ Component, ...rest }: AppPropsWithAuth) {
   const { store, props } = wrapper.useWrappedStore(rest)
   console.log(store)
   return (
@@ -17,9 +24,15 @@ export default function App({ Component, ...rest }: AppProps) {
       <SessionProvider session={props.pageProps.session}>
         <Flowbite>
           <AdminPageProvider>
-            <Layout>
-              <Component {...props.pageProps} />
-            </Layout>
+            {Component.requireAuth ? (
+              <ProtectedLayout>
+                <Component {...props.pageProps} />
+              </ProtectedLayout>
+            ) : (
+              <Layout>
+                <Component {...props.pageProps} />
+              </Layout>
+            )}
           </AdminPageProvider>
         </Flowbite>
       </SessionProvider>

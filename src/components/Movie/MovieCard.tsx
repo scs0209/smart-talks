@@ -2,7 +2,7 @@ import { Card, CustomFlowbiteTheme } from 'flowbite-react'
 import Link from 'next/link'
 import { VFC } from 'react'
 
-import { getImageUrl } from '@/redux/api'
+import { getImageUrl } from '@/redux/api/tmdb'
 import { MovieList } from '@/redux/types/movie/movie'
 
 const customTheme: CustomFlowbiteTheme['card'] = {

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import FindPasswordModal from '../FindPasswordModal'
 import SocialBtn from './SocialBtn'
+import { useRouter } from 'next/router'
 
 interface FormValue {
   email: string
@@ -17,6 +18,7 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onChange' })
+  const router = useRouter()
   const [showModal, setShowModal] = useState(false)
 
   const onSubmit = handleSubmit(async (formData) => {
@@ -28,7 +30,7 @@ const LoginForm = () => {
     if (result?.error) {
       console.log('Error:', result.error)
     } else {
-      window.location.href = '/'
+      router.push('/')
     }
   })
   const handleForgotPasswordClick = () => {

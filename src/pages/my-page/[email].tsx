@@ -42,4 +42,6 @@ const MyPage = () => {
   )
 }
 
+MyPage.requireAuth = true
+
 export default MyPage
