@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { useGetMovieDetailsQuery } from '@/redux/api/movieApi'
-import { getImageUrl } from '@/redux/api'
+import { getImageUrl } from '@/redux/api/tmdb'
 
 interface Genre {
   id: number
