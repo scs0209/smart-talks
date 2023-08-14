@@ -9,9 +9,7 @@ import {
 } from 'react'
 
 import { Theater } from '@/redux/types/theater'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/redux/store'
-import { createShowtime } from '@/redux/actions/showtime'
+import { useCreateShowtimeMutation } from '@/redux/api/showtimeApi'
 
 interface AdminPageContextProps {
   movieId: string
@@ -55,7 +53,7 @@ export const AdminPageProvider = ({ children }: Props) => {
   const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null)
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
-  const dispatch = useDispatch<AppDispatch>()
+  const [createShowtimeMutation] = useCreateShowtimeMutation()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -69,7 +67,7 @@ export const AdminPageProvider = ({ children }: Props) => {
     }
 
     try {
-      await dispatch(createShowtime(showtime))
+      await createShowtimeMutation(showtime).unwrap()
       alert('상영시간 생성 완성!')
     } catch (error) {
       console.error('생성 중 에러가 발생했습니다.', error)

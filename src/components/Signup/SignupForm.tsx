@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { signUp } from '@/redux/api/auth'
-
 import { useForm } from 'react-hook-form'
+import { useSignUpMutation } from '@/redux/api/userApi'
 
 interface FormValue {
   email: string
@@ -20,6 +19,7 @@ const SignupForm = () => {
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onChange' })
   const router = useRouter()
+  const [signUp, { isLoading, isError }] = useSignUpMutation()
 
   const onSubmit = handleSubmit(async (formData) => {
     // Change handleSubmit to onSubmit

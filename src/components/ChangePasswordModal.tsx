@@ -1,8 +1,8 @@
 import { useSession } from 'next-auth/react'
-import { FC, FormEvent, useState } from 'react'
+import { FC, FormEvent } from 'react'
 
 import useInput from '@/hooks/useInput'
-import { changePassword } from '@/redux/api/user'
+import { useChangePasswordMutation } from '@/redux/api/userApi'
 
 interface Props {
   open: boolean
@@ -13,24 +13,23 @@ const ChangePasswordModal: FC<Props> = ({ open, handleClose }) => {
   const { data: session, status } = useSession() // 세션 정보 로딩 상태
   const currentPassword = useInput('')
   const newPassword = useInput('')
-  const [passwordLoading, setPasswordLoading] = useState(false)
-
-  const isLoading = status === 'loading'
+  const [changePassword, { isLoading, isError }] = useChangePasswordMutation()
 
   const handleChangePassword = async (e: FormEvent) => {
     e.preventDefault()
-    setPasswordLoading(true)
 
     try {
-      await changePassword(currentPassword.value, newPassword.value, session)
+      await changePassword({
+        currentPassword: currentPassword.value,
+        newPassword: newPassword.value,
+        session,
+      })
       alert('비밀번호 변경 완료')
       handleClose()
       // 비밀번호 변경 성공 처리
     } catch (err: any) {
       alert(err.response.data)
     }
-
-    setPasswordLoading(false)
   }
 
   if (isLoading) {
@@ -91,10 +90,10 @@ const ChangePasswordModal: FC<Props> = ({ open, handleClose }) => {
               <button
                 type="submit"
                 onClick={handleChangePassword}
-                disabled={passwordLoading}
+                disabled={isLoading}
                 className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                {passwordLoading ? 'Loading...' : 'Change Password'}
+                {isLoading ? 'Loading...' : 'Change Password'}
               </button>
             </form>
           </div>

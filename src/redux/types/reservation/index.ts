@@ -1,13 +1,48 @@
 /* eslint-disable */
 
-// 기존 Reservation 인터페이스 업데이트
+export interface User {
+  _id: string
+  username: string
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+}
+
+export interface Movie {
+  _id: string
+  title: string
+}
+
+export interface Theater {
+  _id: string
+  name: string
+  address: string
+}
+
+export interface Screen {
+  _id: string
+  screenName: string
+  theater: string
+  address: string
+}
+
+export interface Showtime {
+  _id: string
+  movie: Movie
+  theater: Theater
+  screen: Screen
+  startTime: string
+  endTime: string
+  __v: number
+}
+
 export interface Reservation {
   _id: string
-  theater_id: Object
-  user_id?: string
-  showtime_id: string
-  seat_info?: number[]
-  payment_info?: any
+  user: User
+  showtime: Showtime
+  seatInfo: number[]
+  paymentInfo: any
 }
 
 interface SelectedReservation {

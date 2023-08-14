@@ -132,8 +132,8 @@ const LoginForm = () => {
                   Sign up
                 </Link>
               </p>
-              <FindPasswordModal open={showModal} onClose={handleCloseModal} />
             </form>
+            <FindPasswordModal open={showModal} onClose={handleCloseModal} />
           </div>
         </div>
       </div>

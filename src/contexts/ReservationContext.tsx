@@ -10,15 +10,11 @@ import {
   useContext,
   useState,
 } from 'react'
-import { useDispatch } from 'react-redux'
-import useSWR from 'swr'
 
-import { backUrl } from '@/config'
-import { saveReservation } from '@/redux/actions/reservation'
-import { AppDispatch } from '@/redux/store'
-import fetcher from '@/utils/fetcher'
 import { processPayment } from '@/utils/payment'
 import { getFormattedDate } from '@/utils/formDate'
+import { useSaveReservationMutation } from '@/redux/api/reservationApi'
+import { useGetUserByEmailQuery } from '@/redux/api/userApi'
 
 interface ReservationContextProps {
   movieId: string
@@ -34,7 +30,6 @@ interface ReservationContextProps {
   selectedSeats: number[]
   setSelectedSeats: (selectedSeats: any) => void
   user: any
-  dispatch: AppDispatch
   handleSubmit: (e: FormEvent) => void
 }
 
@@ -60,41 +55,38 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
   const [selectedSeats, setSelectedSeats] = useState<number[]>([])
   const [screenId, setScreenId] = useState('')
   const [locationId, setLocationId] = useState('')
-  const dispatch = useDispatch<AppDispatch>()
+  const [saveReservation, { isLoading, isError }] = useSaveReservationMutation()
   const { data: session } = useSession()
-  const { data: user } = useSWR(
-    `${backUrl}/api/user?email=${session?.user?.email}`,
-    fetcher,
-  )
+  const { data: user } = useGetUserByEmailQuery(session?.user?.email)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    const paymentDate = getFormattedDate(new Date())
+    try {
+      const paymentDate = getFormattedDate(new Date())
 
-    const paymentData = {
-      movieName: '영화 이름',
-      userEmail: user.user.email,
-      userName: user.user.username,
-      paymentDate,
-    }
-
-    const paymentResponse = await processPayment(paymentData)
-
-    if (movieId && theaterId && showtimeId && user.user._id) {
-      const reservationData = {
-        user: user.user._id,
-        showtime: showtimeId,
-        seatInfo: selectedSeats,
-        paymentInfo: paymentResponse,
+      const paymentData = {
+        movieName: '영화 이름',
+        userEmail: user.user.email,
+        userName: user.user.username,
+        paymentDate,
       }
 
-      const actionResult = await dispatch(saveReservation(reservationData))
-      if (saveReservation.fulfilled.match(actionResult)) {
-        alert('예약이 성공적으로 생성되었습니다.')
-      } else if (saveReservation.rejected.match(actionResult)) {
-        alert('예약 생성에 실패했습니다.')
+      const paymentResponse = await processPayment(paymentData)
+
+      if (movieId && theaterId && showtimeId && user.user._id) {
+        const reservationData = {
+          user: user.user._id,
+          showtime: showtimeId,
+          seatInfo: selectedSeats,
+          paymentInfo: paymentResponse,
+        }
+
+        await saveReservation(reservationData)
       }
+    } catch (error) {
+      console.error('예약 생성 중 오류 발생: ', error)
+      alert('예약 생성 중 오류가 발생했습니다.')
     }
   }
 
@@ -112,7 +104,6 @@ export const ReservationProvider: FC<Props> = ({ children }) => {
     selectedSeats,
     setSelectedSeats,
     user,
-    dispatch,
     handleSubmit,
   }
 

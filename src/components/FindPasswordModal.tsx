@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import useInput from '@/hooks/useInput'
-import { sendTempPasswordEmail } from '@/redux/api/user'
+import { useSendTempPasswordEmailMutation } from '@/redux/api/userApi'
 
 interface Props {
   open: boolean
@@ -11,16 +11,24 @@ interface Props {
 const FindPasswordModal: FC<Props> = ({ open, onClose }) => {
   const email = useInput('')
   const receiveEmail = useInput('')
+  const [sendTempPasswordEmail, { isLoading, isError }] =
+    useSendTempPasswordEmailMutation()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     try {
-      await sendTempPasswordEmail(email.value, receiveEmail.value)
+      await sendTempPasswordEmail({
+        email: email.value,
+        receiveEmail: receiveEmail.value,
+      })
       alert('Temporary password email sent successfully')
     } catch (error: any) {
       console.log('Failed to send temporary password email:', error.message)
     }
   }
+
+  if (isLoading) return <div>Loading...</div>
 
   return (
     <div
@@ -75,6 +83,7 @@ const FindPasswordModal: FC<Props> = ({ open, onClose }) => {
               >
                 임시 비밀번호 전송
               </button>
+              {isLoading && <div>Loading...</div>}
             </form>
           </div>
         </div>
