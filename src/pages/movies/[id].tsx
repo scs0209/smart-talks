@@ -2,8 +2,8 @@ import { Badge } from 'flowbite-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { getImageUrl } from '@/redux/api'
 import { useGetMovieDetailsQuery } from '@/redux/api/movieApi'
+import { getImageUrl } from '@/redux/api'
 
 interface Genre {
   id: number

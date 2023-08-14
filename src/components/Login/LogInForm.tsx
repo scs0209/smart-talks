@@ -3,9 +3,9 @@ import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 import FindPasswordModal from '../FindPasswordModal'
 import SocialBtn from './SocialBtn'
-import { useRouter } from 'next/router'
 
 interface FormValue {
   email: string

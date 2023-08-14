@@ -38,7 +38,7 @@ const ProtectedLayout: FC<Props> = ({ children }) => {
   return (
     <>
       <Nav />
-      {authorized ? <div>{children}</div> : <></>}
+      {authorized ? <div>{children}</div> : null}
     </>
   )
 }
