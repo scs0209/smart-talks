@@ -43,6 +43,17 @@ const reservationSlice = createSlice({
     setSelectedSeats: (state, action: PayloadAction<number[]>) => {
       state.selectedSeats = action.payload
     },
+    toggleSeat: (state, action: PayloadAction<number>) => {
+      const seatId = action.payload
+
+      if (state.selectedSeats.includes(seatId)) {
+        state.selectedSeats = state.selectedSeats.filter(
+          (seat) => seat !== seatId,
+        )
+      } else {
+        state.selectedSeats.push(seatId)
+      }
+    },
     setSelectedTheater: (state, action: PayloadAction<Theater | null>) => {
       state.selectedTheater = action.payload
     },
@@ -58,6 +69,7 @@ export const {
   setLocationId,
   setSelectedSeats,
   setSelectedTheater,
+  toggleSeat,
 } = reservationSlice.actions
 
 export default reservationSlice.reducer

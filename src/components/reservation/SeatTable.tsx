@@ -1,11 +1,16 @@
 /* eslint-disable */
-import { useReservation } from '@/contexts/ReservationContext'
+import { toggleSeat } from '@/redux/reducers/reservationSlice'
+import { RootState } from '@/redux/store'
+import { useDispatch, useSelector } from 'react-redux'
 
 const totalRows = 10 // 행의 수
 const totalColumns = 10 // 열의 수
 
 const SeatTable = () => {
-  const { selectedSeats, setSelectedSeats } = useReservation()
+  const { selectedSeats } = useSelector(
+    (state: RootState) => state.reservations,
+  )
+  const dispatch = useDispatch()
   const generateSeats = () => {
     const seats = Array.from(
       { length: totalRows * totalColumns },
@@ -25,13 +30,7 @@ const SeatTable = () => {
   }
 
   const onClickSeat = (seatId: number) => {
-    setSelectedSeats((prevSelectedSeats: number[]) => {
-      if (prevSelectedSeats.includes(seatId)) {
-        return prevSelectedSeats.filter((seat: number) => seat !== seatId)
-      }
-
-      return [...prevSelectedSeats, seatId]
-    })
+    dispatch(toggleSeat(seatId))
   }
 
   const seatTable = generateSeats()
