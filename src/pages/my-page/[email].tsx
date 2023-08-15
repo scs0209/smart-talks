@@ -15,6 +15,8 @@ const MyPage = () => {
   const { data: user } = useGetUserByEmailQuery(email)
   const { isModalOpen, openModal, closeModal } = useModal()
 
+  console.log(session)
+
   if (status === 'loading') {
     return <div>Loading...</div>
   }

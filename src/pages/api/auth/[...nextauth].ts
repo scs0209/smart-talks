@@ -62,14 +62,11 @@ export const authOptions: AuthOptions = {
     updateAge: 2 * 24 * 60 * 60,
   },
   callbacks: {
-    async jwt({ token, account, profile }) {
-      if (account) {
-        token.accessToken = account.access_token
-      }
-
-      return token
+    async jwt({ token, account, profile, user }) {
+      return { ...token, ...user }
     },
     async session({ session, token, user }) {
+      session.user = token as any
       return session
     },
   },
