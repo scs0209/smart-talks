@@ -1,6 +1,11 @@
 import { Button, CustomFlowbiteTheme, Table } from 'flowbite-react'
 
-import { useMyPage } from '@/contexts/MyPageContext'
+import { Reservation, User } from '@/redux/types/reservation'
+import {
+  useDeleteReservationMutation,
+  useGetReservationsByUserQuery,
+} from '@/redux/api/reservationApi'
+import { VFC } from 'react'
 
 const customTheme: CustomFlowbiteTheme['table'] = {
   root: {
@@ -11,8 +16,30 @@ const customTheme: CustomFlowbiteTheme['table'] = {
   },
 }
 
-const ReservationTable = () => {
-  const { reservations, handleDeleteReservation } = useMyPage()
+type UserData = {
+  success: boolean
+  user: User
+}
+
+interface Props {
+  user: UserData
+}
+
+const ReservationTable: VFC<Props> = ({ user }) => {
+  const { data: reservations } = useGetReservationsByUserQuery(user?.user._id)
+  const [deleteReservation, { isLoading, isError }] =
+    useDeleteReservationMutation()
+
+  const handleDeleteReservation = async (reservationId: string) => {
+    try {
+      await deleteReservation(reservationId)
+
+      // 예약이 취소되었다는 성공 알림을 추가합니다.
+      alert('예약이 성공적으로 취소되었습니다.')
+    } catch (error) {
+      console.error('Error deleting reservation:', error)
+    }
+  }
 
   console.log(reservations)
 
@@ -27,16 +54,16 @@ const ReservationTable = () => {
         <span className="sr-only">Delete</span>
       </Table.HeadCell>
       <Table.Body>
-        {reservations?.map((reservation) => {
+        {reservations?.map((reservation: Reservation) => {
           return (
             <Table.Row
               className="bg-white dark:border-gray-700 dark:bg-gray-800"
               key={reservation._id}
             >
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+              <Table.Cell className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {reservation.showtime.movie.title}
               </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+              <Table.Cell className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {new Date(reservation.showtime.startTime).toLocaleTimeString(
                   [],
                   {
@@ -45,7 +72,7 @@ const ReservationTable = () => {
                   },
                 )}
               </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+              <Table.Cell className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {new Date(reservation.showtime.endTime).toLocaleTimeString(
                   'ko-KR',
                   {
@@ -54,13 +81,13 @@ const ReservationTable = () => {
                   },
                 )}
               </Table.Cell>
-              <Table.Cell className="font-medium text-gray-900 dark:text-white w-20">
+              <Table.Cell className="w-20 font-medium text-gray-900 dark:text-white">
                 {reservation.showtime.screen.screenName}
               </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+              <Table.Cell className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {`${reservation.paymentInfo.paid_amount} KRW`}
               </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+              <Table.Cell className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <Button
                   gradientDuoTone="purpleToPink"
                   outline
