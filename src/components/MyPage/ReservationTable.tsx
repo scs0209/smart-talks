@@ -41,8 +41,6 @@ const ReservationTable: VFC<Props> = ({ user }) => {
     }
   }
 
-  console.log(reservations)
-
   return (
     <Table theme={customTheme}>
       <Table.HeadCell>영화 제목</Table.HeadCell>

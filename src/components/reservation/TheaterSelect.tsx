@@ -1,28 +1,33 @@
 import { Label, Select } from 'flowbite-react'
 
-import { useReservation } from '@/contexts/ReservationContext'
-import { useState } from 'react'
-import { Theater } from '@/redux/types/theater'
 import { useGetTheatersQuery } from '@/redux/api/theaterApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import {
+  setLocationId,
+  setSelectedTheater,
+  setTheaterId,
+} from '@/redux/reducers/reservationSlice'
 
 const TheaterSelect = () => {
   const { data: theaters, isLoading, isError } = useGetTheatersQuery()
-  const { theaterId, setTheaterId, locationId, setLocationId } =
-    useReservation()
-  const [selectedTheater, setSelectedTheater] = useState<Theater | null>(null)
+  const { theaterId, locationId, selectedTheater } = useSelector(
+    (state: RootState) => state.reservations,
+  )
+  const dispatch = useDispatch()
 
   console.log(theaters, theaterId)
 
   const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTheaterId(e.target.value)
+    dispatch(setTheaterId(e.target.value))
     if (theaters) {
       const chosenTheater = theaters.find((t) => t._id === e.target.value)
-      setSelectedTheater(chosenTheater || null)
+      dispatch(setSelectedTheater(chosenTheater || null))
     }
   }
 
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setLocationId(e.target.value)
+    dispatch(setLocationId(e.target.value))
     console.log(locationId)
   }
 

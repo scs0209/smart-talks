@@ -1,10 +1,15 @@
 import { Label, Select } from 'flowbite-react'
 
-import { useReservation } from '@/contexts/ReservationContext'
 import { useGetScreensQuery } from '@/redux/api/screenApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import { setScreenId } from '@/redux/reducers/reservationSlice'
 
 const ScreenSelect = () => {
-  const { screenId, setScreenId, locationId } = useReservation()
+  const { screenId, locationId } = useSelector(
+    (state: RootState) => state.reservations,
+  )
+  const dispatch = useDispatch()
   const { data: screens } = useGetScreensQuery(locationId)
 
   console.log(screenId)
@@ -15,7 +20,7 @@ const ScreenSelect = () => {
       <Select
         id="screen-id"
         value={screenId}
-        onChange={(e) => setScreenId(e.target.value)}
+        onChange={(e) => dispatch(setScreenId(e.target.value))}
         required
       >
         <option value="">- 스크린을 선택하세요. -</option>

@@ -1,7 +1,6 @@
 import Head from 'next/head'
 
 import ReservationForm from '@/components/reservation/ReservationForm'
-import { ReservationProvider } from '@/contexts/ReservationContext'
 
 const ReservationPage = () => {
   return (
@@ -19,10 +18,8 @@ const ReservationPage = () => {
         />
       </Head>
       <div className="h-screen max-w-screen-lg mx-auto">
-        <h1 className="text-5xl font-extrabold dark:text-white m-3">예매</h1>
-        <ReservationProvider>
-          <ReservationForm />
-        </ReservationProvider>
+        <h1 className="m-3 text-5xl font-extrabold dark:text-white">예매</h1>
+        <ReservationForm />
       </div>
     </>
   )
