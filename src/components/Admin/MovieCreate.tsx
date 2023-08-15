@@ -1,10 +1,14 @@
 import { Label, Select } from 'flowbite-react'
 
-import { useAdminPage } from '@/contexts/AdminContext'
 import { useGetMovieListQuery } from '@/redux/api/movieApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import { setMovieId } from '@/redux/reducers/showtimeSlice'
 
 const MovieCreate = () => {
-  const { movieId, setMovieId } = useAdminPage()
+  const movieId = useSelector((state: RootState) => state.showtimes.movieId)
+  const dispatch = useDispatch()
+  // const { movieId, setMovieId } = useAdminPage()
   const { data: movieList, isLoading, isError } = useGetMovieListQuery()
 
   console.log(movieList, movieId)
@@ -23,7 +27,7 @@ const MovieCreate = () => {
       <Select
         id="movie-id"
         value={movieId}
-        onChange={(e) => setMovieId(e.target.value)}
+        onChange={(e) => dispatch(setMovieId(e.target.value))}
         required
       >
         <option value="">- Select a movie -</option>

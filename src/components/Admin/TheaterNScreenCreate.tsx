@@ -1,20 +1,21 @@
 import { Label, Select } from 'flowbite-react'
 
-import { useAdminPage } from '@/contexts/AdminContext'
 import { useGetTheatersQuery } from '@/redux/api/theaterApi'
 import { useGetScreensQuery } from '@/redux/api/screenApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import {
+  setLocationId,
+  setScreenId,
+  setSelectedTheater,
+  setTheaterId,
+} from '@/redux/reducers/showtimeSlice'
 
 const TheaterNScreenCreate = () => {
-  const {
-    theaterId,
-    setTheaterId,
-    locationId,
-    setLocationId,
-    screenId,
-    setScreenId,
-    selectedTheater,
-    setSelectedTheater,
-  } = useAdminPage()
+  const { theaterId, locationId, screenId, selectedTheater } = useSelector(
+    (state: RootState) => state.showtimes,
+  )
+  const dispatch = useDispatch()
   const {
     data: theaters,
     isLoading: theaterLoading,
@@ -28,15 +29,15 @@ const TheaterNScreenCreate = () => {
   } = useGetScreensQuery(locationId)
 
   const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTheaterId(e.target.value)
+    dispatch(setTheaterId(e.target.value))
     if (theaters) {
       const chosenTheater = theaters.find((t) => t._id === e.target.value)
-      setSelectedTheater(chosenTheater || null)
+      dispatch(setSelectedTheater(chosenTheater || null))
     }
   }
 
   const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setLocationId(e.target.value)
+    dispatch(setLocationId(e.target.value))
   }
 
   console.log(screens)
@@ -84,7 +85,7 @@ const TheaterNScreenCreate = () => {
       <Select
         id="screen-select"
         value={screenId}
-        onChange={(e) => setScreenId(e.target.value)}
+        onChange={(e) => dispatch(setScreenId(e.target.value))}
         required
       >
         <option value="">- Select a screen -</option>

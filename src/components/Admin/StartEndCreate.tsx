@@ -1,9 +1,14 @@
 import { Label } from 'flowbite-react'
 
-import { useAdminPage } from '@/contexts/AdminContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import { setEndTime, setStartTime } from '@/redux/reducers/showtimeSlice'
 
 const StartEndCreate = () => {
-  const { startTime, setStartTime, endTime, setEndTime } = useAdminPage()
+  const { startTime, endTime } = useSelector(
+    (state: RootState) => state.showtimes,
+  )
+  const dispatch = useDispatch()
 
   return (
     <div className="flex justify-between mt-4">
@@ -12,7 +17,7 @@ const StartEndCreate = () => {
         type="datetime-local"
         id="start-time"
         value={startTime}
-        onChange={(e) => setStartTime(e.target.value)}
+        onChange={(e) => dispatch(setStartTime(e.target.value))}
         required
       />
       <Label htmlFor="end-time" value="End Time" />
@@ -20,7 +25,7 @@ const StartEndCreate = () => {
         type="datetime-local"
         id="end-time"
         value={endTime}
-        onChange={(e) => setEndTime(e.target.value)}
+        onChange={(e) => dispatch(setEndTime(e.target.value))}
         required
       />
     </div>

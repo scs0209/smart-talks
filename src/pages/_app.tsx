@@ -6,7 +6,6 @@ import { SessionProvider } from 'next-auth/react'
 import { Provider } from 'react-redux'
 
 import Layout from '@/components/Layout'
-import { AdminPageProvider } from '@/contexts/AdminContext'
 import { wrapper } from '@/redux/store'
 import ProtectedLayout from '@/components/ProtecetedLayout'
 
@@ -23,17 +22,15 @@ export default function App({ Component, ...rest }: AppPropsWithAuth) {
     <Provider store={store}>
       <SessionProvider session={props.pageProps.session}>
         <Flowbite>
-          <AdminPageProvider>
-            {Component.requireAuth ? (
-              <ProtectedLayout>
-                <Component {...props.pageProps} />
-              </ProtectedLayout>
-            ) : (
-              <Layout>
-                <Component {...props.pageProps} />
-              </Layout>
-            )}
-          </AdminPageProvider>
+          {Component.requireAuth ? (
+            <ProtectedLayout>
+              <Component {...props.pageProps} />
+            </ProtectedLayout>
+          ) : (
+            <Layout>
+              <Component {...props.pageProps} />
+            </Layout>
+          )}
         </Flowbite>
       </SessionProvider>
     </Provider>
