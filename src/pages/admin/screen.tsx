@@ -94,4 +94,7 @@ const CreateScreen = () => {
   )
 }
 
+CreateScreen.requireAuth = true
+CreateScreen.allowRole = 'admin'
+
 export default CreateScreen

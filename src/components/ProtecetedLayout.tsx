@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { FC, ReactNode, useEffect } from 'react'
@@ -5,9 +6,10 @@ import Nav from './Nav'
 
 interface Props {
   children: ReactNode
+  allowRole?: '' | 'admin'
 }
 
-const ProtectedLayout: FC<Props> = ({ children }) => {
+const ProtectedLayout: FC<Props> = ({ children, allowRole }) => {
   const { data: session, status } = useSession()
   const router = useRouter()
 
@@ -26,6 +28,9 @@ const ProtectedLayout: FC<Props> = ({ children }) => {
         pathname: '/login',
         query: { returnUrl: router.asPath },
       })
+    } else if (allowRole === 'admin' && session?.user?.role !== 'admin') {
+      alert('관리자 계정으로 로그인해주세요!')
+      router.push('/')
     }
   }, [loading, unAuthorized, status, router])
 

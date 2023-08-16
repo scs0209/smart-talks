@@ -11,6 +11,7 @@ import ProtectedLayout from '@/components/ProtecetedLayout'
 type AppPropsWithAuth = AppProps & {
   Component: {
     requireAuth?: boolean
+    allowRole?: '' | 'admin'
   }
 }
 
@@ -19,7 +20,7 @@ function App({ Component, pageProps }: AppPropsWithAuth) {
     <SessionProvider session={...pageProps.session}>
       <Flowbite>
         {Component.requireAuth ? (
-          <ProtectedLayout>
+          <ProtectedLayout allowRole={Component.allowRole}>
             <Component {...pageProps} />
           </ProtectedLayout>
         ) : (

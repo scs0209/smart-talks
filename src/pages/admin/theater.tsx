@@ -51,4 +51,7 @@ const CreateTheater = () => {
   )
 }
 
+CreateTheater.requireAuth = true
+CreateTheater.allowRole = 'admin'
+
 export default CreateTheater

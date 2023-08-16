@@ -9,4 +9,7 @@ const AdminPage = () => {
   )
 }
 
+AdminPage.requireAuth = true
+AdminPage.allowRole = 'admin'
+
 export default AdminPage
