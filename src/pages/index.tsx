@@ -6,28 +6,18 @@ import MovieList from '@/components/Movie/MovieList'
 import { GetStaticProps } from 'next'
 import { wrapper } from '@/redux/store'
 import movieApi, { getRunningQueriesThunk } from '@/redux/api/movieApi'
-import Head from 'next/head'
 
 export default function Home({ movies }: any) {
   const results = movies.queries['getPopularMovies(1)'].data
   const movieList = movies.queries['getMovieList(undefined)'].data
 
+  console.log(results, movies)
   return (
-    <>
-      <Head>
-        <title>SMAX</title>
-        <meta
-          name="description"
-          content="최신 인기 영화와 다양한 영화를 찾아보세요."
-        />
-        <meta name="keywords" content="영화, 추천, 인기, 최신, 영화 목록" />
-      </Head>
-      <div>
-        <Hero movies={results} />
-        <MovieList movieList={movieList} />
-        <SpecialHall />
-      </div>
-    </>
+    <div>
+      <Hero movies={results} />
+      <MovieList movieList={movieList} />
+      <SpecialHall />
+    </div>
   )
 }
 
