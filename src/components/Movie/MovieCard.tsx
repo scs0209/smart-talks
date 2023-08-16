@@ -27,9 +27,9 @@ const MovieCard: VFC<Props> = ({ movie }) => {
       <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-white">
         <p>{movie.title}</p>
       </h5>
-      <p className="text-xs font-normal text-gray-700 dark:text-gray-400">
+      <div className="text-xs font-normal text-gray-700 dark:text-gray-400">
         <p>평점: {movie.rating}</p>
-      </p>
+      </div>
 
       <div className="absolute inset-0 flex items-center justify-center opacity-0 bg-black bg-opacity-50 group-hover:opacity-100 transition-opacity">
         <div className="flex flex-col space-y-4">

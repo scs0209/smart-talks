@@ -9,12 +9,13 @@ import movieApi, { getRunningQueriesThunk } from '@/redux/api/movieApi'
 
 export default function Home({ movies }: any) {
   const results = movies.queries['getPopularMovies(1)'].data
+  const movieList = movies.queries['getMovieList(undefined)'].data
 
-  console.log(results)
+  console.log(results, movies)
   return (
     <div>
       <Hero movies={results} />
-      <MovieList />
+      <MovieList movieList={movieList} />
       <SpecialHall />
     </div>
   )
@@ -24,6 +25,7 @@ export const getStaticProps: GetStaticProps = wrapper.getStaticProps(
   (store) => async () => {
     // RTK Query 디스패치
     store.dispatch(movieApi.endpoints.getPopularMovies.initiate(1))
+    store.dispatch(movieApi.endpoints.getMovieList.initiate())
 
     await Promise.all(store.dispatch(getRunningQueriesThunk()))
 

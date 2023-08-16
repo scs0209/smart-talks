@@ -1,6 +1,6 @@
 import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
 
-import { useGetMovieListQuery } from '@/redux/api/movieApi'
+import { VFC } from 'react'
 import MovieCard from './MovieCard'
 
 const customTheme: CustomFlowbiteTheme['carousel'] = {
@@ -13,19 +13,18 @@ const customTheme: CustomFlowbiteTheme['carousel'] = {
   },
 }
 
-const MovieList = () => {
-  const { data: movieList, isLoading, isError } = useGetMovieListQuery()
+interface Props {
+  movieList: any
+}
 
-  if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error: {isError}</div>
-
+const MovieList: VFC<Props> = ({ movieList }) => {
   return (
     <div className="max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] overflow-auto">
       <div className="pt-4 pb-2 text-2xl font-semibold dark:text-white">
         영화 목록
       </div>
       <Carousel slide={false} theme={customTheme}>
-        {movieList?.map((movie) => (
+        {movieList?.map((movie: any) => (
           <div key={movie.id} className="w-full">
             <MovieCard movie={movie} />
           </div>
