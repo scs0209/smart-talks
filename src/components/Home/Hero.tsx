@@ -1,17 +1,11 @@
-import { useGetPopularMoviesQuery } from '@/redux/api/movieApi'
+import { VFC } from 'react'
 
-const Hero = () => {
-  const { data: movies, isFetching, isError } = useGetPopularMoviesQuery(1)
+interface Props {
+  movies: any
+}
 
+const Hero: VFC<Props> = ({ movies }) => {
   const videoUrl = `https://www.youtube.com/embed/${movies?.results[0].video.key}`
-
-  if (isFetching) {
-    return <div>Loading...</div>
-  }
-
-  if (isError) {
-    return <div>Error: {isError}</div>
-  }
 
   return (
     <section className="bg-black border-solid border-b-[1px] h-[50vh] border-b-gray-500">

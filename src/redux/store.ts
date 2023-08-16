@@ -5,7 +5,7 @@ import {
   PayloadAction,
   ThunkAction,
 } from '@reduxjs/toolkit'
-import { createWrapper, HYDRATE } from 'next-redux-wrapper'
+import { Context, createWrapper, HYDRATE } from 'next-redux-wrapper'
 
 import { moviesReducer } from './reducers/movieSlice'
 import reservationSlice from './reducers/reservationSlice'
@@ -36,7 +36,7 @@ const reducer = (state: any, action: PayloadAction<any>) => {
   })(state, action)
 }
 
-const makeStore = () =>
+const makeStore = (context: Context) =>
   configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
@@ -51,17 +51,16 @@ const makeStore = () =>
     devTools: process.env.NODE_ENV !== 'production',
   })
 
-const store = makeStore()
-
-export const wrapper = createWrapper<AppStore>(makeStore, {
-  debug: process.env.NODE_ENV === 'development',
-})
 export type AppStore = ReturnType<typeof makeStore>
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<AppStore['getState']>
+export type AppDispatch = AppStore['dispatch']
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
   unknown,
   Action
 >
+
+export const wrapper = createWrapper<AppStore>(makeStore, {
+  debug: true,
+})
