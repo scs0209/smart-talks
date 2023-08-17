@@ -8,10 +8,7 @@ import { setMovieId } from '@/redux/reducers/showtimeSlice'
 const MovieCreate = () => {
   const movieId = useSelector((state: RootState) => state.showtimes.movieId)
   const dispatch = useDispatch()
-  // const { movieId, setMovieId } = useAdminPage()
   const { data: movieList, isLoading, isError } = useGetMovieListQuery()
-
-  console.log(movieList, movieId)
 
   if (isLoading) {
     return <div>Loading...</div>

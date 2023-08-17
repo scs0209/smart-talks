@@ -40,6 +40,14 @@ const Nav = () => {
                 >
                   My Page
                 </Link>
+                {session.user.role === 'admin' && (
+                  <Link
+                    href="/admin"
+                    className="text-sm mr-3 text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    Admin Page
+                  </Link>
+                )}
                 <span
                   onClick={handleLogout}
                   className="text-sm text-blue-600 dark:text-blue-500 hover:underline"

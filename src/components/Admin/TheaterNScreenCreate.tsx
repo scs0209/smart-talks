@@ -40,8 +40,6 @@ const TheaterNScreenCreate = () => {
     dispatch(setLocationId(e.target.value))
   }
 
-  console.log(screens)
-
   if (theaterLoading) {
     return <div>Loading...</div>
   }

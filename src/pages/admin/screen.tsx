@@ -1,6 +1,7 @@
 import { useCreateScreenMutation } from '@/redux/api/screenApi'
 import { useGetTheatersQuery } from '@/redux/api/theaterApi'
 import { Theater } from '@/redux/types/theater'
+import { Button, Label, Select, TextInput } from 'flowbite-react'
 import React, { useState, FormEvent } from 'react'
 
 const CreateScreen = () => {
@@ -13,8 +14,6 @@ const CreateScreen = () => {
     createScreen,
     { isLoading: createScreenLoading, error: createScreenError },
   ] = useCreateScreenMutation()
-
-  console.log(theaters)
 
   const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTheaterId(e.target.value)
@@ -53,29 +52,29 @@ const CreateScreen = () => {
   }
 
   return (
-    <div>
+    <div className="h-screen max-w-screen-lg mx-auto mt-3">
       <h2>Create Screen</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="screenName">Screen Name</label>
-        <input
+        <Label htmlFor="screenName" value="Screen Name" />
+        <TextInput
           type="text"
           id="screenName"
           value={screenName}
           onChange={(e) => setScreenName(e.target.value)}
         />
 
-        <label htmlFor="theaterId">Select Theater</label>
-        <select id="theaterId" value={theaterId} onChange={handleTheaterChange}>
+        <Label htmlFor="theaterId" value="Select Theater" />
+        <Select id="theaterId" value={theaterId} onChange={handleTheaterChange}>
           <option value="">-- Select Theater --</option>
           {theaters?.map((theater) => (
             <option key={theater._id} value={theater._id}>
               {theater._id}
             </option>
           ))}
-        </select>
+        </Select>
 
-        <label htmlFor="addressId">Select Address</label>
-        <select
+        <Label htmlFor="addressId" value="Select Address " />
+        <Select
           id="addressId"
           onChange={handleLocationChange}
           value={locationId}
@@ -86,9 +85,11 @@ const CreateScreen = () => {
               {location.address}
             </option>
           ))}
-        </select>
+        </Select>
 
-        <button type="submit">Create Screen</button>
+        <Button type="submit" className="w-full mt-3" color="gray">
+          Create Screen
+        </Button>
       </form>
     </div>
   )

@@ -1,4 +1,5 @@
 import { useCreateTheaterMutation } from '@/redux/api/theaterApi'
+import { Button, Label, TextInput } from 'flowbite-react'
 import React, { FormEvent, useState } from 'react'
 
 const CreateTheater = () => {
@@ -26,26 +27,28 @@ const CreateTheater = () => {
   if (isError) return <div>{isError}</div>
 
   return (
-    <div>
-      <h2>Create Theater</h2>
+    <div className="h-screen max-w-screen-lg mx-auto mt-3">
+      <h2 className="text-2xl font-bold">Create Theater</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input
+        <Label htmlFor="name" value="Name" />
+        <TextInput
           type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
-        <label htmlFor="address">Address</label>
-        <input
+        <Label htmlFor="address" value="Address" />
+        <TextInput
           type="text"
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
 
-        <button type="submit">Create Theater</button>
+        <Button type="submit" className="mt-3 w-full" color="gray">
+          Create Theater
+        </Button>
       </form>
     </div>
   )

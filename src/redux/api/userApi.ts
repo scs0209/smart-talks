@@ -55,6 +55,15 @@ export const userApi = createApi({
         },
       }),
     }),
+    deleteUser: builder.mutation<void, { userId: string; adminId: string }>({
+      query: ({ userId, adminId }) => ({
+        url: `/user?userId=${userId}&adminId=${adminId}`,
+        method: 'DELETE',
+      }),
+    }),
+    getAllUsers: builder.query<any, void>({
+      query: () => `/user`,
+    }),
   }),
 })
 
@@ -63,4 +72,6 @@ export const {
   useGetUserByEmailQuery,
   useChangePasswordMutation,
   useSendTempPasswordEmailMutation,
+  useDeleteUserMutation,
+  useGetAllUsersQuery,
 } = userApi
