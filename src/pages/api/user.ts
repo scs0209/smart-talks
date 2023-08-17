@@ -13,6 +13,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const { username, email, password, firstName, lastName } = req.body
 
+      const existingUser = await User.findOne({ email })
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email is already in use. Please use a different email.',
+        })
+      }
+
       // 비밀번호 암호화
       const hashedPassword = await bcrypt.hash(password, 10)
 
