@@ -1,7 +1,7 @@
 import { useDeleteUserMutation, useGetAllUsersQuery } from '@/redux/api/userApi'
 import { Button, Table } from 'flowbite-react'
 import { useSession } from 'next-auth/react'
-import { Head } from 'next/document'
+import Head from 'next/head'
 import Link from 'next/link'
 
 const AdminPage = () => {

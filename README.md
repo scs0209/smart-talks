@@ -1,4 +1,4 @@
-# FilmFinder
+# SMAX
 
 <div align="center">
 <img src="https://user-images.githubusercontent.com/110822847/235289858-a8950f96-5c58-42f9-8a56-5abc50c541af.png" width="300">
@@ -63,12 +63,13 @@ npm run dev or npm run start
 
 ## 라이브러리 선택 이유
 
-- Next.js: 서버 사이드 렌더링(SSR)을 지원하여 검색 엔진 최적화(SEO)를 개선하고 초기 로딩 속도를 높이기 위해 사용했습니다.
-- TypeScript: 코드의 가독성과 유지 보수성을 높이고, 컴파일 타임에 타입 검사를 통해 버그를 줄이기 위해 사용했습니다.
-- MongoDB & Mongoose: NoSQL 기반의 데이터베이스로 대용량 데이터 처리와 확장성을 고려하여 선택했습니다. Mongoose는 MongoDB를 더 쉽게 사용하기 위해 선택하였습니다.
-- Redux Toolkit: 상태 관리를 효율적으로 하기 위해 사용하였으며, 응용 프로그램의 복잡성을 줄여 구조화된 상태 관리를 가능케 합니다.
-- Axios: RESTful API 통신을 위해 사용하였고, 쉽게 요청과 응답을 처리할 수 있는 기능을 제공하여 개발에 편리함을 줍니다.
-- react-hook-form: 비제어 컴포넌트의 장점은 그대로 살리면서 제어 컴포넌트에서만 다룰 수 있는 실시간 유효성 검사, 실시간 동기화 등의 API를 제공하여 실시간 유효성 검사 및 동기화를 가능하게 해줍니다.
+- **Next.js**: 서버 사이드 렌더링(SSR)을 지원하여 검색 엔진 최적화(SEO)를 개선하고 초기 로딩 속도를 높이기 위해 사용했습니다.
+- **TypeScript**: 코드의 가독성과 유지 보수성을 높이고, 컴파일 타임에 타입 검사를 통해 버그를 줄이기 위해 사용했습니다.
+- **MongoDB & Mongoose**: NoSQL 기반의 데이터베이스로 대용량 데이터 처리와 확장성을 고려하여 선택했습니다. Mongoose는 MongoDB를 더 쉽게 사용하기 위해 선택하였습니다.
+- **Redux Toolkit**: 상태 관리를 효율적으로 하기 위해 사용하였으며, 응용 프로그램의 복잡성을 줄여 구조화된 상태 관리를 가능케 합니다.
+- **RTK Query**: Redux Toolkit의 일부로, 서버 상태와 캐시 관리를 간소화하며 API 호출을 쉽게 만들어줍니다. 이를 통해 개발자는 네트워크 요청과 데이터 관리에 대한 부담을 줄일 수 있습니다.
+- **Axios**: RESTful API 통신을 위해 사용하였고, 쉽게 요청과 응답을 처리할 수 있는 기능을 제공하여 개발에 편리함을 줍니다.
+- **react-hook-form**: 비제어 컴포넌트의 장점은 그대로 살리면서 제어 컴포넌트에서만 다룰 수 있는 실시간 유효성 검사, 실시간 동기화 등의 API를 제공하여 실시간 유효성 검사 및 동기화를 가능하게 해줍니다.
 
 <details>
 <summary>선택한 라이브러리의 장단점</summary>
@@ -115,12 +116,15 @@ npm run dev or npm run start
 - 영화 예매 기능
 - 영화 검색 기능
 - 영화 목록 기능
+- 마이 페이지
+- 관리자 페이지
+- 권한에 따른 페이지 접속을 가능하게 하는 프로텍트 라우트 구현
 
 ## 프로젝트 설명
 
 1. 메인 페이지
 
-- Hero Section에 TMDB API를 활용해 최신영화의 예고편을 보여줌
+- Hero Section에 `TMDB API`를 활용해 최신영화의 예고편을 보여줌
 - Hero Section 아래에는 Movie 스키마 등록된 영화 목록이 보여짐
 - getStaticProps를 사용하여 초기 로딩 속도 향상(Lighthouse 성능 점수 76 -> 99)
 
@@ -128,7 +132,7 @@ npm run dev or npm run start
 
 2. 로그인, 회원가입
 
-- `next-auth`를 사용하여 커스텀 로그인과 소셜 미디어 프로바이더를 통한 소셜 로그인을 구현
+- `next-auth`를 사용하여 커스텀 로그인과 소셜 미디어 프로바이더를 통한 `소셜 로그인`을 구현
 - `react-hook-form`을 사용하여 실시간 유효성 검사 및 불필요한 리렌더링 최소화
 
 로그인
@@ -166,6 +170,12 @@ npm run dev or npm run start
 - 예매한 정보 삭제 가능
 
 ![마이페이지](https://github.com/scs0209/myBlog/assets/110822847/f3e11ee4-2052-4f91-b35c-f7be8f46a71d)
+
+7. 관리자 페이지 구현
+
+- 해당 웹에 가입한 유저 전체를 볼 수 있고, 삭제할 수 있음
+
+![관리자 페이지](https://github.com/scs0209/myBlog/assets/110822847/5eaf860a-b74e-4b3a-a3b7-953df98af052)
 
 ## 📂 디렉토리 구조
 
