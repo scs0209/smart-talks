@@ -53,8 +53,6 @@ const ReservationForm = () => {
     }
   }
 
-  console.log(session)
-
   return (
     <>
       <form onSubmit={handleSubmit}>
