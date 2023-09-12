@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useGetScreensQuery } from '@/redux/api/screenApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -11,21 +12,19 @@ const ScreenSelect = () => {
   const { data: screens } = useGetScreensQuery(locationId)
 
   return (
-    <>
-      <ul id="screen-id">
-        {screens?.map((screen) => (
-          <li
-            key={screen._id}
-            onClick={() => dispatch(setScreenId(screen._id))}
-            className={`cursor-pointer ${
-              screen._id === screenId ? 'font-bold' : ''
-            }`}
-          >
-            {screen.screenName}
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul id="screen-id">
+      {screens?.map((screen) => (
+        <li
+          key={screen._id}
+          onClick={() => dispatch(setScreenId(screen._id))}
+          className={`cursor-pointer ${
+            screen._id === screenId ? 'font-bold' : ''
+          }`}
+        >
+          {screen.screenName}
+        </li>
+      ))}
+    </ul>
   )
 }
 

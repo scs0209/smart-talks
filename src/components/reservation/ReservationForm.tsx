@@ -82,7 +82,7 @@ const ReservationForm = () => {
                 <ShowtimeSelect />
               </td>
             </tr>
-            <tr></tr>
+            <tr />
           </tbody>
         </Table>
         <Button type="submit" color="purple" className="mt-3">

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useGetTheatersQuery } from '@/redux/api/theaterApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'

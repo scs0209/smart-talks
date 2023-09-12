@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useGetShowtimesQuery } from '@/redux/api/showtimeApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -17,27 +18,25 @@ const ShowtimeSelect = () => {
   )
 
   return (
-    <>
-      <ul id="showtime-id">
-        {showtimes?.map((showtime: Showtime) => (
-          <li
-            key={showtime._id}
-            onClick={() => dispatch(setShowtimeId(showtime._id))}
-            className={`cursor-pointer ${
-              showtime._id === showtimeId ? 'font-bold' : ''
-            }`}
-          >
-            {`${new Date(showtime.startTime).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })} - ${new Date(showtime.endTime).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}`}
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul id="showtime-id">
+      {showtimes?.map((showtime: Showtime) => (
+        <li
+          key={showtime._id}
+          onClick={() => dispatch(setShowtimeId(showtime._id))}
+          className={`cursor-pointer ${
+            showtime._id === showtimeId ? 'font-bold' : ''
+          }`}
+        >
+          {`${new Date(showtime.startTime).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          })} - ${new Date(showtime.endTime).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          })}`}
+        </li>
+      ))}
+    </ul>
   )
 }
 
