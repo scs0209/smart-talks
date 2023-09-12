@@ -1,5 +1,4 @@
-import { Label, Select } from 'flowbite-react'
-
+/* eslint-disable */
 import { useGetScreensQuery } from '@/redux/api/screenApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -12,25 +11,20 @@ const ScreenSelect = () => {
   const dispatch = useDispatch()
   const { data: screens } = useGetScreensQuery(locationId)
 
-  console.log(screenId)
-
   return (
-    <>
-      <Label htmlFor="screen-id" value="스크린 선택" />
-      <Select
-        id="screen-id"
-        value={screenId}
-        onChange={(e) => dispatch(setScreenId(e.target.value))}
-        required
-      >
-        <option value="">- 스크린을 선택하세요. -</option>
-        {screens?.map((screen) => (
-          <option key={screen._id} value={screen._id}>
-            {screen.screenName}
-          </option>
-        ))}
-      </Select>
-    </>
+    <ul id="screen-id">
+      {screens?.map((screen) => (
+        <li
+          key={screen._id}
+          onClick={() => dispatch(setScreenId(screen._id))}
+          className={`cursor-pointer ${
+            screen._id === screenId ? 'font-bold' : ''
+          }`}
+        >
+          {screen.screenName}
+        </li>
+      ))}
+    </ul>
   )
 }
 
