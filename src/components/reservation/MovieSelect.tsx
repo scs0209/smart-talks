@@ -1,4 +1,4 @@
-import { Label, Select } from 'flowbite-react'
+import { Label } from 'flowbite-react'
 
 import { MovieList } from '@/redux/types/movie/movie'
 import { useGetMovieListQuery } from '@/redux/api/movieApi'
@@ -17,20 +17,20 @@ const MovieSelect = () => {
 
   return (
     <>
-      <Label htmlFor="movie-id" value="영화 선택" />
-      <Select
-        id="movie-id"
-        value={movieId}
-        onChange={(e) => dispatch(setMovieId(e.target.value))}
-        required
-      >
-        <option value="">- 영화를 선택하세요. -</option>
+      <Label htmlFor="movie-id" value="영화 선택" className="text-2xl" />
+      <ul id="movie-id">
         {movieList?.map((movie: MovieList) => (
-          <option key={movie._id} value={movie._id}>
+          <li
+            key={movie._id}
+            onClick={() => dispatch(setMovieId(movie._id))}
+            className={`cursor-pointer ${
+              movie._id === movieId ? 'font-bold' : ''
+            }`}
+          >
             {movie.title}
-          </option>
+          </li>
         ))}
-      </Select>
+      </ul>
     </>
   )
 }

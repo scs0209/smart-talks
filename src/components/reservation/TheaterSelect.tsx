@@ -1,4 +1,4 @@
-import { Label, Select } from 'flowbite-react'
+import { Label } from 'flowbite-react'
 
 import { useGetTheatersQuery } from '@/redux/api/theaterApi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,49 +18,51 @@ const TheaterSelect = () => {
 
   console.log(theaters, theaterId)
 
-  const handleTheaterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setTheaterId(e.target.value))
+  const handleTheaterChange = (id: string) => {
+    dispatch(setTheaterId(id))
     if (theaters) {
-      const chosenTheater = theaters.find((t) => t._id === e.target.value)
+      const chosenTheater = theaters.find((t) => t._id === id)
       dispatch(setSelectedTheater(chosenTheater || null))
     }
   }
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setLocationId(e.target.value))
+  const handleLocationChange = (id: string) => {
+    dispatch(setLocationId(id))
     console.log(locationId)
   }
 
   return (
     <>
       <Label htmlFor="theater-id" value="극장 선택" />
-      <Select
-        id="theater-id"
-        value={theaterId}
-        onChange={handleTheaterChange}
-        required
-      >
-        <option value="">- 극장을 선택하세요. -</option>
+      <ul id="theater-id">
+        <li>- 극장을 선택하세요. -</li>
         {theaters?.map((theater) => (
-          <option key={theater._id} value={theater._id}>
+          <li
+            key={theater._id}
+            onClick={() => handleTheaterChange(theater._id)}
+            className={`cursor-pointer ${
+              theater._id === theaterId ? 'font-bold' : ''
+            }`}
+          >
             {theater._id}
-          </option>
+          </li>
         ))}
-      </Select>
+      </ul>
       <Label htmlFor="addressId" value="지점 선택" />
-      <Select
-        id="addressId"
-        value={locationId}
-        onChange={handleLocationChange}
-        required
-      >
-        <option value="">- 지점을 선택하세요. -</option>
+      <ul id="address-id">
+        <li>- 지점을 선택하세요. -</li>
         {selectedTheater?.locations.map((location) => (
-          <option key={location.id} value={location.id}>
+          <li
+            key={location.id}
+            onClick={() => handleLocationChange(location.id)}
+            className={`cursor-pointer ${
+              location.id === locationId ? 'font-bold' : ''
+            }`}
+          >
             {location.address}
-          </option>
+          </li>
         ))}
-      </Select>
+      </ul>
     </>
   )
 }

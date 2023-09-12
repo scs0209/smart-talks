@@ -1,4 +1,4 @@
-import { Button } from 'flowbite-react'
+import { Button, Table } from 'flowbite-react'
 
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -55,7 +55,7 @@ const ReservationForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <Table onSubmit={handleSubmit}>
         <MovieSelect />
         <TheaterSelect />
         <ScreenSelect />
@@ -63,7 +63,7 @@ const ReservationForm = () => {
         <Button type="submit" color="purple" className="mt-3">
           예약하기
         </Button>
-      </form>
+      </Table>
       <SeatTable />
     </>
   )

@@ -1,4 +1,4 @@
-import { Label, Select } from 'flowbite-react'
+import { Label } from 'flowbite-react'
 
 import { useGetShowtimesQuery } from '@/redux/api/showtimeApi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,28 +23,26 @@ const ShowtimeSelect = () => {
   return (
     <>
       <Label htmlFor="showtime-id" value="시간 선택" />
-      <Select
-        id="showtime-select"
-        value={showtimeId}
-        onChange={(e) => dispatch(setShowtimeId(e.target.value))}
-        required
-      >
-        <option value="">- 시간을 선택하세요. -</option>
-
+      <ul id="showtime-id">
+        <li>- 시간을 선택하세요. -</li>
         {showtimes?.map((showtime: Showtime) => (
-          <option key={showtime._id} value={showtime._id}>
-            {new Date(showtime.startTime).toLocaleTimeString([], {
+          <li
+            key={showtime._id}
+            onClick={() => dispatch(setShowtimeId(showtime._id))}
+            className={`cursor-pointer ${
+              showtime._id === showtimeId ? 'font-bold' : ''
+            }`}
+          >
+            {`${new Date(showtime.startTime).toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit',
-            })}{' '}
-            -{' '}
-            {new Date(showtime.endTime).toLocaleTimeString([], {
+            })} - ${new Date(showtime.endTime).toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit',
-            })}
-          </option>
+            })}`}
+          </li>
         ))}
-      </Select>
+      </ul>
     </>
   )
 }
