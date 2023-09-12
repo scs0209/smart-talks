@@ -55,15 +55,40 @@ const ReservationForm = () => {
 
   return (
     <>
-      <Table onSubmit={handleSubmit}>
-        <MovieSelect />
-        <TheaterSelect />
-        <ScreenSelect />
-        <ShowtimeSelect />
+      <form onSubmit={handleSubmit}>
+        <Table className="p-2">
+          <thead>
+            <tr>
+              <th>영화</th>
+              <th>극장</th>
+              <th>스크린</th>
+              <th>시간</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <MovieSelect />
+              </td>
+              {/* TheaterSelect */}
+              <td>
+                <TheaterSelect />
+              </td>
+              <td>
+                <ScreenSelect />
+              </td>
+              {/* Showtime Select */}
+              <td>
+                <ShowtimeSelect />
+              </td>
+            </tr>
+            <tr></tr>
+          </tbody>
+        </Table>
         <Button type="submit" color="purple" className="mt-3">
           예약하기
         </Button>
-      </Table>
+      </form>
       <SeatTable />
     </>
   )

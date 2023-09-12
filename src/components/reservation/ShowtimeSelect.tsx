@@ -1,5 +1,3 @@
-import { Label } from 'flowbite-react'
-
 import { useGetShowtimesQuery } from '@/redux/api/showtimeApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -18,13 +16,9 @@ const ShowtimeSelect = () => {
     },
   )
 
-  console.log(showtimes, showtimeId)
-
   return (
     <>
-      <Label htmlFor="showtime-id" value="시간 선택" />
       <ul id="showtime-id">
-        <li>- 시간을 선택하세요. -</li>
         {showtimes?.map((showtime: Showtime) => (
           <li
             key={showtime._id}

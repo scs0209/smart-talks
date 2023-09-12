@@ -1,5 +1,3 @@
-import { Label } from 'flowbite-react'
-
 import { MovieList } from '@/redux/types/movie/movie'
 import { useGetMovieListQuery } from '@/redux/api/movieApi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,7 +15,6 @@ const MovieSelect = () => {
 
   return (
     <>
-      <Label htmlFor="movie-id" value="영화 선택" className="text-2xl" />
       <ul id="movie-id">
         {movieList?.map((movie: MovieList) => (
           <li

@@ -1,5 +1,3 @@
-import { Label } from 'flowbite-react'
-
 import { useGetScreensQuery } from '@/redux/api/screenApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -12,13 +10,9 @@ const ScreenSelect = () => {
   const dispatch = useDispatch()
   const { data: screens } = useGetScreensQuery(locationId)
 
-  console.log(screenId)
-
   return (
     <>
-      <Label htmlFor="screen-id" value="스크린 선택" />
       <ul id="screen-id">
-        <li>- 스크린을 선택하세요. -</li>
         {screens?.map((screen) => (
           <li
             key={screen._id}

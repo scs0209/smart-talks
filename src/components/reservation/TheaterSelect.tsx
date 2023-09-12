@@ -1,5 +1,3 @@
-import { Label } from 'flowbite-react'
-
 import { useGetTheatersQuery } from '@/redux/api/theaterApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -16,8 +14,6 @@ const TheaterSelect = () => {
   )
   const dispatch = useDispatch()
 
-  console.log(theaters, theaterId)
-
   const handleTheaterChange = (id: string) => {
     dispatch(setTheaterId(id))
     if (theaters) {
@@ -28,14 +24,11 @@ const TheaterSelect = () => {
 
   const handleLocationChange = (id: string) => {
     dispatch(setLocationId(id))
-    console.log(locationId)
   }
 
   return (
     <>
-      <Label htmlFor="theater-id" value="극장 선택" />
       <ul id="theater-id">
-        <li>- 극장을 선택하세요. -</li>
         {theaters?.map((theater) => (
           <li
             key={theater._id}
@@ -48,9 +41,8 @@ const TheaterSelect = () => {
           </li>
         ))}
       </ul>
-      <Label htmlFor="addressId" value="지점 선택" />
+
       <ul id="address-id">
-        <li>- 지점을 선택하세요. -</li>
         {selectedTheater?.locations.map((location) => (
           <li
             key={location.id}
