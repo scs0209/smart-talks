@@ -1,25 +1,60 @@
-import { VFC } from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { KeyboardEvent, VFC, useState } from 'react'
 
 interface Props {
   movies: any
 }
 
 const Hero: VFC<Props> = ({ movies }) => {
-  const videoUrl = `https://www.youtube.com/embed/${movies?.results[0].video.key}`
+  const [searchTerm, setSearchTerm] = useState('')
+  const router = useRouter()
+  const imageUrl = `https://image.tmdb.org/t/p/original/${movies?.results[0].backdrop_path}`
+
+  console.log(movies)
+
+  const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchTerm.length > 0) {
+      router.push(`/search-results/${searchTerm}`)
+    }
+  }
 
   return (
-    <section className="bg-black border-solid border-b-[1px] h-[50vh] border-b-gray-500">
-      <div className="h-full max-w-screen-xl mx-auto lg:gap-8 xl:gap-0">
-        {videoUrl && (
-          <iframe
-            src={`${videoUrl}?autoplay=1&mute=1`}
-            className="w-full h-full shadow-lg border-gray-200/5 shadow-gray-400/50"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title="Movie Video"
+    <section className="relative h-[450px] bg-black w-full flex items-center md:h-[700px]">
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-50">
+        <Image
+          src={imageUrl}
+          alt="배경 이미지"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+        />
+      </div>
+      <div className="absolute top-0 left-0 w-full h-full bg-white-custom-gradient dark:bg-dark-custom-gradient" />
+
+      <div className="relative flex flex-col items-center max-w-screen-lg mx-auto text-white">
+        <span className="text-[50px] font-bold mb-[10px] md:mb-0 md:text-[90px]">
+          Welcome.
+        </span>
+        <span className="text-lg font-medium mb-[40px] md:text-xl">
+          Millions of movies, TV shows and people to discover. Explore now.
+        </span>
+        <div className="flex items-center w-full">
+          <input
+            type="search"
+            id="default-search"
+            className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="영화, TV 프로그램 검색"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyUp={handleSearch}
           />
-        )}
+          <button
+            type="submit"
+            className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Search
+          </button>
+        </div>
       </div>
     </section>
   )
