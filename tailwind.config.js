@@ -25,6 +25,10 @@ module.exports = {
         },
       },
     },
+    backgroundImage: {
+      'custom-gradient':
+        'linear-gradient(180deg, rgba(4, 21, 45, 0) 0%, #111828 79.17%)',
+    },
     fontFamily: {
       body: [
         'Inter',
