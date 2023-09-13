@@ -29,7 +29,7 @@ const Hero: VFC<Props> = ({ movies }) => {
           style={{ objectFit: 'cover', objectPosition: 'center' }}
         />
       </div>
-      <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient" />
+      <div className="absolute top-0 left-0 w-full h-full bg-white-custom-gradient dark:bg-dark-custom-gradient" />
 
       <div className="relative flex flex-col items-center max-w-screen-lg mx-auto text-white">
         <span className="text-[50px] font-bold mb-[10px] md:mb-0 md:text-[90px]">

@@ -26,8 +26,10 @@ module.exports = {
       },
     },
     backgroundImage: {
-      'custom-gradient':
+      'dark-custom-gradient':
         'linear-gradient(180deg, rgba(4, 21, 45, 0) 0%, #111828 79.17%)',
+      'white-custom-gradient':
+        'linear-gradient(180deg, rgba(4, 21, 45, 0) 0%, #fefffe 79.17%)',
     },
     fontFamily: {
       body: [
