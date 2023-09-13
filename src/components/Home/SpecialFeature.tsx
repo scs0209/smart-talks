@@ -33,8 +33,8 @@ const SpecialHall = () => {
               theme={customTheme}
             />
           </div>
-          <ul className="max-w-md divide-y divide-gray-200 dark:text-white ml-3 basis-1/2 flex flex-col">
-            <li className="p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2 flex-grow flex items-center">
+          <ul className="flex flex-col max-w-md ml-3 divide-y divide-gray-200 dark:text-white basis-1/2">
+            <li className="flex items-center flex-grow p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2">
               <Link
                 onMouseOver={() =>
                   handleMouseOver(
@@ -46,7 +46,7 @@ const SpecialHall = () => {
                 CINE de CHEF
               </Link>
             </li>
-            <li className="p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2 flex-grow items-center flex">
+            <li className="flex items-center flex-grow p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2">
               <Link
                 onMouseOver={() =>
                   handleMouseOver(
@@ -58,7 +58,7 @@ const SpecialHall = () => {
                 CINE & LIVINGROOM
               </Link>
             </li>
-            <li className="p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2 flex-grow items-center flex">
+            <li className="flex items-center flex-grow p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2">
               <Link
                 onMouseOver={() =>
                   handleMouseOver(
@@ -70,7 +70,7 @@ const SpecialHall = () => {
                 SUITE CINEMA
               </Link>
             </li>
-            <li className="p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2 flex-grow items-center flex">
+            <li className="flex items-center flex-grow p-3 rounded hover:border-solid hover:border-gray-100 hover:border-2">
               <Link
                 onMouseOver={() =>
                   handleMouseOver(
@@ -85,7 +85,6 @@ const SpecialHall = () => {
           </ul>
         </div>
       </div>
-      <Footer />
     </>
   )
 }
