@@ -32,13 +32,11 @@ const MovieList = () => {
         <div className="text-2xl font-semibold dark:text-white">Trending</div>
         <SwitchTab data={['Day', 'Week']} onTabChange={onTabChange} />
       </div>
-      <Carousel slide={false} theme={customTheme}>
-        {trendingMovies?.results.map((movie: any) => (
-          <div key={movie.id} className="w-full">
-            <MovieCard movie={movie} />
-          </div>
-        ))}
-      </Carousel>
+      {trendingMovies?.results.map((movie: any) => (
+        <div key={movie.id} className="w-full gap-4">
+          <MovieCard movie={movie} />
+        </div>
+      ))}
     </div>
   )
 }
