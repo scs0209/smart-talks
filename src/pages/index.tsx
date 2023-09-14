@@ -15,7 +15,7 @@ export default function Home({ movies }: any) {
   return (
     <>
       <motion.div
-        className="fixed left-0 z-30 w-full h-1 bg-blue-500 md:top-[70px]"
+        className="fixed left-0 z-20 w-full h-1 bg-blue-500 md:top-[70px]"
         style={{ scaleX: scrollYProgress }}
       />
       <Hero movies={results} />

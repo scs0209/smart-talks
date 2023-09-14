@@ -19,7 +19,7 @@ const SwitchTab: VFC<Props> = ({ data, onTabChange }) => {
         {data.map((tab, index) => (
           <span
             key={tab}
-            className={`flex z-20 items-center justify-center w-24 text-sm cursor-pointer transition-colors duration-300 
+            className={`flex z-10 items-center justify-center w-24 text-sm cursor-pointer transition-colors duration-300 
                             ${
                               selectedTab === index
                                 ? 'text-white'
