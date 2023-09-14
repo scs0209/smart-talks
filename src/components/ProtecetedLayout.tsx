@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { FC, ReactNode, useEffect } from 'react'
-import Nav from './Nav'
+import Nav from './Header'
 
 interface Props {
   children: ReactNode
