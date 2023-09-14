@@ -4,7 +4,6 @@ import { useSession } from 'next-auth/react'
 
 import ChangePasswordModal from '@/components/ChangePasswordModal'
 import HeadInfo from '@/components/common/HeadInfo'
-import ReservationTable from '@/components/MyPage/ReservationTable'
 import useModal from '@/hooks/useModal'
 import { useGetUserByEmailQuery } from '@/redux/api/userApi'
 
@@ -24,18 +23,17 @@ const MyPage = () => {
   }
 
   return (
-    <div className="items-center h-screen max-w-screen-lg mx-auto text-center align-middle">
+    <div className="items-center h-screen text-center align-middle dark:bg-gray-800">
       <HeadInfo title={`${email}'s Page`} />
-      <h1 className="mt-5 text-5xl dark:text-white">My Page</h1>
+      <h1 className="text-5xl p-[4rem] dark:text-white">My Page</h1>
       <div className="flex items-center justify-center">
         <h2 className="mt-3 mb-3 text-3xl dark:text-white">
           Email: {session.user?.email}
         </h2>
-        <Button gradientDuoTone="purpleToBlue" outline onClick={openModal}>
+        <Button color="blue" outline onClick={openModal}>
           Change Password
         </Button>
       </div>
-      <ReservationTable user={user} />
       <ChangePasswordModal open={isModalOpen} handleClose={closeModal} />
     </div>
   )

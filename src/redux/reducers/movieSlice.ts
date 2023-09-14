@@ -43,4 +43,4 @@ const moviesSlice = createSlice({
 export const { setAllResults, setPage, setPopularMovies, setPopularPage } =
   moviesSlice.actions
 
-export const moviesReducer = moviesSlice.reducer
+export default moviesSlice.reducer

@@ -1,8 +1,6 @@
+import { API_KEY, API_URL } from '@/utils/tmdbApiConfig'
 import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
-
-const API_URL = 'https://api.themoviedb.org/3'
-const API_KEY = process.env.TMDB_API_KEY
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {

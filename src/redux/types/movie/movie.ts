@@ -1,4 +1,4 @@
-import { Video } from '@/pages/api/movies/popular-movie'
+import { Video } from '@/pages/api/movies/popular'
 
 export interface Movie {
   id: number

@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { VFC } from 'react'
 
 import { getImageUrl } from '@/redux/api/tmdb'
-import { MovieList } from '@/redux/types/movie/movie'
 
 const customTheme: CustomFlowbiteTheme['card'] = {
   img: {
@@ -12,11 +11,11 @@ const customTheme: CustomFlowbiteTheme['card'] = {
 }
 
 interface Props {
-  movie: MovieList
+  movie: any
 }
 
 const MovieCard: VFC<Props> = ({ movie }) => {
-  const posterUrl = getImageUrl(movie.poster)
+  const posterUrl = getImageUrl(movie.poster_path)
 
   return (
     <Card
@@ -28,10 +27,10 @@ const MovieCard: VFC<Props> = ({ movie }) => {
         <p>{movie.title}</p>
       </h5>
       <div className="text-xs font-normal text-gray-700 dark:text-gray-400">
-        <p>평점: {movie.rating}</p>
+        <p>평점: {movie.vote_average}</p>
       </div>
 
-      <div className="absolute inset-0 flex items-center justify-center opacity-0 bg-black bg-opacity-50 group-hover:opacity-100 transition-opacity">
+      <div className="absolute inset-0 flex items-center justify-center transition-opacity bg-black bg-opacity-50 opacity-0 group-hover:opacity-100">
         <div className="flex flex-col space-y-4">
           <Link
             href={`/movies/${movie.id}`}

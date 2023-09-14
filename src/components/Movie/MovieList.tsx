@@ -1,7 +1,9 @@
 import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
 
-import { VFC } from 'react'
+import { useState } from 'react'
+import { useGetTrendingMoviesQuery } from '@/redux/api/movieApi'
 import MovieCard from './MovieCard'
+import SwitchTab from './SwitchTab'
 
 const customTheme: CustomFlowbiteTheme['carousel'] = {
   root: {
@@ -13,18 +15,25 @@ const customTheme: CustomFlowbiteTheme['carousel'] = {
   },
 }
 
-interface Props {
-  movieList: any
-}
+const MovieList = () => {
+  const [endpoint, setEndpoint] = useState('day')
 
-const MovieList: VFC<Props> = ({ movieList }) => {
+  // RTK Query 훅 사용
+  const { data: trendingMovies, isLoading } =
+    useGetTrendingMoviesQuery(endpoint)
+
+  const onTabChange = (tab: string) => {
+    setEndpoint(tab === 'Day' ? 'day' : 'week')
+  }
+
   return (
-    <div className="max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] overflow-auto">
-      <div className="pt-4 pb-2 text-2xl font-semibold dark:text-white">
-        영화 목록
+    <div className="min-h-screen max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] overflow-auto">
+      <div className="flex items-center justify-between w-full mb-2">
+        <div className="text-2xl font-semibold dark:text-white">Trending</div>
+        <SwitchTab data={['Day', 'Week']} onTabChange={onTabChange} />
       </div>
       <Carousel slide={false} theme={customTheme}>
-        {movieList?.map((movie: any) => (
+        {trendingMovies?.results.map((movie: any) => (
           <div key={movie.id} className="w-full">
             <MovieCard movie={movie} />
           </div>

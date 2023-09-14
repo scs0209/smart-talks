@@ -1,10 +1,8 @@
 import Movie, { IMovie } from '@/models/Movie'
 import connectDB from '@/services/dbConnect'
+import { API_KEY, API_URL } from '@/utils/tmdbApiConfig'
 import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
-
-const API_KEY = process.env.TMDB_API_KEY
-const API_URL = 'https://api.themoviedb.org/3'
 
 interface CrewMember {
   job: string

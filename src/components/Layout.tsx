@@ -1,10 +1,10 @@
 import Footer from './Footer'
-import Nav from './Nav'
+import Header from './Header'
 
 const Layout = ({ children }: any) => {
   return (
     <div className="dark:bg-gray-900">
-      <Nav />
+      <Header />
       <div>{children}</div>
       <Footer />
     </div>

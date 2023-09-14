@@ -6,17 +6,22 @@ import MovieList from '@/components/Movie/MovieList'
 import { GetStaticProps } from 'next'
 import { wrapper } from '@/redux/store'
 import movieApi, { getRunningQueriesThunk } from '@/redux/api/movieApi'
+import { useScroll, motion } from 'framer-motion'
 
 export default function Home({ movies }: any) {
+  const { scrollYProgress } = useScroll()
   const results = movies.queries['getPopularMovies(1)'].data
-  const movieList = movies.queries['getMovieList(undefined)'].data
 
   return (
-    <div>
+    <>
+      <motion.div
+        className="fixed left-0 z-30 w-full h-1 bg-blue-500 md:top-[70px]"
+        style={{ scaleX: scrollYProgress }}
+      />
       <Hero movies={results} />
-      <MovieList movieList={movieList} />
+      <MovieList />
       <SpecialHall />
-    </div>
+    </>
   )
 }
 
@@ -24,7 +29,6 @@ export const getStaticProps: GetStaticProps = wrapper.getStaticProps(
   (store) => async () => {
     // RTK Query 디스패치
     store.dispatch(movieApi.endpoints.getPopularMovies.initiate(1))
-    store.dispatch(movieApi.endpoints.getMovieList.initiate())
 
     await Promise.all(store.dispatch(getRunningQueriesThunk()))
 

@@ -1,0 +1,3 @@
+.items {
+  @apply text-sm text-blue-600 cursor-pointer dark:text-blue-500 hover:underline;
+}
