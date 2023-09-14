@@ -1,19 +1,8 @@
-import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
-
 import { useState } from 'react'
 import { useGetTrendingMoviesQuery } from '@/redux/api/movieApi'
+import dayjs from 'dayjs'
 import MovieCard from './MovieCard'
 import SwitchTab from './SwitchTab'
-
-const customTheme: CustomFlowbiteTheme['carousel'] = {
-  root: {
-    base: 'relative w-full',
-  },
-  item: {
-    wrapper: 'w-1/2',
-    base: 'w-1/4',
-  },
-}
 
 const MovieList = () => {
   const [endpoint, setEndpoint] = useState('day')
@@ -33,8 +22,10 @@ const MovieList = () => {
         <SwitchTab data={['Day', 'Week']} onTabChange={onTabChange} />
       </div>
       {trendingMovies?.results.map((movie: any) => (
-        <div key={movie.id} className="w-full gap-4">
+        <div key={movie.id} className="max-w-[13rem] gap-4 flex flex-col">
           <MovieCard movie={movie} />
+          <span>{movie.title}</span>
+          <span> {dayjs(movie.release_date).format('MMM D, YYYY')}</span>
         </div>
       ))}
     </div>
