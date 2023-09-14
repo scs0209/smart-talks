@@ -35,7 +35,7 @@ const Header = () => {
 
   const getNavbarClass = () => {
     if (isOpen) return 'dark:bg-slate-600 bg-gray-200'
-    if (isScrolled) return 'bg-gray-300 dark:bg-slate-700'
+    if (isScrolled) return 'bg-gray-100 dark:bg-slate-700'
     return 'bg-transparent'
   }
 
@@ -49,7 +49,7 @@ const Header = () => {
         <div className="flex items-center justify-between w-full sm:w-auto">
           <Link
             href="/"
-            className="self-center text-2xl font-semibold text-white whitespace-nowrap"
+            className="self-center text-2xl font-semibold text-indigo-300 dark:text-white whitespace-nowrap"
           >
             FLIM FINDER
           </Link>

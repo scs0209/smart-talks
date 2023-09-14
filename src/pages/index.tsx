@@ -6,16 +6,22 @@ import MovieList from '@/components/Movie/MovieList'
 import { GetStaticProps } from 'next'
 import { wrapper } from '@/redux/store'
 import movieApi, { getRunningQueriesThunk } from '@/redux/api/movieApi'
+import { useScroll, motion } from 'framer-motion'
 
 export default function Home({ movies }: any) {
+  const { scrollYProgress } = useScroll()
   const results = movies.queries['getPopularMovies(1)'].data
 
   return (
-    <div>
+    <>
+      <motion.div
+        className="fixed left-0 z-30 w-full h-1 bg-blue-500 md:top-[70px]"
+        style={{ scaleX: scrollYProgress }}
+      />
       <Hero movies={results} />
       <MovieList />
       <SpecialHall />
-    </div>
+    </>
   )
 }
 
