@@ -17,7 +17,7 @@ const ReservationPage = () => {
           async
         />
       </Head>
-      <div className="h-screen max-w-screen-lg mx-auto">
+      <div className="max-w-screen-lg min-h-screen mx-auto">
         <h1 className="m-3 text-5xl font-extrabold dark:text-white">예매</h1>
         <ReservationForm />
       </div>

@@ -12,20 +12,22 @@ const movieApi = createApi({
   },
   endpoints: (builder) => ({
     getMovieList: builder.query<any[], void>({
-      query: () => '/movie-list',
+      query: () => '/movie',
     }),
     searchMovies: builder.query<
       { results: any[] },
       { query: string | undefined; page: number }
     >({
-      query: ({ query, page }) =>
-        `/movies/movie-search?query=${query}&page=${page}`,
+      query: ({ query, page }) => `/movies/search?query=${query}&page=${page}`,
     }),
     getMovieDetails: builder.query<any, string | undefined>({
-      query: (id) => `/movies/movie-detail?movieId=${id}`,
+      query: (id) => `/movies/details?movieId=${id}`,
     }),
     getPopularMovies: builder.query<{ results: any[] }, number>({
-      query: (page) => `/movies/popular-movie?page=${page}`,
+      query: (page) => `/movies/popular?page=${page}`,
+    }),
+    getTrendingMovies: builder.query<{ results: any[] }, string | undefined>({
+      query: (timeWindow) => `/movies/trending?timeWindow=${timeWindow}`,
     }),
   }),
 })
@@ -35,6 +37,7 @@ export const {
   useSearchMoviesQuery,
   useGetMovieDetailsQuery,
   useGetPopularMoviesQuery,
+  useGetTrendingMoviesQuery,
   util: { getRunningQueriesThunk },
 } = movieApi
 

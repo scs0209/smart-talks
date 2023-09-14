@@ -1,6 +1,5 @@
+import { IMG_URL } from '@/utils/tmdbApiConfig'
 import { client } from './client'
-
-const IMG_URL = 'https://image.tmdb.org/t/p/w500'
 
 export const getMovieList = async () => {
   const { data } = await client.get('/api/movie-list')

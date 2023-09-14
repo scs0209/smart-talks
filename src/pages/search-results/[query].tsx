@@ -56,7 +56,7 @@ const SearchResults = () => {
   }, [searchQuery, dispatch])
 
   return (
-    <div className="container max-w-screen-lg px-4 py-16 mx-auto">
+    <div className="max-w-screen-lg min-h-screen px-4 py-16 mx-auto">
       <h2 className="text-4xl font-semibold">검색 결과</h2>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {allResults.map((movie) => (
