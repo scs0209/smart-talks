@@ -22,7 +22,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
   const rating = movie.vote_average.toFixed(1)
 
   return (
-    <div className="relative grid h-[15rem] w-full max-w-[13rem] flex-col items-end justify-center bg-white bg-clip-border text-center text-gray-700 group">
+    <div className="relative grid h-[15rem] w-full max-w-[13rem] flex-col items-end justify-center bg-transparent bg-clip-border text-center rounded-[10px] text-gray-700 group shadow-lg border-gray-200/5 shadow-gray-400/50">
       <Image
         src={posterUrl}
         alt="movie-image"

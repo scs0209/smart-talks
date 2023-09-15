@@ -1,7 +1,7 @@
-import React, { VFC, useState } from 'react'
+import React, { VFC, useEffect, useState } from 'react'
 
 interface Props {
-  data: [string, string]
+  data: string[]
   onTabChange: (tab: string) => void
 }
 
@@ -12,6 +12,12 @@ const SwitchTab: VFC<Props> = ({ data, onTabChange }) => {
     setSelectedTab(index)
     onTabChange(tab)
   }
+
+  useEffect(() => {
+    if (data.length > 0) {
+      onTabChange(data[0])
+    }
+  }, [])
 
   return (
     <div className="relative w-[200px] p-1 min-h-9 bg-gray-200 dark:bg-slate-600 rounded-full">
