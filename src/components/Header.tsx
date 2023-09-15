@@ -35,8 +35,9 @@ const Header = () => {
 
   const getNavbarClass = () => {
     if (isOpen) return 'dark:bg-slate-600 bg-gray-200'
-    if (isScrolled) return 'bg-gray-100 dark:bg-slate-700'
-    return 'bg-transparent'
+    if (isScrolled)
+      return 'bg-gray-100 dark:bg-slate-700 transition-colors duration-500'
+    return 'bg-transparent transition-colors duration-500'
   }
 
   const handleLogout = () => {
@@ -44,7 +45,7 @@ const Header = () => {
   }
 
   return (
-    <nav className={`${getNavbarClass()} fixed top-0 left-0 z-10 w-full`}>
+    <nav className={`${getNavbarClass()} fixed top-0 left-0 z-20 w-full`}>
       <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
         <div className="flex items-center justify-between w-full sm:w-auto">
           <Link

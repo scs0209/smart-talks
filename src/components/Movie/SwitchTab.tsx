@@ -1,7 +1,7 @@
-import React, { VFC, useState } from 'react'
+import React, { VFC, useEffect, useState } from 'react'
 
 interface Props {
-  data: [string, string]
+  data: string[]
   onTabChange: (tab: string) => void
 }
 
@@ -13,13 +13,19 @@ const SwitchTab: VFC<Props> = ({ data, onTabChange }) => {
     onTabChange(tab)
   }
 
+  useEffect(() => {
+    if (data.length > 0) {
+      onTabChange(data[0])
+    }
+  }, [])
+
   return (
     <div className="relative w-[200px] p-1 min-h-9 bg-gray-200 dark:bg-slate-600 rounded-full">
       <div className="relative flex items-center h-7">
         {data.map((tab, index) => (
           <span
             key={tab}
-            className={`flex z-20 items-center justify-center w-24 text-sm cursor-pointer transition-colors duration-300 
+            className={`flex z-10 items-center justify-center w-24 text-sm cursor-pointer transition-colors duration-300 
                             ${
                               selectedTab === index
                                 ? 'text-white'

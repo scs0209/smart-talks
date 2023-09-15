@@ -2,11 +2,13 @@ import React from 'react'
 
 import Hero from '@/components/Home/Hero'
 import SpecialHall from '@/components/Home/SpecialFeature'
-import MovieList from '@/components/Movie/MovieList'
+import Trending from '@/components/Movie/Trending'
 import { GetStaticProps } from 'next'
 import { wrapper } from '@/redux/store'
 import movieApi, { getRunningQueriesThunk } from '@/redux/api/movieApi'
 import { useScroll, motion } from 'framer-motion'
+import TopRated from '@/components/Movie/TopRated,'
+import Popular from '@/components/Movie/Popular'
 
 export default function Home({ movies }: any) {
   const { scrollYProgress } = useScroll()
@@ -15,11 +17,13 @@ export default function Home({ movies }: any) {
   return (
     <>
       <motion.div
-        className="fixed left-0 z-30 w-full h-1 bg-blue-500 md:top-[70px]"
+        className="fixed left-0 z-20 w-full h-1 bg-blue-500 md:top-[70px]"
         style={{ scaleX: scrollYProgress }}
       />
       <Hero movies={results} />
-      <MovieList />
+      <Trending />
+      <TopRated />
+      <Popular />
       <SpecialHall />
     </>
   )

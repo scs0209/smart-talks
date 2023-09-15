@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { FC, ReactNode, useEffect } from 'react'
 import Nav from './Header'
+import Footers from './Footer'
 
 interface Props {
   children: ReactNode
@@ -44,6 +45,7 @@ const ProtectedLayout: FC<Props> = ({ children, allowRole }) => {
     <>
       <Nav />
       {authorized ? <div>{children}</div> : null}
+      <Footers />
     </>
   )
 }

@@ -1,41 +1,52 @@
-import { Carousel, CustomFlowbiteTheme } from 'flowbite-react'
-
-import { useState } from 'react'
-import { useGetTrendingMoviesQuery } from '@/redux/api/movieApi'
+import { VFC, useState } from 'react'
+import dayjs from 'dayjs'
 import MovieCard from './MovieCard'
 import SwitchTab from './SwitchTab'
+import Carousel from '../Home/Carousel'
 
-const customTheme: CustomFlowbiteTheme['carousel'] = {
-  root: {
-    base: 'relative w-full',
-  },
-  item: {
-    wrapper: 'w-1/2',
-    base: 'w-1/4',
-  },
+interface Props {
+  title: string
+  tabs: string[]
+  defaultTab: string
+  useQuery: (tab: string) => any
+  transformTab?: (tab: string) => string
 }
 
-const MovieList = () => {
-  const [endpoint, setEndpoint] = useState('day')
+const MovieList: VFC<Props> = ({
+  title,
+  tabs,
+  defaultTab,
+  useQuery,
+  transformTab,
+}) => {
+  const [tab, setTab] = useState(defaultTab)
 
   // RTK Query 훅 사용
-  const { data: trendingMovies, isLoading } =
-    useGetTrendingMoviesQuery(endpoint)
+  const { data: movies } = useQuery(transformTab ? transformTab(tab) : tab)
 
-  const onTabChange = (tab: string) => {
-    setEndpoint(tab === 'Day' ? 'day' : 'week')
+  const onTabChange = (newTab: string) => {
+    setTab(newTab)
   }
 
   return (
-    <div className="min-h-screen max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] overflow-auto">
+    <div className="max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] p-4">
       <div className="flex items-center justify-between w-full mb-2">
-        <div className="text-2xl font-semibold dark:text-white">Trending</div>
-        <SwitchTab data={['Day', 'Week']} onTabChange={onTabChange} />
+        <div className="text-2xl font-semibold dark:text-white">{title}</div>
+        <SwitchTab data={tabs} onTabChange={onTabChange} />
       </div>
-      <Carousel slide={false} theme={customTheme}>
-        {trendingMovies?.results.map((movie: any) => (
-          <div key={movie.id} className="w-full">
+      <Carousel>
+        {movies?.results.map((movie: any) => (
+          <div key={movie.id} className="min-w-[13rem] gap-2">
             <MovieCard movie={movie} />
+            <div className="mt-6 flex flex-col">
+              <span className="overflow-hidden overflow-ellipsis whitespace-nowrap">
+                {movie.title || movie.name}
+              </span>
+              <span className="text-gray-500 font-sans font-extrabold text-sm">
+                {' '}
+                {dayjs(movie.release_date).format('MMM D, YYYY')}
+              </span>
+            </div>
           </div>
         ))}
       </Carousel>
