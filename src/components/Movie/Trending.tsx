@@ -5,7 +5,7 @@ import MovieCard from './MovieCard'
 import SwitchTab from './SwitchTab'
 import Carousel from '../Home/Carousel'
 
-const MovieList = () => {
+const Trending = () => {
   const [endpoint, setEndpoint] = useState('day')
 
   // RTK Query 훅 사용
@@ -24,13 +24,15 @@ const MovieList = () => {
       </div>
       <Carousel>
         {trendingMovies?.results.map((movie: any) => (
-          <div key={movie.id} className="min-w-[13rem] gap-2 flex flex-col">
+          <div key={movie.id} className="min-w-[13rem] gap-2">
             <MovieCard movie={movie} />
-            <span>{movie.title}</span>
-            <span className="text-gray-500 font-sans font-extrabold text-sm">
-              {' '}
-              {dayjs(movie.release_date).format('MMM D, YYYY')}
-            </span>
+            <div className="mt-6 flex flex-col">
+              <span>{movie.title}</span>
+              <span className="text-gray-500 font-sans font-extrabold text-sm">
+                {' '}
+                {dayjs(movie.release_date).format('MMM D, YYYY')}
+              </span>
+            </div>
           </div>
         ))}
       </Carousel>
@@ -38,4 +40,4 @@ const MovieList = () => {
   )
 }
 
-export default MovieList
+export default Trending

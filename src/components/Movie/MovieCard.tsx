@@ -22,7 +22,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
   const rating = movie.vote_average.toFixed(1)
 
   return (
-    <div className="relative grid h-[15rem] w-full max-w-[13rem] flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-center text-gray-700">
+    <div className="relative grid h-[15rem] w-full max-w-[13rem] flex-col items-end justify-center rounded-xl bg-white bg-clip-border text-center text-gray-700">
       <Image
         src={posterUrl}
         alt="movie-image"
@@ -31,7 +31,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
         className="absolute inset-0 m-0 z-0 h-full w-full overflow-hidden rounded-none bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none"
       />
       <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/60 via-black/20" />
-      <div className="relative inline-block bg-transparent rounded-full p-4 right-[70px] w-20">
+      <div className="relative inline-block bg-transparent rounded-full p-4 -bottom-9 w-20">
         <CircularProgressbar
           value={rating}
           maxValue={10}
