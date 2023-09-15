@@ -4,6 +4,14 @@
 <img src="https://user-images.githubusercontent.com/110822847/235289858-a8950f96-5c58-42f9-8a56-5abc50c541af.png" width="300">
 </div>
 
+### <p style="color: skyblue;">예매 시스템에 대한 데이터베이스 설계 이해 부족과 UI/UX가 이상하기 때문에 지금 다시 리팩토링 중입니다. 컨셉은 영화 정보 및 예고편을 볼 수 있는 프로젝트로 변경중입니다. 배포는 계속 하고 있으니 배포링크를 가시면 확인하실 수 있습니다.</p>
+
+### [배포 링크](https://smart-talks.vercel.app/)
+
+이전 미흡하게나마 예매 성공한 프로젝트를 보시려면 아래 링크를 클릭해주세요
+
+### [이전 버전 프로젝트](https://github.com/scs0209/smart-talks/tree/legacy)
+
 ## 프로젝트 소개
 
 SMAX는 영화 정보 검색, 예약, 관리 등의 기능을 제공하는 웹 애플리케이션입니다. 이 프로젝트는 React, Redux Toolkit, RTK Query, Next.js, MongoDB 등의 기술을 사용하여 개발되었습니다.
