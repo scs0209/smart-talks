@@ -30,7 +30,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
         height={230}
         className="absolute inset-0 m-0 z-0 h-full w-full overflow-hidden rounded-none bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none"
       />
-      <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50" />
+      <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/60 via-black/20" />
       <div className="relative inline-block bg-transparent rounded-full p-4 right-[70px] w-20">
         <CircularProgressbar
           value={rating}
@@ -41,6 +41,8 @@ const MovieCard: VFC<Props> = ({ movie }) => {
             pathColor: determineColor(rating),
             backgroundColor: 'white',
             trailColor: 'transparent',
+            textSize: '30px',
+            textColor: determineColor(rating),
           })}
         />
       </div>

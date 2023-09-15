@@ -3,6 +3,7 @@ import { useGetTrendingMoviesQuery } from '@/redux/api/movieApi'
 import dayjs from 'dayjs'
 import MovieCard from './MovieCard'
 import SwitchTab from './SwitchTab'
+import Carousel from '../Home/Carousel'
 
 const MovieList = () => {
   const [endpoint, setEndpoint] = useState('day')
@@ -16,18 +17,23 @@ const MovieList = () => {
   }
 
   return (
-    <div className="min-h-screen max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] overflow-auto">
+    <div className="max-w-screen-xl mx-auto dark:bg-gray-900 h-[50vh] p-4">
       <div className="flex items-center justify-between w-full mb-2">
         <div className="text-2xl font-semibold dark:text-white">Trending</div>
         <SwitchTab data={['Day', 'Week']} onTabChange={onTabChange} />
       </div>
-      {trendingMovies?.results.map((movie: any) => (
-        <div key={movie.id} className="max-w-[13rem] gap-4 flex flex-col">
-          <MovieCard movie={movie} />
-          <span>{movie.title}</span>
-          <span> {dayjs(movie.release_date).format('MMM D, YYYY')}</span>
-        </div>
-      ))}
+      <Carousel>
+        {trendingMovies?.results.map((movie: any) => (
+          <div key={movie.id} className="min-w-[13rem] gap-2 flex flex-col">
+            <MovieCard movie={movie} />
+            <span>{movie.title}</span>
+            <span className="text-gray-500 font-sans font-extrabold text-sm">
+              {' '}
+              {dayjs(movie.release_date).format('MMM D, YYYY')}
+            </span>
+          </div>
+        ))}
+      </Carousel>
     </div>
   )
 }
