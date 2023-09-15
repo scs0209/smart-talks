@@ -27,7 +27,7 @@ const Trending = () => {
           <div key={movie.id} className="min-w-[13rem] gap-2">
             <MovieCard movie={movie} />
             <div className="mt-6 flex flex-col">
-              <span>{movie.title}</span>
+              <span>{movie.title || movie.name}</span>
               <span className="text-gray-500 font-sans font-extrabold text-sm">
                 {' '}
                 {dayjs(movie.release_date).format('MMM D, YYYY')}
