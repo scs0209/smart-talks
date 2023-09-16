@@ -32,3 +32,7 @@
   -ms-overflow-style: none; /* IE and 엣지 */
   scrollbar-width: none; /* 파이어폭스 */
 }
+
+.badges {
+  @apply bg-indigo-100 text-indigo-800 text-[3px] font-medium mr-2 px-2 py-0.5 rounded dark:bg-gray-700 dark:text-indigo-400 border border-indigo-400;
+}

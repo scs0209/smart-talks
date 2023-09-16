@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { useGetGenresQuery } from '@/redux/api/movieApi'
+import Genres from '../common/Genres'
 
 interface Props {
   movie: any
@@ -23,14 +24,14 @@ const MovieCard: VFC<Props> = ({ movie }) => {
 
   const rating = movie.vote_average.toFixed(1)
 
+  console.log(movie)
+
   const movieGenres =
     movie.genre_ids.map(
       (id: string) =>
         genres?.results.find((genre) => genre.id === id)?.name ||
         `Unknown Genre (${id})`,
     ) || []
-
-  console.log(genres, movieGenres)
 
   return (
     <>
@@ -47,7 +48,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
         <div className="absolute inset-0 flex items-center justify-center opacity-0 bg-black bg-opacity-50 group-hover:opacity-100 transition-opacity rounded-[10px]">
           <div className="flex flex-col space-y-4">
             <Link
-              href={`/movies/${movie.id}`}
+              href={`/movies/${movie.media_type}/${movie.id}`}
               className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600"
             >
               상세보기
@@ -71,13 +72,10 @@ const MovieCard: VFC<Props> = ({ movie }) => {
           />
         </div>
       </div>
+
       {movieGenres && (
         <>
-          {movieGenres.map((genre: any) => (
-            <span key={genre} className="text-xs font-semibold text-grayLight">
-              {genre}{' '}
-            </span>
-          ))}
+          <Genres genres={movieGenres} />
         </>
       )}
     </>

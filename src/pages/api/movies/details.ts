@@ -3,9 +3,9 @@ import { API_KEY, API_URL } from '@/utils/tmdbApiConfig'
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const getDirector = async (movieId: string) => {
+const getDirector = async (mediaType: string, id: string) => {
   const response = await axios.get(
-    `${API_URL}/movie/${movieId}/credits?api_key=${API_KEY}`,
+    `${API_URL}/${mediaType}/${id}/credits?api_key=${API_KEY}`,
   )
 
   const directorInfo = response.data.crew.find(
@@ -15,9 +15,9 @@ const getDirector = async (movieId: string) => {
   return directorInfo ? directorInfo.name : 'Unknown'
 }
 
-const getCast = async (movieId: string) => {
+const getCast = async (mediaType: string, id: string) => {
   const response = await axios.get(
-    `${API_URL}/movie/${movieId}/credits?api_key=${API_KEY}`,
+    `${API_URL}/${mediaType}/${id}/credits?api_key=${API_KEY}`,
   )
 
   const castMembers = response.data.cast
@@ -27,24 +27,30 @@ const getCast = async (movieId: string) => {
   return castMembers
 }
 
-const getMovieData = async (movieId: string) => {
+const getMovieData = async (mediaType: string, id: string) => {
   const response = await axios.get(
-    `${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=ko`,
+    `${API_URL}/${mediaType}/${id}?api_key=${API_KEY}&language=ko`,
   )
 
-  const director = await getDirector(movieId)
-  const cast = await getCast(movieId)
+  console.log(response)
+
+  const director =
+    mediaType === 'movie' ? await getDirector(mediaType, id) : null
+
+  const cast = await getCast(mediaType, id)
 
   const movieData = {
     id: response.data.id,
     title: response.data.title,
     genres: response.data.genres,
     popularity: response.data.popularity,
+    backdrop: response.data.backdrop_path,
+    tagline: response.data.tagline,
     director,
     country: response.data.production_countries[0].iso_3166_1,
     releaseDate: response.data.release_date,
     runtime: response.data.runtime,
-    rating: response.data.vote_average.toString(),
+    rating: response.data.vote_average,
     poster: response.data.poster_path,
     synopsis: response.data.overview,
     cast,
@@ -58,10 +64,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   await connectDB()
 
   if (req.method === 'GET') {
-    const { movieId } = req.query
+    const { mediaType, id } = req.query
 
     try {
-      const movieData = await getMovieData(movieId as string)
+      const movieData = await getMovieData(mediaType as string, id as string)
 
       res.status(200).json(movieData)
     } catch (error) {

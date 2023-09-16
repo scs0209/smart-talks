@@ -20,8 +20,12 @@ const movieApi = createApi({
     >({
       query: ({ query, page }) => `/movies/search?query=${query}&page=${page}`,
     }),
-    getMovieDetails: builder.query<any, string | undefined>({
-      query: (id) => `/movies/details?movieId=${id}`,
+    getMovieDetails: builder.query<
+      any,
+      { mediaType: string | undefined; id: string | undefined }
+    >({
+      query: ({ mediaType, id }) =>
+        `/movies/details?mediaType=${mediaType}&id=${id}`,
     }),
     getPopularMovies: builder.query<{ results: any[] }, number>({
       query: (page) => `/movies/popular?page=${page}`,
