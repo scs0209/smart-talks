@@ -20,7 +20,7 @@ export const PlayIcon = () => {
         strokeLinejoin="round"
         strokeMiterlimit="10"
         points="73.5,62.5 148.5,105.8 73.5,149.1 "
-      ></polygon>
+      />
       <circle
         className="circle"
         fill="none"
@@ -31,7 +31,7 @@ export const PlayIcon = () => {
         cx="106.8"
         cy="106.8"
         r="103.3"
-      ></circle>
+      />
     </svg>
   )
 }

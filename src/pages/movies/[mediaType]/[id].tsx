@@ -57,13 +57,13 @@ const MovieDetail = () => {
       <div className="w-full h-full bg-black pt-24 md:pt-30 md:mb-0 mb-12 md:min-h-[700px]">
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
           <Image
-            fill={true}
+            fill
             src={backdropUrl}
             alt={`${movieDetails.title} poster`}
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         </div>
-        <div className="w-full h-[250px] absolute bottom-0 left-0 bg-gradient-to-b from-transparent to-[#04152d] opacity-80"></div>
+        <div className="w-full h-[250px] absolute bottom-0 left-0 bg-gradient-to-b from-transparent to-[#04152d] opacity-80" />
 
         <div className="relative flex flex-col max-w-screen-lg gap-6 mx-auto md:gap-12 md:flex-row">
           {/* left */}

@@ -73,11 +73,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
         </div>
       </div>
 
-      {movieGenres && (
-        <>
-          <Genres genres={movieGenres} />
-        </>
-      )}
+      {movieGenres && <Genres genres={movieGenres} />}
     </>
   )
 }
