@@ -38,11 +38,11 @@ const MovieList: VFC<Props> = ({
         {movies?.results.map((movie: any) => (
           <div key={movie.id} className="min-w-[13rem] gap-2">
             <MovieCard movie={movie} />
-            <div className="mt-6 flex flex-col">
+            <div className="flex flex-col mt-6">
               <span className="overflow-hidden overflow-ellipsis whitespace-nowrap">
                 {movie.title || movie.name}
               </span>
-              <span className="text-gray-500 font-sans font-extrabold text-sm">
+              <span className="font-sans text-sm font-extrabold text-gray-500">
                 {' '}
                 {dayjs(movie.release_date).format('MMM D, YYYY')}
               </span>
