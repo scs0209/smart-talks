@@ -10,7 +10,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         `${API_URL}/${mediaType}/popular?api_key=${API_KEY}&language=ko-KR`,
       )
 
-      res.status(200).json({ results: response.data.results })
+      const resultsWithMediaType = response.data.results.map((item: any) => ({
+        ...item,
+        media_type: mediaType,
+      }))
+
+      res.status(200).json({ results: resultsWithMediaType })
     } catch (error) {
       res.status(500).json({ message: `Error fetching popular data` })
     }

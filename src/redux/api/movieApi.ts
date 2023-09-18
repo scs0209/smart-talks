@@ -20,8 +20,12 @@ const movieApi = createApi({
     >({
       query: ({ query, page }) => `/movies/search?query=${query}&page=${page}`,
     }),
-    getMovieDetails: builder.query<any, string | undefined>({
-      query: (id) => `/movies/details?movieId=${id}`,
+    getMovieDetails: builder.query<
+      any,
+      { mediaType: string | undefined; id: string | undefined }
+    >({
+      query: ({ mediaType, id }) =>
+        `/movies/details?mediaType=${mediaType}&id=${id}`,
     }),
     getPopularMovies: builder.query<{ results: any[] }, number>({
       query: (page) => `/movies/popular?page=${page}`,
@@ -35,6 +39,9 @@ const movieApi = createApi({
     getTopRatedMovies: builder.query<{ results: any[] }, string | undefined>({
       query: (mediaType) => `/movies/top-rated?mediaType=${mediaType}`,
     }),
+    getGenres: builder.query<{ results: any[] }, void>({
+      query: () => `/movies/genres`,
+    }),
   }),
 })
 
@@ -46,6 +53,7 @@ export const {
   useGetPopularsMoviesQuery,
   useGetTrendingMoviesQuery,
   useGetTopRatedMoviesQuery,
+  useGetGenresQuery,
   util: { getRunningQueriesThunk },
 } = movieApi
 
