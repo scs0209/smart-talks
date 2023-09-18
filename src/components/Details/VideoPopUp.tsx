@@ -21,7 +21,7 @@ const VideoPopUp: VFC<Props> = ({ videoKey, show, setShow }) => {
       <div
         className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-25 backdrop-blur-md transition-opacity duration-400"
         onClick={hidePopup}
-      ></div>
+      />
       <div
         className={`relative transform transition-transform duration-[250ms] bg-white ${
           show ? 'scale-[1]' : 'scale-[0.2]'
@@ -39,6 +39,7 @@ const VideoPopUp: VFC<Props> = ({ videoKey, show, setShow }) => {
           width="700px"
           height="400px"
           playing={show}
+          muted
         />
       </div>
     </div>
