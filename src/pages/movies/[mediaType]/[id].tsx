@@ -1,4 +1,3 @@
-import { Badge } from 'flowbite-react'
 import { useRouter } from 'next/router'
 
 import { useGetMovieDetailsQuery } from '@/redux/api/movieApi'
@@ -9,6 +8,7 @@ import Genres from '@/components/common/Genres'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import { PlayIcon } from '@/components/Detail/PlayBtn'
 import { useState } from 'react'
+import VideoPopUp from '@/components/Details/VideoPopUp'
 
 interface Genre {
   id: number
@@ -30,11 +30,13 @@ const MovieDetail = () => {
     isError,
   } = useGetMovieDetailsQuery({ mediaType, id: movieId })
   const [show, setShow] = useState(false)
-  const [videoId, setVideoId] = useState(null)
 
   const posterUrl = movieDetails?.poster && getImageUrl(movieDetails.poster)
   const backdropUrl = movieDetails?.poster && getImageUrl(movieDetails.backdrop)
   const genres = movieDetails?.genres.map((g: any) => g.name)
+  const videoKey = movieDetails?.videoKey
+
+  console.log(videoKey)
 
   const determineColor = (rating: number) => {
     if (rating < 5) return 'red'
@@ -111,7 +113,6 @@ const MovieDetail = () => {
                 className="flex items-center space-x-5 cursor-pointer playbtn"
                 onClick={() => {
                   setShow(true)
-                  setVideoId(null)
                 }}
               >
                 <div className="w-15 md:w-20">
@@ -121,6 +122,7 @@ const MovieDetail = () => {
               </button>
             </div>
           </div>
+          <VideoPopUp show={show} setShow={setShow} videoKey={videoKey} />
         </div>
       </div>
     </section>

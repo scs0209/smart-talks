@@ -27,17 +27,25 @@ const getCast = async (mediaType: string, id: string) => {
   return castMembers
 }
 
+const getVideo = async (mediaType: string, id: string) => {
+  const response = await axios.get(
+    `${API_URL}/${mediaType}/${id}/videos?api_key=${API_KEY}`,
+  )
+
+  // Assuming the first video is the one you want
+  return response.data.results[0]?.key || 'No video available'
+}
+
 const getMovieData = async (mediaType: string, id: string) => {
   const response = await axios.get(
     `${API_URL}/${mediaType}/${id}?api_key=${API_KEY}&language=ko`,
   )
 
-  console.log(response)
-
   const director =
     mediaType === 'movie' ? await getDirector(mediaType, id) : null
 
   const cast = await getCast(mediaType, id)
+  const videoKey = await getVideo(mediaType, id)
 
   const movieData = {
     id: response.data.id,
@@ -46,6 +54,7 @@ const getMovieData = async (mediaType: string, id: string) => {
     popularity: response.data.popularity,
     backdrop: response.data.backdrop_path,
     tagline: response.data.tagline,
+    videoKey,
     director,
     country: response.data.production_countries[0].iso_3166_1,
     releaseDate: response.data.release_date,
