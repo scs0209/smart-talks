@@ -39,7 +39,17 @@ const getCast = async (mediaType: string, id: string) => {
 
   const castMembers = response.data.cast
     .slice(0, 5)
-    .map((castMember: { name: string }) => castMember.name)
+    .map(
+      (castMember: {
+        name: string
+        profile_path: string
+        character: string
+      }) => ({
+        name: castMember.name,
+        imageUrl: castMember.profile_path,
+        character: castMember.character,
+      }),
+    )
 
   return castMembers
 }

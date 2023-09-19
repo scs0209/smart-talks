@@ -46,7 +46,7 @@
 }
 
 .infoName {
-  @apply text-white mr-2.5 leading-6 font-semibold;
+  @apply dark:text-white mr-2.5 leading-6 font-semibold;
 }
 
 .infoValue {
