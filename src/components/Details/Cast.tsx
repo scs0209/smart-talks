@@ -15,7 +15,7 @@ const Cast: VFC<Props> = ({ cast }) => {
           {cast?.map((item: any) => {
             const imgUrl = getImageUrl(item.imageUrl)
             return (
-              <div key={item.id} className="text-center dark:text-white">
+              <div key={item.name} className="text-center dark:text-white">
                 <div className="w-[125px] h-[125px] rounded-full overflow-hidden mb-4 md:w-[175px] md:h-[175px] md:mb-6">
                   <Image
                     alt="cast-image"

@@ -4,8 +4,8 @@ import Image from 'next/image'
 import React, { VFC, useState } from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
-import Genres from '../common/Genres'
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
+import Genres from '../common/Genres'
 import VideoPopUp from './VideoPopUp'
 
 interface Props {
