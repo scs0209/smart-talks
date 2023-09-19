@@ -36,3 +36,19 @@
 .badges {
   @apply bg-indigo-100 text-indigo-800 text-[3px] font-medium mr-2 px-2 py-0.5 rounded dark:bg-gray-700 dark:text-indigo-400 border border-indigo-400;
 }
+
+.info {
+  @apply border-b-2 border-b-white border-opacity-30 py-3.5 flex;
+}
+
+.infoItem {
+  @apply mr-2.5 flex flex-wrap;
+}
+
+.infoName {
+  @apply dark:text-white mr-2.5 leading-6 font-semibold;
+}
+
+.infoValue {
+  @apply opacity-50 leading-6;
+}
