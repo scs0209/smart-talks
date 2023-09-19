@@ -36,6 +36,10 @@ const MovieDetail = () => {
   const backdropUrl = movieDetails?.poster && getImageUrl(movieDetails.backdrop)
   const genres = movieDetails?.genres.map((g: any) => g.name)
   const videoKey = movieDetails?.videoKey
+  const director = movieDetails?.director
+  const writer = movieDetails?.writers
+
+  console.log(movieDetails)
 
   const determineColor = (rating: number) => {
     if (rating < 5) return 'red'
@@ -44,6 +48,12 @@ const MovieDetail = () => {
   }
 
   const rating = movieDetails?.rating.toFixed(1)
+
+  const toHoursAndMinutes = (totalMinutes: any) => {
+    const hours = Math.floor(totalMinutes / 60)
+    const minutes = totalMinutes % 60
+    return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`
+  }
 
   if (isFetching) {
     return <div>Loading...</div>
@@ -54,75 +64,127 @@ const MovieDetail = () => {
   }
 
   return (
-    <div className="w-full h-full bg-black pt-24 md:pt-30 md:mb-0 mb-12 md:min-h-[700px]">
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
-        <Image
-          fill
-          src={backdropUrl}
-          alt={`${movieDetails.title} poster`}
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
-        />
-      </div>
-      <div className="w-full h-[250px] absolute bottom-0 left-0 bg-gradient-to-b from-transparent to-[#04152d] opacity-80" />
-
-      <div className="relative flex flex-col max-w-screen-lg gap-6 mx-auto md:gap-12 md:flex-row">
-        {/* left */}
-        <div className="relative w-full block rounded-[20px] md:max-w-[350px] h-[500px]">
+    <section className="h-screen">
+      <div className="w-full h-full bg-black pt-24 md:pt-30 md:mb-0 mb-12 md:min-h-[700px]">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
           <Image
             fill
-            src={posterUrl}
+            src={backdropUrl}
             alt={`${movieDetails.title} poster`}
-            style={{ objectFit: 'cover', borderRadius: '15px' }}
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         </div>
-        {/* right */}
-        <div className="text-white">
-          <div className="p-4 text-3xl leading-[40px] md:text-4xl md:leading-[44px] title">
-            {`${movieDetails.name || movieDetails.title} (${dayjs(
-              movieDetails?.releaseDate,
-            ).format('YYYY')})`}
-          </div>
-          <div className="mb-4 text-base italic leading-6 opacity-50 md:text-lg md:leading-7 subtitle">
-            {movieDetails.tagLine}
-          </div>
+        <div className="w-full h-[250px] absolute bottom-0 left-0 bg-gradient-to-b from-transparent to-[#04152d] opacity-80" />
 
-          <div className="flex flex-wrap mb-6 p-4">
-            <Genres genres={genres} />
+        <div className="relative flex flex-col max-w-screen-lg gap-6 mx-auto md:gap-12 md:flex-row">
+          {/* left */}
+          <div className="relative w-full block rounded-[20px] md:max-w-[350px] h-[500px]">
+            <Image
+              fill
+              src={posterUrl}
+              alt={`${movieDetails.title} poster`}
+              style={{ objectFit: 'cover', borderRadius: '15px' }}
+            />
           </div>
-
-          <div className="flex flex-row items-center">
-            <div className="w-16 p-2 bg-transparent rounded-full">
-              <CircularProgressbar
-                value={rating}
-                maxValue={10}
-                background
-                text={rating}
-                styles={buildStyles({
-                  pathColor: determineColor(rating),
-                  backgroundColor: 'white',
-                  textSize: '25px',
-                  textColor: determineColor(rating),
-                })}
-              />
+          {/* right */}
+          <div className="text-white">
+            <div className="text-3xl leading-[40px] md:text-4xl md:leading-[44px] title">
+              {`${movieDetails.name || movieDetails.title} (${dayjs(
+                movieDetails?.releaseDate,
+              ).format('YYYY')})`}
+            </div>
+            <div className="mb-4 text-base italic leading-6 opacity-50 md:text-lg md:leading-7 subtitle">
+              {movieDetails.tagLine}
             </div>
 
-            <button
-              className="flex items-center space-x-5 cursor-pointer"
-              onClick={() => {
-                setShow(true)
-              }}
-            >
-              <div>
-                <BsFillArrowRightCircleFill className="text-5xl" />
-              </div>
-              <span className="text">Watch Trailer</span>
-            </button>
-          </div>
-        </div>
+            <div className="flex flex-wrap mb-6">
+              <Genres genres={genres} />
+            </div>
 
-        <VideoPopUp show={show} setShow={setShow} videoKey={videoKey} />
+            <div className="flex flex-row items-center mb-4">
+              <div className="w-12 mr-4 bg-transparent rounded-full">
+                <CircularProgressbar
+                  value={rating}
+                  maxValue={10}
+                  background
+                  text={rating}
+                  styles={buildStyles({
+                    pathColor: determineColor(rating),
+                    backgroundColor: 'white',
+                    textSize: '25px',
+                    textColor: determineColor(rating),
+                  })}
+                />
+              </div>
+
+              <button
+                className="flex items-center space-x-5 cursor-pointer"
+                onClick={() => {
+                  setShow(true)
+                }}
+              >
+                <div>
+                  <BsFillArrowRightCircleFill className="text-5xl" />
+                </div>
+                <span className="text">Watch Trailer</span>
+              </button>
+            </div>
+
+            <div className="mb-6">
+              <div className="text-xl mb-2.5">Overview</div>
+              <div className="leading-6 md:pr-24">{movieDetails?.overview}</div>
+            </div>
+
+            <div className="info">
+              <div className="infoItem">
+                <span className="infoName">Status: </span>
+                <span className="infoValue">{movieDetails?.status}</span>
+              </div>
+
+              <div className="infoItem">
+                <span className="infoName">Release Date: </span>
+                <span className="infoValue">
+                  {dayjs(movieDetails?.releaseDate).format('MMM D, YYYY')}
+                </span>
+              </div>
+
+              <div className="infoItem">
+                <span className="infoName">Runtime: </span>
+                <span className="infoValue ">
+                  {toHoursAndMinutes(movieDetails?.runtime)}
+                </span>
+              </div>
+            </div>
+
+            <div className="info">
+              <span className="infoName">Director: </span>
+              <span className="infoValue">
+                {director?.map((d: any, i: number) => (
+                  <span key={d}>
+                    {d}
+                    {director.length - 1 !== i && ', '}
+                  </span>
+                ))}
+              </span>
+            </div>
+
+            <div className="info">
+              <span className="infoName">Writer: </span>
+              <span className="infoValue">
+                {writer?.map((w: any, i: number) => (
+                  <span key={w}>
+                    {w}
+                    {writer.length - 1 !== i && ', '}
+                  </span>
+                ))}
+              </span>
+            </div>
+          </div>
+
+          <VideoPopUp show={show} setShow={setShow} videoKey={videoKey} />
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 

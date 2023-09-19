@@ -3,16 +3,33 @@ import { API_KEY, API_URL } from '@/utils/tmdbApiConfig'
 import axios from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const getDirector = async (mediaType: string, id: string) => {
+const getDirectors = async (mediaType: string, id: string) => {
   const response = await axios.get(
     `${API_URL}/${mediaType}/${id}/credits?api_key=${API_KEY}`,
   )
 
-  const directorInfo = response.data.crew.find(
+  const directorInfo = response.data.crew.filter(
     (crewMember: { job: string }) => crewMember.job === 'Director',
   )
 
-  return directorInfo ? directorInfo.name : 'Unknown'
+  return directorInfo.length > 0
+    ? directorInfo.map((director: any) => director.name)
+    : ['Unknown']
+}
+
+const getWriters = async (mediaType: string, id: string) => {
+  const response = await axios.get(
+    `${API_URL}/${mediaType}/${id}/credits?api_key=${API_KEY}`,
+  )
+
+  const writerInfo = response.data.crew.filter(
+    (crewMember: { job: string }) =>
+      crewMember.job === 'Screenplay' || crewMember.job === 'Writer',
+  )
+
+  return writerInfo.length > 0
+    ? writerInfo.map((writer: any) => writer.name)
+    : ['Unknown']
 }
 
 const getCast = async (mediaType: string, id: string) => {
@@ -42,7 +59,8 @@ const getMovieData = async (mediaType: string, id: string) => {
   )
 
   const director =
-    mediaType === 'movie' ? await getDirector(mediaType, id) : null
+    mediaType === 'movie' ? await getDirectors(mediaType, id) : null
+  const writers = mediaType === 'movie' ? await getWriters(mediaType, id) : null
 
   const cast = await getCast(mediaType, id)
   const videoKey = await getVideo(mediaType, id)
@@ -54,8 +72,10 @@ const getMovieData = async (mediaType: string, id: string) => {
     popularity: response.data.popularity,
     backdrop: response.data.backdrop_path,
     tagline: response.data.tagline,
+    overview: response.data.overview,
     videoKey,
     director,
+    writers,
     country: response.data.production_countries[0].iso_3166_1,
     releaseDate: response.data.release_date,
     runtime: response.data.runtime,
