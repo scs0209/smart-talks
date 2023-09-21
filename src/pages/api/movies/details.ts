@@ -59,8 +59,11 @@ const getVideo = async (mediaType: string, id: string) => {
     `${API_URL}/${mediaType}/${id}/videos?api_key=${API_KEY}`,
   )
 
-  // Assuming the first video is the one you want
-  return response.data.results[0]?.key || 'No video available'
+  return response.data.results.map((video: any) => ({
+    key: video.key,
+    id: video.id,
+    name: video.name,
+  }))
 }
 
 const getMovieData = async (mediaType: string, id: string) => {
@@ -73,7 +76,7 @@ const getMovieData = async (mediaType: string, id: string) => {
   const writers = mediaType === 'movie' ? await getWriters(mediaType, id) : null
 
   const cast = await getCast(mediaType, id)
-  const videoKey = await getVideo(mediaType, id)
+  const videos = await getVideo(mediaType, id)
 
   const movieData = {
     id: response.data.id,
@@ -83,7 +86,7 @@ const getMovieData = async (mediaType: string, id: string) => {
     backdrop: response.data.backdrop_path,
     tagline: response.data.tagline,
     overview: response.data.overview,
-    videoKey,
+    videos,
     director,
     writers,
     country: response.data.production_countries[0].iso_3166_1,

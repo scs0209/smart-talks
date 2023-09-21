@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useGetMovieDetailsQuery } from '@/redux/api/movieApi'
 import HeroBanner from '@/components/Details/HeroBanner'
 import Cast from '@/components/Details/Cast'
+import VideoSection from '@/components/Details/VideoSection'
 
 interface Genre {
   id: number
@@ -25,6 +26,7 @@ const MovieDetail = () => {
   } = useGetMovieDetailsQuery({ mediaType, id: movieId })
 
   const cast = movieDetails?.cast
+  const videos = movieDetails?.videos
 
   console.log(movieDetails)
 
@@ -40,6 +42,7 @@ const MovieDetail = () => {
     <section className="detail">
       <HeroBanner movieDetails={movieDetails} />
       <Cast cast={cast} />
+      <VideoSection videos={videos} />
     </section>
   )
 }

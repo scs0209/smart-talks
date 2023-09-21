@@ -18,9 +18,11 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
   const posterUrl = movieDetails?.poster && getImageUrl(movieDetails.poster)
   const backdropUrl = movieDetails?.poster && getImageUrl(movieDetails.backdrop)
   const genres = movieDetails?.genres.map((g: any) => g.name)
-  const videoKey = movieDetails?.videoKey
+  const videoKey = movieDetails?.videos[0].key
   const director = movieDetails?.director
   const writer = movieDetails?.writers
+
+  console.log(videoKey)
 
   const determineColor = (rating: number) => {
     if (rating < 5) return 'red'
@@ -49,7 +51,7 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
 
       <div className="relative flex flex-col max-w-screen-lg gap-6 mx-auto md:gap-12 md:flex-row">
         {/* left */}
-        <div className="relative w-full block rounded-[20px] md:max-w-[350px] h-[500px]">
+        <div className="relative w-full flex-shrink-0 block rounded-[20px] md:max-w-[350px] h-[500px]">
           <Image
             fill
             src={posterUrl}
