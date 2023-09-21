@@ -71,7 +71,21 @@ const getSimilar = async (mediaType: string, id: string) => {
     `${API_URL}/${mediaType}/${id}/similar?api_key=${API_KEY}&language=ko`,
   )
 
-  return response.data.results
+  return response.data.results.map((item: any) => ({
+    ...item,
+    media_type: mediaType,
+  }))
+}
+
+const getRecommendations = async (mediaType: string, id: string) => {
+  const response = await axios.get(
+    `${API_URL}/${mediaType}/${id}/recommendations?api_key=${API_KEY}&language=ko`,
+  )
+
+  return response.data.results.map((item: any) => ({
+    ...item,
+    media_type: mediaType,
+  }))
 }
 
 const getMovieData = async (mediaType: string, id: string) => {
@@ -86,6 +100,7 @@ const getMovieData = async (mediaType: string, id: string) => {
   const cast = await getCast(mediaType, id)
   const videos = await getVideo(mediaType, id)
   const similar = await getSimilar(mediaType, id)
+  const recommendations = await getRecommendations(mediaType, id)
 
   const movieData = {
     id: response.data.id,
@@ -107,6 +122,7 @@ const getMovieData = async (mediaType: string, id: string) => {
     cast,
     status: response.data.status,
     similar,
+    recommendations,
   }
 
   return movieData

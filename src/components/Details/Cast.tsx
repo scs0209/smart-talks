@@ -10,7 +10,9 @@ const Cast: VFC<Props> = ({ cast }) => {
   return (
     <div className="relative mb-12">
       <div className="max-w-screen-lg mx-auto p-4">
-        <div className="text-lg dark:text-white mb-6">Top Cast</div>
+        <div className="text-2xl font-semibold dark:text-white mb-6">
+          Top Cast
+        </div>
         <div className="flex gap-5 overflow-y-hidden mx-[-20px] px-5 md:mx-0 md:px-0">
           {cast?.map((item: any) => {
             const imgUrl = getImageUrl(item.imageUrl)

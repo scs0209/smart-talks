@@ -14,7 +14,7 @@ interface Props {
 
 const MovieCard: VFC<Props> = ({ movie }) => {
   const { data: genres } = useGetGenresQuery()
-  const posterUrl = getImageUrl(movie.poster_path)
+  const posterUrl = getImageUrl(movie?.poster_path)
 
   const determineColor = (rating: number) => {
     if (rating < 5) return 'red'
@@ -23,8 +23,6 @@ const MovieCard: VFC<Props> = ({ movie }) => {
   }
 
   const rating = movie.vote_average.toFixed(1)
-
-  console.log(movie)
 
   const movieGenres =
     movie.genre_ids.map(

@@ -18,7 +18,8 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
   const posterUrl = movieDetails?.poster && getImageUrl(movieDetails.poster)
   const backdropUrl = movieDetails?.poster && getImageUrl(movieDetails.backdrop)
   const genres = movieDetails?.genres.map((g: any) => g.name)
-  const videoKey = movieDetails?.videos[0].key
+  const videoKey =
+    movieDetails?.videos?.length > 0 ? movieDetails.videos[0]?.key : null
   const director = movieDetails?.director
   const writer = movieDetails?.writers
 

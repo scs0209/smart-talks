@@ -14,7 +14,7 @@ const VideoSection: VFC<Props> = ({ videos }) => {
   return (
     <div className="relative mb-12 videosSection">
       <div className="max-w-screen-lg mx-auto p-4">
-        <div className="dark:text-white text-lg mb-6 sectionHeading">
+        <div className="dark:text-white text-2xl font-semibold mb-6 sectionHeading">
           Official Videos
         </div>
         <div className="flex space-x-[10px] overflow-x-auto pr-5 pl-5 md:space-x-5 md:pr-0 md:pl-0 videos">
@@ -34,7 +34,7 @@ const VideoSection: VFC<Props> = ({ videos }) => {
                   fill
                   className="rounded-md"
                 />
-                <BsFillArrowRightCircleFill className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white opacity-25 z-20 text-5xl hover:opacity-60" />
+                <BsFillArrowRightCircleFill className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white opacity-25 z-5 text-5xl hover:opacity-60" />
               </div>
               <div className="dark:text-white text-sm leading-snug md:text-base md:leading-normal videoTitle">
                 {video.name}

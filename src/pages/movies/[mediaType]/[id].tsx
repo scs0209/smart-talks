@@ -5,6 +5,7 @@ import HeroBanner from '@/components/Details/HeroBanner'
 import Cast from '@/components/Details/Cast'
 import VideoSection from '@/components/Details/VideoSection'
 import Similar from '@/components/Details/Similar'
+import Recommendation from '@/components/Details/Recommendation'
 
 interface Genre {
   id: number
@@ -29,8 +30,7 @@ const MovieDetail = () => {
   const cast = movieDetails?.cast
   const videos = movieDetails?.videos
   const similar = movieDetails?.similar
-
-  console.log(movieDetails)
+  const recommendations = movieDetails?.recommendations
 
   if (isFetching) {
     return <div>Loading...</div>
@@ -46,6 +46,7 @@ const MovieDetail = () => {
       <Cast cast={cast} />
       <VideoSection videos={videos} />
       <Similar similar={similar} />
+      <Recommendation recommendations={recommendations} />
     </section>
   )
 }
