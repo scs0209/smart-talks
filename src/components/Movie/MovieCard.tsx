@@ -54,7 +54,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
           </div>
         </div>
 
-        <div className="relative inline-block w-20 p-4 bg-transparent rounded-full -bottom-9">
+        <div className="relative inline-block w-20 p-4 bg-transparent rounded-full -top-[175px] -left-[78px]">
           <CircularProgressbar
             value={rating}
             maxValue={10}
