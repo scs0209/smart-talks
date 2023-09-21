@@ -4,6 +4,7 @@ import { useGetMovieDetailsQuery } from '@/redux/api/movieApi'
 import HeroBanner from '@/components/Details/HeroBanner'
 import Cast from '@/components/Details/Cast'
 import VideoSection from '@/components/Details/VideoSection'
+import Similar from '@/components/Details/Similar'
 
 interface Genre {
   id: number
@@ -27,6 +28,7 @@ const MovieDetail = () => {
 
   const cast = movieDetails?.cast
   const videos = movieDetails?.videos
+  const similar = movieDetails?.similar
 
   console.log(movieDetails)
 
@@ -43,6 +45,7 @@ const MovieDetail = () => {
       <HeroBanner movieDetails={movieDetails} />
       <Cast cast={cast} />
       <VideoSection videos={videos} />
+      <Similar similar={similar} />
     </section>
   )
 }

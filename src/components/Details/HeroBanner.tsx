@@ -22,8 +22,6 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
   const director = movieDetails?.director
   const writer = movieDetails?.writers
 
-  console.log(videoKey)
-
   const determineColor = (rating: number) => {
     if (rating < 5) return 'red'
     if (rating < 7) return 'orange'
