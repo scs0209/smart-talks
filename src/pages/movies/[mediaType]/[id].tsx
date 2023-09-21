@@ -3,6 +3,9 @@ import { useRouter } from 'next/router'
 import { useGetMovieDetailsQuery } from '@/redux/api/movieApi'
 import HeroBanner from '@/components/Details/HeroBanner'
 import Cast from '@/components/Details/Cast'
+import VideoSection from '@/components/Details/VideoSection'
+import Similar from '@/components/Details/Similar'
+import Recommendation from '@/components/Details/Recommendation'
 
 interface Genre {
   id: number
@@ -25,8 +28,9 @@ const MovieDetail = () => {
   } = useGetMovieDetailsQuery({ mediaType, id: movieId })
 
   const cast = movieDetails?.cast
-
-  console.log(movieDetails)
+  const videos = movieDetails?.videos
+  const similar = movieDetails?.similar
+  const recommendations = movieDetails?.recommendations
 
   if (isFetching) {
     return <div>Loading...</div>
@@ -40,6 +44,9 @@ const MovieDetail = () => {
     <section className="detail">
       <HeroBanner movieDetails={movieDetails} />
       <Cast cast={cast} />
+      <VideoSection videos={videos} />
+      <Similar similar={similar} />
+      <Recommendation recommendations={recommendations} />
     </section>
   )
 }
