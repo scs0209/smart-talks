@@ -32,7 +32,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
     ) || []
 
   return (
-    <>
+    <div>
       <div className="relative grid h-[15rem] w-full max-w-[13rem] flex-col items-end justify-center bg-transparent bg-clip-border text-center rounded-[10px] text-gray-700 group shadow-lg border-gray-200/5 shadow-gray-400/50">
         <Image
           src={posterUrl}
@@ -72,7 +72,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
       </div>
 
       {movieGenres && <Genres genres={movieGenres} />}
-    </>
+    </div>
   )
 }
 

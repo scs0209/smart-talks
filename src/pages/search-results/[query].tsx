@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-import MovieCard from '@/components/Search/MovieCard'
 import { useSearchMoviesQuery } from '@/redux/api/movieApi'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { setAllResults, setPage } from '@/redux/reducers/movieSlice'
+import MovieCard from '@/components/Movie/MovieCard'
 
 const SearchResults = () => {
   const router = useRouter()
@@ -31,6 +31,8 @@ const SearchResults = () => {
       refetchOnFocus: true,
     },
   )
+
+  console.log(searchResult)
 
   useEffect(() => {
     if (searchResult) {
