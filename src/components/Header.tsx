@@ -88,6 +88,16 @@ const Header = () => {
               영화
             </Link>
           </li>
+          <li>
+            <Link href="/explore/tv" className={styles.items}>
+              TV Shows
+            </Link>
+          </li>
+          <li>
+            <Link href="/explore/movie" className={styles.items}>
+              Movies
+            </Link>
+          </li>
           {session ? (
             <>
               <li>

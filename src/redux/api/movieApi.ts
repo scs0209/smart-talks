@@ -42,6 +42,13 @@ const movieApi = createApi({
     getGenres: builder.query<{ results: any[] }, void>({
       query: () => `/movies/genres`,
     }),
+    discoverMovies: builder.query<
+      { results: any[] },
+      { mediaType?: string; page?: number }
+    >({
+      query: ({ mediaType = 'movie', page = 1 }) =>
+        `/movies/discover?mediaType=${mediaType}&page=${page}`,
+    }),
   }),
 })
 
@@ -54,6 +61,7 @@ export const {
   useGetTrendingMoviesQuery,
   useGetTopRatedMoviesQuery,
   useGetGenresQuery,
+  useDiscoverMoviesQuery,
   util: { getRunningQueriesThunk },
 } = movieApi
 

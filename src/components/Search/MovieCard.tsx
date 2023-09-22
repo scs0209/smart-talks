@@ -53,7 +53,7 @@ const MovieCard: VFC<Props> = ({ movie }) => {
             text={rating}
             styles={buildStyles({
               pathColor: determineColor(rating),
-              backgroundColor: 'white',
+              backgroundColor: '#f1f1f2',
               trailColor: 'transparent',
               textSize: '30px',
               textColor: determineColor(rating),
