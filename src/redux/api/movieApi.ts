@@ -44,10 +44,15 @@ const movieApi = createApi({
     }),
     discoverMovies: builder.query<
       { results: any[] },
-      { mediaType?: string | string[]; genreId?: string | null; page?: number }
+      {
+        mediaType?: string | string[]
+        genreId?: string | null
+        sort?: string
+        page?: number
+      }
     >({
-      query: ({ mediaType, genreId, page = 1 }) =>
-        `/movies/explore?mediaType=${mediaType}&genreId=${genreId}&page=${page}`,
+      query: ({ mediaType, genreId, sort, page = 1 }) =>
+        `/movies/explore?mediaType=${mediaType}&genreId=${genreId}&sort=${sort}page=${page}`,
     }),
     getGenre: builder.query<{ results: any[] }, string | string[] | undefined>({
       query: (mediaType) => `/movies/genre?mediaType=${mediaType}`,
