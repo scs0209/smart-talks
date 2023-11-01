@@ -4,6 +4,9 @@ import { useDiscoverMoviesQuery, useGetGenreQuery } from '@/redux/api/movieApi'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import { setAllResults, setPage } from '@/redux/reducers/movieSlice'
 
 const sortOptions = [
   { value: 'popularity.desc', label: 'Popularity Descending' },
@@ -19,10 +22,10 @@ const sortOptions = [
 ]
 
 const ExplorePage = () => {
+  const dispatch = useDispatch()
   const router = useRouter()
   const { mediatype } = router.query
-  const [dataList, setDataList] = useState<any[]>([])
-  const [pageNum, setPageNum] = useState(1)
+  const { allResults, page } = useSelector((state: RootState) => state.movies)
   const [genre, setGenre] = useState<any>(null)
   const [sort, setSort] = useState<any>(null)
 
@@ -36,38 +39,29 @@ const ExplorePage = () => {
     mediaType: mediatype,
     genreId: genre?.id,
     sort: sort?.value,
-    page: pageNum,
+    page,
   })
 
   const onChangeGenre = (newGenre: any) => {
-    setPageNum(1)
-    setDataList([])
     setGenre(newGenre)
+    dispatch(setPage(1))
+    dispatch(setAllResults([]))
   }
 
   const onChangeSort = (newSort: any) => {
-    setPageNum(1)
-    setDataList([])
     setSort(newSort)
+    dispatch(setAllResults([]))
   }
 
   const fetchMoreData = () => {
-    setPageNum((prevPageNum) => prevPageNum + 1)
+    dispatch(setPage(page + 1))
   }
 
   useEffect(() => {
     if (data) {
-      if (pageNum === 1) {
-        setDataList(data.results)
-      } else if (
-        pageNum > 1 &&
-        JSON.stringify(dataList[dataList.length - 1]) !==
-          JSON.stringify(data.results[0])
-      ) {
-        setDataList((oldData) => [...oldData, ...data.results])
-      }
+      dispatch(setAllResults(data.results))
     }
-  }, [data, pageNum])
+  }, [data])
 
   return (
     <div className="max-w-screen-lg min-h-screen px-4 py-16 mx-auto ">
@@ -92,15 +86,15 @@ const ExplorePage = () => {
           placeholder="Sort by"
         />
       </div>
-      {dataList.length > 0 && (
+      {allResults.length > 0 && (
         <InfiniteScroll
-          dataLength={dataList.length} // 이 값이 변경될 때마다 새 데이터 로드 함수가 호출됩니다.
+          dataLength={allResults.length} // 이 값이 변경될 때마다 새 데이터 로드 함수가 호출됩니다.
           next={fetchMoreData} // 새 데이터 로드 함수입니다.
           hasMore={!isFetching && !isError} // 더 많은 데이터가 있는지 여부입니다.
           loader={<h4>Loading...</h4>} // 로딩 스피너입니다.
         >
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            {dataList.map((movie) => (
+            {allResults.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
