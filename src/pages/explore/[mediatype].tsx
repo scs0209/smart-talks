@@ -61,7 +61,9 @@ const ExplorePage = () => {
   }
 
   const fetchMoreData = () => {
-    dispatch(setPage(page + 1))
+    if (allResults && allResults.length > 0) {
+      dispatch(setPage(page + 1))
+    }
   }
 
   // 초기 상태로 설정

@@ -17,11 +17,11 @@ const VideoSection: VFC<Props> = ({ videos }) => {
         <div className="dark:text-white text-2xl font-semibold mb-6 sectionHeading">
           Official Videos
         </div>
-        <div className="flex space-x-[10px] overflow-x-auto pr-5 pl-5 md:space-x-5 md:pr-0 md:pl-0 videos">
+        <div className="flex space-x-[10px] overflow-x-auto pr-5 pl-5 md:space-x-5 md:pr-0 md:pl-0 videos overflow-y-hidden">
           {videos?.map((video: any) => (
             <div
               key={video.id}
-              className="w-[250px] h-[200px] flex-shrink-0 cursor-pointer videoItem"
+              className="w-[250px] h-[210px] flex-shrink-0 cursor-pointer videoItem"
               onClick={() => {
                 setVideoId(video.key)
                 setShow(true)

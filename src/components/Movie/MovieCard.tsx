@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { VFC } from 'react'
+import { VFC, useEffect, useState } from 'react'
 
 import { getImageUrl } from '@/redux/api/tmdb'
 import Image from 'next/image'
@@ -15,6 +15,17 @@ interface Props {
 const MovieCard: VFC<Props> = ({ movie }) => {
   const { data: genres } = useGetGenresQuery()
   const posterUrl = getImageUrl(movie?.poster_path)
+  const [imageUrl, setImageUrl] = useState(posterUrl)
+
+  console.log(imageUrl)
+
+  const handleImageError = () => {
+    setImageUrl('/images/no-poster.png') // 여기에 대체 이미지 경로를 넣으세요.
+  }
+
+  useEffect(() => {
+    setImageUrl(posterUrl)
+  }, [posterUrl])
 
   const determineColor = (rating: number) => {
     if (rating < 5) return 'red'
@@ -35,7 +46,8 @@ const MovieCard: VFC<Props> = ({ movie }) => {
     <div>
       <div className="relative grid h-[15rem] w-full max-w-[13rem] flex-col items-end justify-center bg-transparent bg-clip-border text-center rounded-[10px] text-gray-700 group shadow-lg border-gray-200/5 shadow-gray-400/50">
         <Image
-          src={posterUrl}
+          src={imageUrl}
+          onError={handleImageError}
           alt="movie-image"
           width={300}
           height={230}
