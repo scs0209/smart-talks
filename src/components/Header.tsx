@@ -84,11 +84,6 @@ const Header = () => {
           } sm:flex items-center gap-2 text-sm`}
         >
           <li>
-            <Link href="/popular" className={styles.items}>
-              영화
-            </Link>
-          </li>
-          <li>
             <Link href="/explore/tv" className={styles.items}>
               TV Shows
             </Link>

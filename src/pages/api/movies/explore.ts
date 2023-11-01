@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
-      const mediaType = req.query.mediaType || 'movie' // mediaType 파라미터가 없으면 기본값으로 'movie'를 사용합니다.
+      const mediaType = req.query.mediaType || 'tv' // mediaType 파라미터가 없으면 기본값으로 'movie'를 사용합니다.
       const { genreId, sort } = req.query
       const page = req.query.page || 1 // page 파라미터가 없으면 기본값으로 1을 사용합니다.
       const response = await axios.get(
