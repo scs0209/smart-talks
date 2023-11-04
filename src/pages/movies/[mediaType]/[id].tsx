@@ -10,18 +10,25 @@ import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { client } from '@/redux/api/client'
 
-interface Genre {
-  id: number
-  name: string
-}
-
 const MovieDetail = () => {
   const router = useRouter()
   const { data: session, status } = useSession()
 
   const [reviews, setReviews] = useState<any>([])
   const [newReview, setNewReview] = useState('')
-  // 세션 정보를 가져옴
+  const [dropdownOpen, setDropdownOpen] = useState<{ [key: string]: boolean }>(
+    {},
+  )
+
+  // 기존 코드
+
+  // 드랍다운 메뉴를 토글하는 함수
+  const toggleDropdown = (id: string) => {
+    setDropdownOpen({
+      ...dropdownOpen,
+      [id]: !dropdownOpen[id],
+    })
+  }
 
   const mediaType = Array.isArray(router.query.mediaType)
     ? router.query.mediaType[0]
@@ -91,14 +98,13 @@ const MovieDetail = () => {
                 Your comment
               </label>
               <textarea
-                id="comment"
                 rows={6}
                 className="comment-textarea"
                 placeholder="Write a comment..."
                 required
                 value={newReview}
                 onChange={(e) => setNewReview(e.target.value)}
-              ></textarea>
+              />
             </div>
             <button type="submit" className="comment-submit-btn">
               Post comment
@@ -109,7 +115,7 @@ const MovieDetail = () => {
             return (
               <div key={review._id}>
                 <article className="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
-                  <footer className="flex justify-between items-center mb-2">
+                  <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center">
                       <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                         {review.userId?.username}
@@ -118,47 +124,37 @@ const MovieDetail = () => {
                         Feb. 8, 2022
                       </p>
                     </div>
-                    <button
-                      id="dropdownComment1Button"
-                      data-dropdown-toggle="dropdownComment1"
-                      className="comment-list-dropdown-btn"
-                      type="button"
-                    >
-                      <svg
-                        className="w-4 h-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 16 3"
+
+                    <div>
+                      <button
+                        className="comment-list-dropdown-btn"
+                        type="button"
+                        onClick={() => toggleDropdown(review._id)}
                       >
-                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                      </svg>
-                      <span className="sr-only">Comment settings</span>
-                    </button>
-                    {/* <!-- Dropdown menu --> */}
-                    <div id="dropdownComment1" className="dropdown-wrapper">
-                      <ul
-                        className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownMenuIconHorizontalButton"
+                        <svg
+                          className="w-4 h-4"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 16 3"
+                        >
+                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                        </svg>
+                      </button>
+                      {/* <!-- Dropdown menu --> */}
+                      <div
+                        className={`dropdown-wrapper ${
+                          dropdownOpen[review._id] ? '' : 'hidden'
+                        }`}
                       >
-                        <li>
-                          <a href="#" className="dropdown-li">
-                            Edit
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="dropdown-li">
-                            Remove
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" className="dropdown-li">
-                            Report
-                          </a>
-                        </li>
-                      </ul>
+                        <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
+                          <li className="dropdown-li">Edit</li>
+                          <li className="dropdown-li">Remove</li>
+                        </ul>
+                      </div>
                     </div>
-                  </footer>
+                  </div>
+
                   <p className="text-gray-500 dark:text-gray-400">
                     {review.review}
                   </p>
@@ -173,9 +169,9 @@ const MovieDetail = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
                         />
                       </svg>
