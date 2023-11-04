@@ -1,7 +1,7 @@
 import { getImageUrl } from '@/redux/api/tmdb'
 import dayjs from 'dayjs'
 import Image from 'next/image'
-import React, { VFC, useEffect, useState } from 'react'
+import React, { VFC, useState } from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
@@ -23,12 +23,6 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
   const director = movieDetails?.director
   const writer = movieDetails?.writers
 
-  const [imageUrl, setImageUrl] = useState(posterUrl)
-
-  const handleImageError = () => {
-    setImageUrl('/images/no-poster.png') // 여기에 대체 이미지 경로를 넣으세요.
-  }
-
   const determineColor = (rating: number) => {
     if (rating < 5) return 'red'
     if (rating < 7) return 'orange'
@@ -42,14 +36,9 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
     const minutes = totalMinutes % 60
     return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`
   }
-
-  useEffect(() => {
-    setImageUrl(posterUrl)
-  }, [posterUrl])
-
   return (
-    <div className="w-full h-full bg-white dark:bg-[#303030] pt-24 md:pt-30 md:mb-0 mb-12 md:min-h-[700px]">
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+    <div className="w-full h-full bg-white dark:bg-[#101725] pt-24 md:pt-30 md:mb-0 mb-12 md:min-h-[700px]">
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-50">
         <Image
           fill
           src={backdropUrl}
@@ -57,15 +46,14 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
           style={{ objectFit: 'cover', objectPosition: 'center' }}
         />
       </div>
-      <div className="w-full h-[250px] absolute bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-400 dark:to-[#04152d] opacity-80" />
+      <div className="w-full h-full absolute bottom-0 left-0 bg-white-custom-gradient dark:bg-gradient-to-t dark:from-[#101725] dark:to-transparent" />
 
       <div className="relative flex flex-col max-w-screen-lg gap-6 mx-auto md:gap-12 md:flex-row">
         {/* left */}
         <div className="relative w-full flex-shrink-0 block rounded-[20px] md:max-w-[350px] h-[500px]">
           <Image
             fill
-            src={imageUrl}
-            onError={handleImageError}
+            src={posterUrl}
             alt={`${movieDetails.title} poster`}
             style={{ objectFit: 'cover', borderRadius: '15px' }}
           />

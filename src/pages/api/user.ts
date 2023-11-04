@@ -78,11 +78,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const { userId, adminId } = req.query
 
-      console.log('adminId:', adminId)
       // 관리자 계정 정보를 조회
       const adminUser = await User.findById(adminId)
-
-      console.log('adminUser:', adminUser)
 
       // 관리자가 아닌 경우 권한 없음을 반환
       if (!adminUser || adminUser.role !== 'admin') {

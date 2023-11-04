@@ -9,5 +9,6 @@ declare module 'next-auth' {
       role?: string | null
       _id?: string | undefined
     }
+    accessToken: string
   }
 }

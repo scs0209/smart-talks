@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getSession } from 'next-auth/react'
 
 export const BASE_URL =
   process.env.NODE_ENV === 'development'
@@ -10,10 +11,25 @@ export const client = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 })
 
 client.interceptors.response.use(
   (response) => response,
+  (error) => {
+    return Promise.reject(error)
+  },
+)
+
+client.interceptors.request.use(
+  async (config) => {
+    const session = await getSession()
+    console.log(session?.user)
+    if (session) {
+      config.headers.Authorization = `Bearer ${session.user}`
+    }
+    return config
+  },
   (error) => {
     return Promise.reject(error)
   },

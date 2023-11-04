@@ -17,8 +17,6 @@ const MovieCard: VFC<Props> = ({ movie }) => {
   const posterUrl = getImageUrl(movie?.poster_path)
   const [imageUrl, setImageUrl] = useState(posterUrl)
 
-  console.log(imageUrl)
-
   const handleImageError = () => {
     setImageUrl('/images/no-poster.png') // 여기에 대체 이미지 경로를 넣으세요.
   }

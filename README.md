@@ -1,4 +1,4 @@
-# SMAX
+# FILM FINDER
 
 <div align="center">
 <img src="https://user-images.githubusercontent.com/110822847/235289858-a8950f96-5c58-42f9-8a56-5abc50c541af.png" width="300">
@@ -14,11 +14,11 @@
 
 ## 프로젝트 소개
 
-SMAX는 영화 정보 검색, 예약, 관리 등의 기능을 제공하는 웹 애플리케이션입니다. 이 프로젝트는 React, Redux Toolkit, RTK Query, Next.js, MongoDB 등의 기술을 사용하여 개발되었습니다.
+FILM FINDER는 인기 영화 정보 및 영화 정보 검색, 관리, 예고편 보기 등의 기능을 제공하는 웹 애플리케이션입니다. 이 프로젝트는 React, Redux Toolkit, RTK Query, Next.js, MongoDB 등의 기술을 사용하여 개발되었습니다.
 
 ## 프로젝트 목적
 
-프로젝트의 주된 목적은 사용자들이 편리하게 영화 예매를 할 수 있도록 지원하는 웹 애플리케이션을 개발하는 것입니다
+프로젝트의 주된 목적은 사용자들이 편리하게 최신 영화 정보를 찾을 수 있도록 지원하는 웹 애플리케이션을 개발하는 것입니다
 
 ## 프로젝트 기간
 
@@ -120,25 +120,23 @@ npm run dev or npm run start
 ## 🎈 구현 기능
 
 - 로그인 및 회원가입
-- 영화 상영 시간 생성
-- 영화 예매 기능
 - 영화 검색 기능
 - 영화 목록 기능
+- 탭을 이용하여 해당 주제에 맞게 영화 렌더링
+- 티비 및 영화에 대한 정보 목록 기능
 - 마이 페이지
-- 관리자 페이지
-- 권한에 따른 페이지 접속을 가능하게 하는 프로텍트 라우트 구현
 
 ## 프로젝트 설명
 
 1. 메인 페이지
 
-- Hero Section에 `TMDB API`를 활용해 최신영화의 예고편을 보여줌
-- Hero Section 아래에는 Movie 스키마 등록된 영화 목록이 보여짐
-- getStaticProps를 사용하여 초기 로딩 속도 향상(Lighthouse 성능 점수 76 -> 99)
+- Hero Section에 `TMDB API`를 활용해 랜덤한 영화 이미지가 렌더링 됨
+- 검색창으로 영화를 검색할 수 있음
+- Hero Section 아래에는 `TMDB API`가 제공하는 트렌드와 평점순, 그리고 인기있는 영화와 TV 프로그램을 각각 섹션별로 렌더링하고 있음
 
 ![홈페이지](https://github.com/scs0209/myBlog/assets/110822847/ae8c4d4b-8610-4574-b7d2-767e53399763)
 
-2. 로그인, 회원가입
+1. 로그인, 회원가입
 
 - `next-auth`를 사용하여 커스텀 로그인과 소셜 미디어 프로바이더를 통한 `소셜 로그인`을 구현
 - `react-hook-form`을 사용하여 실시간 유효성 검사 및 불필요한 리렌더링 최소화
@@ -151,26 +149,27 @@ npm run dev or npm run start
 
 ![회원가입](https://github.com/scs0209/myBlog/assets/110822847/18301b39-851b-4dd1-a8dc-5635592e8f2f)
 
-3. 인기 영화 조회
+3. 영화와 TV 프로그램 목록
 
-- `TMDB API`를 활용하여 영화 데이터를 불러와 인기 영화 조회 기능을 프론트엔드에 구현
-- `Intersection Observer API`를 사용하여 인피니트 스크롤 구현
+- `useRouter`를 활용하여 mediatype별로 해당 데이터에 맞게 페이지가 렌더링되게함
+  - mediatype은 URL의 일부로, movie나 tv와 같은 값을 가질 수 있음. 이 값에 따라 탐색 대상이 영화인지 TV 프로그램인지가 결정됨
+- UX를 향상시키기 위해 `react-infinite-scroll-component`를 활용하여 무한스크롤 구현
+- `react-select`를 활용하여 선택한 장르와 정렬에 맞게 데이터를 정렬할 수 있도록 구현
 
 ![인기 영화 목록](https://github.com/scs0209/myBlog/assets/110822847/bd628082-ed6d-4520-a480-19ef4f7f33b1)
 
-4. 영화 검색
+4. 검색 결과 페이지 구현
 
-- `TMDB API`를 활용하여 검색 결과에 해당하는 데이터를 불러와서 화면에 표시
-- `Intersection Observer API`를 사용하여 인피니트 스크롤 구현
+- 검색한 데이터에 맞게 해당 영화들이 나옴
+- `intersection-observer-api`를 사용하여 무한스크롤 구현
 
-![영화 검색](https://github.com/scs0209/myBlog/assets/110822847/85d2291e-7918-4746-a98e-69b463374677)
+![마이페이지](https://github.com/scs0209/myBlog/assets/110822847/f3e11ee4-2052-4f91-b35c-f7be8f46a71d)
 
-5. 영화 예매 기능
+5. 영화 상세 페이지 구현
 
-- `아임포트 API`를 활용하여 결제시스템 연동
-- 영화, 극장, 상영시간, 좌석 정보를 선택한 후 예매 가능
-
-![예매](https://github.com/scs0209/myBlog/assets/110822847/0d2dc6c4-3721-4188-8e44-1299f9313b46)
+- 카드 컴포넌트를 클릭하면 해당 데이터에 맞는 영화 상세페이지로 이동
+- 해당 영화에 대한 트레일러, 메인 예고편, 그리고 해당 영화에 맞는 추천 영화들 및 감독 등을 볼 수 있음
+- 데이터들을 편하게 볼 수 있도록 Carousel 구현
 
 6. 마이 페이지 구현
 
@@ -178,12 +177,6 @@ npm run dev or npm run start
 - 예매한 정보 삭제 가능
 
 ![마이페이지](https://github.com/scs0209/myBlog/assets/110822847/f3e11ee4-2052-4f91-b35c-f7be8f46a71d)
-
-7. 관리자 페이지 구현
-
-- 해당 웹에 가입한 유저 전체를 볼 수 있고, 삭제할 수 있음
-
-![관리자 페이지](https://github.com/scs0209/myBlog/assets/110822847/5eaf860a-b74e-4b3a-a3b7-953df98af052)
 
 ## 📂 디렉토리 구조
 
@@ -352,3 +345,8 @@ npm run dev or npm run start
 | chore     | 기능과 관련 없는 내용 수정 |
 
 ---
+
+## 추가로 구현해 볼 것
+
+- 리뷰 기능
+- 영화 공유 기능
