@@ -10,11 +10,13 @@ import { Context, createWrapper, HYDRATE } from 'next-redux-wrapper'
 import moviesSlice from './reducers/movieSlice'
 import movieApi from './api/movieApi'
 import { userApi } from './api/userApi'
+import reviewApi from './api/reviewApi'
 
 const reducer = (state: any, action: PayloadAction<any>) => {
   return combineReducers({
     [movieApi.reducerPath]: movieApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [reviewApi.reducerPath]: reviewApi.reducer,
     movies: moviesSlice,
     // 추가적인 리듀서들을 여기에 추가해주세요.
   })(state, action)
@@ -24,7 +26,11 @@ const makeStore = (context: Context) =>
   configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(movieApi.middleware, userApi.middleware),
+      getDefaultMiddleware().concat(
+        movieApi.middleware,
+        userApi.middleware,
+        reviewApi.middleware,
+      ),
     devTools: process.env.NODE_ENV !== 'production',
   })
 

@@ -6,15 +6,15 @@ import Cast from '@/components/Details/Cast'
 import VideoSection from '@/components/Details/VideoSection'
 import Similar from '@/components/Details/Similar'
 import Recommendation from '@/components/Details/Recommendation'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { client } from '@/redux/api/client'
+import { useGetReviewsQuery } from '@/redux/api/reviewApi'
 
 const MovieDetail = () => {
   const router = useRouter()
   const { data: session, status } = useSession()
 
-  const [reviews, setReviews] = useState<any>([])
   const [newReview, setNewReview] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState<{ [key: string]: boolean }>(
     {},
@@ -55,14 +55,7 @@ const MovieDetail = () => {
     isError,
   } = useGetMovieDetailsQuery({ mediaType, id: movieId })
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      const response = await client.get(`/api/movies/review?movieId=${movieId}`)
-      setReviews(response.data)
-    }
-
-    fetchReviews()
-  }, [movieId])
+  const { data: reviews } = useGetReviewsQuery(movieId)
 
   const cast = movieDetails?.cast
   const videos = movieDetails?.videos
@@ -85,7 +78,7 @@ const MovieDetail = () => {
       review: newReview,
       userId: session?.user._id,
     })
-    setReviews([...reviews, response.data.review])
+    // setReviews([...reviews, response.data.review])
     setNewReview('')
   }
 
@@ -98,9 +91,9 @@ const MovieDetail = () => {
     })
 
     // 서버에서 반환된 수정된 리뷰를 찾아서 상태를 업데이트
-    setReviews(
-      reviews.map((r: any) => (r._id === id ? response.data.review : r)),
-    )
+    // setReviews(
+    //   reviews.map((r: any) => (r._id === id ? response.data.review : r)),
+    // )
     toggleEditing(id)
     setEditingReview('')
   }
@@ -111,9 +104,10 @@ const MovieDetail = () => {
     )
 
     // 삭제된 리뷰를 상태에서 제거
-    setReviews(reviews.filter((r: any) => r._id !== id))
+    // setReviews(reviews.filter((r: any) => r._id !== id))
   }
 
+  console.log(reviews)
   return (
     <section className="detail">
       <HeroBanner movieDetails={movieDetails} />
@@ -125,7 +119,7 @@ const MovieDetail = () => {
         <div className="max-w-2xl mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
-              Review ({reviews.length})
+              Review ({reviews?.length})
             </h2>
           </div>
           <form className="mb-6" onSubmit={postComment}>
@@ -144,7 +138,7 @@ const MovieDetail = () => {
             </button>
           </form>
 
-          {reviews.map((review: any) => {
+          {reviews?.map((review: any) => {
             return (
               <div key={review._id}>
                 <article className="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
