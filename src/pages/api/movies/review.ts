@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import connectDB from '@/services/dbConnect'
 import Review, { IReview } from '@/models/Review'
-import { getSession } from 'next-auth/react'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   await connectDB()
@@ -30,11 +29,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(201).json({ message: 'Review added!', review: populatedReview })
   } else if (req.method === 'PUT') {
-    const session = await getSession({ req }) // 세션 정보를 가져옴
     const { id, review, userId } = req.body
 
-    if (!session || session.user._id !== userId) {
-      res.status(401).json({ message: 'Unauthorized' }) // 로그인되지 않았거나 세션의 사용자 ID와 요청 본문의 사용자 ID가 일치하지 않는 경우
+    const reviewToUpdate = await Review.findById(id)
+
+    if (!reviewToUpdate || reviewToUpdate.userId.toString() !== userId) {
+      res.status(401).json({ message: 'Unauthorized' }) // 로그인되지 않았거나 사용자 ID가 일치하지 않는 경우
       return
     }
 
@@ -46,11 +46,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({ message: 'Review updated!', review: updatedReview })
   } else if (req.method === 'DELETE') {
-    const session = await getSession({ req }) // 세션 정보를 가져옴
-    const { id, userId } = req.body
+    const { id, userId } = req.query
 
-    if (!session || session.user._id !== userId) {
-      res.status(401).json({ message: 'Unauthorized' }) // 로그인되지 않았거나 세션의 사용자 ID와 요청 본문의 사용자 ID가 일치하지 않는 경우
+    const reviewToDelete = await Review.findById(id)
+
+    if (!reviewToDelete || reviewToDelete.userId.toString() !== userId) {
+      res.status(401).json({ message: 'Unauthorized' }) // 로그인되지 않았거나 사용자 ID가 일치하지 않는 경우
       return
     }
 

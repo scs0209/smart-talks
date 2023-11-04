@@ -6,7 +6,7 @@ import Cast from '@/components/Details/Cast'
 import VideoSection from '@/components/Details/VideoSection'
 import Similar from '@/components/Details/Similar'
 import Recommendation from '@/components/Details/Recommendation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { client } from '@/redux/api/client'
 
@@ -19,6 +19,7 @@ const MovieDetail = () => {
   const [dropdownOpen, setDropdownOpen] = useState<{ [key: string]: boolean }>(
     {},
   )
+  const modalRef = useRef(null)
 
   // 기존 코드
 
@@ -29,6 +30,8 @@ const MovieDetail = () => {
       [id]: !dropdownOpen[id],
     })
   }
+
+  console.log(dropdownOpen)
 
   const mediaType = Array.isArray(router.query.mediaType)
     ? router.query.mediaType[0]
@@ -71,12 +74,33 @@ const MovieDetail = () => {
     const response = await client.post('/api/movies/review', {
       movieId,
       review: newReview,
+      userId: session?.user._id,
     })
     setReviews([...reviews, response.data.review])
     setNewReview('')
   }
 
-  console.log(session)
+  const editReview = async (id: string, review: string) => {
+    const response = await client.put('/api/movies/review', {
+      id,
+      review,
+      userId: session?.user._id,
+    })
+
+    // 서버에서 반환된 수정된 리뷰를 찾아서 상태를 업데이트
+    setReviews(
+      reviews.map((r: any) => (r._id === id ? response.data.review : r)),
+    )
+  }
+
+  const deleteReview = async (id: string) => {
+    await client.delete(
+      `/api/movies/review?id=${id}&userId=${session?.user._id}`,
+    )
+
+    // 삭제된 리뷰를 상태에서 제거
+    setReviews(reviews.filter((r: any) => r._id !== id))
+  }
 
   return (
     <section className="detail">
@@ -143,13 +167,31 @@ const MovieDetail = () => {
                       </button>
                       {/* <!-- Dropdown menu --> */}
                       <div
+                        ref={modalRef}
+                        onClick={(e) => {
+                          modalRef.current === e.target &&
+                            setDropdownOpen({
+                              ...dropdownOpen,
+                              [review._id]: false,
+                            })
+                        }}
                         className={`dropdown-wrapper ${
                           dropdownOpen[review._id] ? '' : 'hidden'
                         }`}
                       >
                         <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
-                          <li className="dropdown-li">Edit</li>
-                          <li className="dropdown-li">Remove</li>
+                          <li
+                            className="dropdown-li"
+                            onClick={() => editReview(review._id, newReview)}
+                          >
+                            Edit
+                          </li>
+                          <li
+                            className="dropdown-li"
+                            onClick={() => deleteReview(review._id)}
+                          >
+                            Remove
+                          </li>
                         </ul>
                       </div>
                     </div>
