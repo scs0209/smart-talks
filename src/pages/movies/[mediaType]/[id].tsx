@@ -19,6 +19,8 @@ const MovieDetail = () => {
   const [dropdownOpen, setDropdownOpen] = useState<{ [key: string]: boolean }>(
     {},
   )
+  const [editing, setEditing] = useState<{ [key: string]: boolean }>({})
+  const [editingReview, setEditingReview] = useState('')
   const modalRef = useRef(null)
 
   // 기존 코드
@@ -28,6 +30,13 @@ const MovieDetail = () => {
     setDropdownOpen({
       ...dropdownOpen,
       [id]: !dropdownOpen[id],
+    })
+  }
+
+  const toggleEditing = (id: string) => {
+    setEditing({
+      ...editing,
+      [id]: !editing[id],
     })
   }
 
@@ -80,10 +89,11 @@ const MovieDetail = () => {
     setNewReview('')
   }
 
-  const editReview = async (id: string, review: string) => {
+  const submitEdit = async (e: React.FormEvent, id: string) => {
+    e.preventDefault()
     const response = await client.put('/api/movies/review', {
       id,
-      review,
+      review: editingReview,
       userId: session?.user._id,
     })
 
@@ -91,6 +101,8 @@ const MovieDetail = () => {
     setReviews(
       reviews.map((r: any) => (r._id === id ? response.data.review : r)),
     )
+    toggleEditing(id)
+    setEditingReview('')
   }
 
   const deleteReview = async (id: string) => {
@@ -118,9 +130,6 @@ const MovieDetail = () => {
           </div>
           <form className="mb-6" onSubmit={postComment}>
             <div className="comment-textarea-wrapper">
-              <label htmlFor="comment" className="sr-only">
-                Your comment
-              </label>
               <textarea
                 rows={6}
                 className="comment-textarea"
@@ -182,7 +191,7 @@ const MovieDetail = () => {
                         <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
                           <li
                             className="dropdown-li"
-                            onClick={() => editReview(review._id, newReview)}
+                            onClick={() => toggleEditing(review._id)}
                           >
                             Edit
                           </li>
@@ -197,9 +206,36 @@ const MovieDetail = () => {
                     </div>
                   </div>
 
-                  <p className="text-gray-500 dark:text-gray-400">
-                    {review.review}
-                  </p>
+                  {editing[review._id] ? (
+                    <form>
+                      <div className="comment-textarea-wrapper">
+                        <textarea
+                          className="comment-textarea"
+                          defaultValue={review.review}
+                          onChange={(e) => setEditingReview(e.target.value)}
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="comment-submit-btn"
+                        onClick={(e) => submitEdit(e, review._id)}
+                      >
+                        Submit
+                      </button>
+                      <button
+                        type="button"
+                        className="comment-submit-btn"
+                        onClick={() => toggleEditing(review._id)}
+                      >
+                        Cancel
+                      </button>
+                    </form>
+                  ) : (
+                    <p className="text-gray-500 dark:text-gray-400">
+                      {review.review}
+                    </p>
+                  )}
+
                   <div className="flex items-center mt-4 space-x-4">
                     <button type="button" className="reply-btn">
                       <svg
