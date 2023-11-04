@@ -9,7 +9,10 @@ import Recommendation from '@/components/Details/Recommendation'
 import { useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { client } from '@/redux/api/client'
-import { useGetReviewsQuery } from '@/redux/api/reviewApi'
+import {
+  useGetReviewsQuery,
+  usePostReviewMutation,
+} from '@/redux/api/reviewApi'
 
 const MovieDetail = () => {
   const router = useRouter()
@@ -56,6 +59,10 @@ const MovieDetail = () => {
   } = useGetMovieDetailsQuery({ mediaType, id: movieId })
 
   const { data: reviews } = useGetReviewsQuery(movieId)
+  const [
+    postReview,
+    { isLoading: postReviewLoading, isError: postReviewError },
+  ] = usePostReviewMutation()
 
   const cast = movieDetails?.cast
   const videos = movieDetails?.videos
@@ -70,16 +77,18 @@ const MovieDetail = () => {
     return <div>Error: {isError || 'Movie details not available'}</div>
   }
 
-  // 댓글을 게시하는 함수
   const postComment = async (e: any) => {
     e.preventDefault()
-    const response = await client.post('/api/movies/review', {
-      movieId,
-      review: newReview,
-      userId: session?.user._id,
-    })
-    // setReviews([...reviews, response.data.review])
-    setNewReview('')
+    try {
+      const response = await postReview({
+        movieId,
+        review: newReview,
+        userId: session?.user._id,
+      })
+      setNewReview('')
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const submitEdit = async (e: React.FormEvent, id: string) => {
