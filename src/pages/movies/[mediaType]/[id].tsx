@@ -7,7 +7,7 @@ import VideoSection from '@/components/Details/VideoSection'
 import Similar from '@/components/Details/Similar'
 import Recommendation from '@/components/Details/Recommendation'
 import { useSession } from 'next-auth/react'
-import Review from '@/components/Details/Review'
+import Review from '@/components/Details/Review/Review'
 
 const MovieDetail = () => {
   const router = useRouter()

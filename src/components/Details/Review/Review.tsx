@@ -1,10 +1,17 @@
 import {
   useDeleteReviewMutation,
-  useEditReviewMutation,
   useGetReviewsQuery,
   usePostReviewMutation,
 } from '@/redux/api/reviewApi'
-import React, { FC, useRef, useState } from 'react'
+import {
+  setNewReview,
+  toggleDropdown,
+  toggleEditing,
+} from '@/redux/reducers/reviewSlice'
+import { RootState } from '@/redux/store'
+import React, { FC } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import ReviewEditForm from './ReviewEditForm'
 
 interface Props {
   movieId: string | undefined
@@ -12,33 +19,14 @@ interface Props {
 }
 
 const Review: FC<Props> = ({ movieId, session }) => {
+  const dispatch = useDispatch()
   const { data: reviews } = useGetReviewsQuery(movieId)
   const [postReview] = usePostReviewMutation()
-  const [editReview] = useEditReviewMutation()
   const [deleteReview] = useDeleteReviewMutation()
 
-  const [newReview, setNewReview] = useState('')
-  const [dropdownOpen, setDropdownOpen] = useState<{ [key: string]: boolean }>(
-    {},
+  const { editing, dropdownOpen, newReview } = useSelector(
+    (state: RootState) => state.review,
   )
-  const [editing, setEditing] = useState<{ [key: string]: boolean }>({})
-  const [editingReview, setEditingReview] = useState('')
-  const modalRef = useRef(null)
-
-  // 드랍다운 메뉴를 토글하는 함수
-  const toggleDropdown = (id: string) => {
-    setDropdownOpen({
-      ...dropdownOpen,
-      [id]: !dropdownOpen[id],
-    })
-  }
-
-  const toggleEditing = (id: string) => {
-    setEditing({
-      ...editing,
-      [id]: !editing[id],
-    })
-  }
 
   const postComment = async (e: any) => {
     e.preventDefault()
@@ -48,21 +36,10 @@ const Review: FC<Props> = ({ movieId, session }) => {
         review: newReview,
         userId: session?.user._id,
       })
-      setNewReview('')
+      dispatch(setNewReview(''))
     } catch (err) {
       console.error(err)
     }
-  }
-
-  const submitEdit = async (e: React.FormEvent, id: string) => {
-    e.preventDefault()
-    await editReview({
-      id,
-      review: editingReview,
-      userId: session?.user._id,
-    })
-    toggleEditing(id)
-    setEditingReview('')
   }
 
   const deleteReviews = async (id: string) => {
@@ -114,7 +91,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
                     <button
                       className="comment-list-dropdown-btn"
                       type="button"
-                      onClick={() => toggleDropdown(review._id)}
+                      onClick={() => dispatch(toggleDropdown(review._id))}
                     >
                       <svg
                         className="w-4 h-4"
@@ -128,14 +105,6 @@ const Review: FC<Props> = ({ movieId, session }) => {
                     </button>
                     {/* <!-- Dropdown menu --> */}
                     <div
-                      ref={modalRef}
-                      onClick={(e) => {
-                        modalRef.current === e.target &&
-                          setDropdownOpen({
-                            ...dropdownOpen,
-                            [review._id]: false,
-                          })
-                      }}
                       className={`dropdown-wrapper ${
                         dropdownOpen[review._id] ? '' : 'hidden'
                       }`}
@@ -143,7 +112,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
                       <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
                         <li
                           className="dropdown-li"
-                          onClick={() => toggleEditing(review._id)}
+                          onClick={() => dispatch(toggleEditing(review._id))}
                         >
                           Edit
                         </li>
@@ -159,29 +128,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
                 </div>
 
                 {editing[review._id] ? (
-                  <form>
-                    <div className="comment-textarea-wrapper">
-                      <textarea
-                        className="comment-textarea"
-                        defaultValue={review.review}
-                        onChange={(e) => setEditingReview(e.target.value)}
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="comment-submit-btn"
-                      onClick={(e) => submitEdit(e, review._id)}
-                    >
-                      Submit
-                    </button>
-                    <button
-                      type="button"
-                      className="comment-submit-btn"
-                      onClick={() => toggleEditing(review._id)}
-                    >
-                      Cancel
-                    </button>
-                  </form>
+                  <ReviewEditForm review={review} />
                 ) : (
                   <p className="text-gray-500 dark:text-gray-400">
                     {review.review}
