@@ -49,8 +49,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { id, userId } = req.query
 
     const reviewToDelete = await Review.findById(id)
+    console.log('reviewToDelete:', reviewToDelete?.userId, reviewToDelete)
 
-    if (!reviewToDelete || reviewToDelete.userId.toString() !== userId) {
+    if (!reviewToDelete || reviewToDelete.userId?.toString() !== userId) {
       res.status(401).json({ message: 'Unauthorized' }) // 로그인되지 않았거나 사용자 ID가 일치하지 않는 경우
       return
     }

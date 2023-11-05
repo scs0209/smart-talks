@@ -10,6 +10,8 @@ import { useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { client } from '@/redux/api/client'
 import {
+  useDeleteReviewMutation,
+  useEditReviewMutation,
   useGetReviewsQuery,
   usePostReviewMutation,
 } from '@/redux/api/reviewApi'
@@ -59,10 +61,9 @@ const MovieDetail = () => {
   } = useGetMovieDetailsQuery({ mediaType, id: movieId })
 
   const { data: reviews } = useGetReviewsQuery(movieId)
-  const [
-    postReview,
-    { isLoading: postReviewLoading, isError: postReviewError },
-  ] = usePostReviewMutation()
+  const [postReview] = usePostReviewMutation()
+  const [editReview] = useEditReviewMutation()
+  const [deleteReview] = useDeleteReviewMutation()
 
   const cast = movieDetails?.cast
   const videos = movieDetails?.videos
@@ -93,27 +94,20 @@ const MovieDetail = () => {
 
   const submitEdit = async (e: React.FormEvent, id: string) => {
     e.preventDefault()
-    const response = await client.put('/api/movies/review', {
+    await editReview({
       id,
       review: editingReview,
       userId: session?.user._id,
     })
-
-    // 서버에서 반환된 수정된 리뷰를 찾아서 상태를 업데이트
-    // setReviews(
-    //   reviews.map((r: any) => (r._id === id ? response.data.review : r)),
-    // )
     toggleEditing(id)
     setEditingReview('')
   }
 
-  const deleteReview = async (id: string) => {
-    await client.delete(
-      `/api/movies/review?id=${id}&userId=${session?.user._id}`,
-    )
-
-    // 삭제된 리뷰를 상태에서 제거
-    // setReviews(reviews.filter((r: any) => r._id !== id))
+  const deleteReviews = async (id: string) => {
+    await deleteReview({
+      id,
+      userId: session?.user._id,
+    })
   }
 
   console.log(reviews)
@@ -200,7 +194,7 @@ const MovieDetail = () => {
                           </li>
                           <li
                             className="dropdown-li"
-                            onClick={() => deleteReview(review._id)}
+                            onClick={() => deleteReviews(review._id)}
                           >
                             Remove
                           </li>

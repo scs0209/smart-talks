@@ -22,9 +22,39 @@ const reviewApi = createApi({
       // 리뷰를 추가한 후에 getReviews 쿼리의 캐시를 무효화
       invalidatesTags: ['Reviews'],
     }),
+    editReview: builder.mutation<
+      void,
+      { id: string; review: string; userId: string | undefined }
+    >({
+      query: ({ id, review, userId }) => ({
+        url: `movies/review`,
+        method: 'PUT',
+        body: {
+          id,
+          review,
+          userId,
+        },
+      }),
+      invalidatesTags: ['Reviews'],
+    }),
+    deleteReview: builder.mutation<
+      void,
+      { id: string; userId: string | undefined }
+    >({
+      query: ({ id, userId }) => ({
+        url: `movies/review?id=${id}&userId=${userId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Reviews'],
+    }),
   }),
 })
 
-export const { useGetReviewsQuery, usePostReviewMutation } = reviewApi
+export const {
+  useGetReviewsQuery,
+  usePostReviewMutation,
+  useEditReviewMutation,
+  useDeleteReviewMutation,
+} = reviewApi
 
 export default reviewApi
