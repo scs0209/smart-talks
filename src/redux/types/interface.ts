@@ -1,6 +1,9 @@
-export interface Session {
-  user: User
-  expires: string
+export interface Review {
+  _id: string
+  movieId: string
+  review: string
+  userId: User
+  __v: number
 }
 
 export interface User {

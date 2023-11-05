@@ -8,6 +8,7 @@ import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ReviewEditForm from './ReviewEditForm'
 import ReviewDropDown from './ReviewDropDown'
+import { Review } from '@/redux/types/interface'
 
 interface Props {
   movieId: string | undefined
@@ -43,6 +44,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
             Review ({reviews?.length})
           </h2>
         </div>
+        {/* 댓글 입력 창 */}
         <form className="mb-6" onSubmit={postComment}>
           <div className="comment-textarea-wrapper">
             <textarea
@@ -59,7 +61,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
           </button>
         </form>
 
-        {reviews?.map((review: any) => {
+        {reviews?.map((review: Review) => {
           return (
             <div key={review._id}>
               <article className="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
@@ -89,6 +91,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
                         <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
                       </svg>
                     </button>
+
                     {/* <!-- Dropdown menu --> */}
                     <ReviewDropDown review={review} />
                   </div>
