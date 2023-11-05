@@ -1,17 +1,13 @@
 import {
-  useDeleteReviewMutation,
   useGetReviewsQuery,
   usePostReviewMutation,
 } from '@/redux/api/reviewApi'
-import {
-  setNewReview,
-  toggleDropdown,
-  toggleEditing,
-} from '@/redux/reducers/reviewSlice'
+import { setNewReview, toggleDropdown } from '@/redux/reducers/reviewSlice'
 import { RootState } from '@/redux/store'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ReviewEditForm from './ReviewEditForm'
+import ReviewDropDown from './ReviewDropDown'
 
 interface Props {
   movieId: string | undefined
@@ -22,11 +18,8 @@ const Review: FC<Props> = ({ movieId, session }) => {
   const dispatch = useDispatch()
   const { data: reviews } = useGetReviewsQuery(movieId)
   const [postReview] = usePostReviewMutation()
-  const [deleteReview] = useDeleteReviewMutation()
 
-  const { editing, dropdownOpen, newReview } = useSelector(
-    (state: RootState) => state.review,
-  )
+  const { editing, newReview } = useSelector((state: RootState) => state.review)
 
   const postComment = async (e: any) => {
     e.preventDefault()
@@ -40,13 +33,6 @@ const Review: FC<Props> = ({ movieId, session }) => {
     } catch (err) {
       console.error(err)
     }
-  }
-
-  const deleteReviews = async (id: string) => {
-    await deleteReview({
-      id,
-      userId: session?.user._id,
-    })
   }
 
   return (
@@ -65,7 +51,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
               placeholder="Write a comment..."
               required
               value={newReview}
-              onChange={(e) => setNewReview(e.target.value)}
+              onChange={(e) => dispatch(setNewReview(e.target.value))}
             />
           </div>
           <button type="submit" className="comment-submit-btn">
@@ -104,26 +90,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
                       </svg>
                     </button>
                     {/* <!-- Dropdown menu --> */}
-                    <div
-                      className={`dropdown-wrapper ${
-                        dropdownOpen[review._id] ? '' : 'hidden'
-                      }`}
-                    >
-                      <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
-                        <li
-                          className="dropdown-li"
-                          onClick={() => dispatch(toggleEditing(review._id))}
-                        >
-                          Edit
-                        </li>
-                        <li
-                          className="dropdown-li"
-                          onClick={() => deleteReviews(review._id)}
-                        >
-                          Remove
-                        </li>
-                      </ul>
-                    </div>
+                    <ReviewDropDown review={review} />
                   </div>
                 </div>
 
