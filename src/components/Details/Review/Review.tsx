@@ -44,13 +44,76 @@ const Review: FC<Props> = ({ movieId, session }) => {
     }
   }
 
+  let averageRating = 0
+  if (reviews) {
+    averageRating =
+      reviews.reduce((prev, curr) => prev + curr.rating, 0) / reviews.length
+  }
+
+  // 소수점 아래 한 자리까지만 표시
+  const roundedAverageRating = Math.round(averageRating * 10) / 10
+
+  let scoreCount = Array(6).fill(0)
+  let scoreRatio = Array(6).fill(0)
+  if (reviews) {
+    reviews.forEach((review) => {
+      scoreCount[review.rating]++
+    })
+
+    scoreRatio = scoreCount.map((count) => count / reviews.length)
+  }
+
   return (
     <section className="comment-wrapper">
       <div className="max-w-2xl mx-auto px-4">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
-            Review ({reviews?.length})
+            <div className="flex items-center">
+              <svg
+                className="w-4 h-4 text-yellow-300 mr-1"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 22 20"
+              >
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+              <p className="ml-2 text-sm font-bold text-gray-900 dark:text-white">
+                {roundedAverageRating}/5
+              </p>
+              <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+              <span className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">
+                {reviews?.length} reviews
+              </span>
+            </div>
           </h2>
+        </div>
+        <div className="mb-2">
+          {scoreRatio
+            .slice(1)
+            .reverse()
+            .map((ratio, index) => {
+              const score = 5 - index
+              return (
+                <div className="flex items-center mt-4" key={score}>
+                  <a
+                    href="#"
+                    className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    {score} star
+                  </a>
+                  <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+                    <div
+                      className="h-5 bg-yellow-300 rounded"
+                      style={{ width: `${ratio * 100}%` }}
+                    ></div>
+                  </div>
+                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {Math.round(ratio * 100)}%
+                  </span>
+                </div>
+              )
+            })}
         </div>
         {/* 댓글 입력 창 */}
         <ReviewForm movieId={movieId} session={session} />
