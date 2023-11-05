@@ -1,5 +1,7 @@
 import {
+  useDislikeReviewMutation,
   useGetReviewsQuery,
+  useLikeReviewMutation,
   usePostReviewMutation,
 } from '@/redux/api/reviewApi'
 import { setNewReview, toggleDropdown } from '@/redux/reducers/reviewSlice'
@@ -20,6 +22,8 @@ const Review: FC<Props> = ({ movieId, session }) => {
   const dispatch = useDispatch()
   const { data: reviews } = useGetReviewsQuery(movieId)
   const [postReview] = usePostReviewMutation()
+  const [likeReview] = useLikeReviewMutation()
+  const [dislikeReview] = useDislikeReviewMutation()
 
   const { editing, newReview } = useSelector((state: RootState) => state.review)
 
@@ -32,6 +36,24 @@ const Review: FC<Props> = ({ movieId, session }) => {
         userId: session?.user._id,
       })
       dispatch(setNewReview(''))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  // 좋아요 버튼 클릭 이벤트 핸들러
+  const handleLike = async (reviewId: string) => {
+    try {
+      await likeReview({ id: reviewId, userId: session?.user._id })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  // 싫어요 버튼 클릭 이벤트 핸들러
+  const handleDislike = async (reviewId: string) => {
+    try {
+      await dislikeReview({ id: reviewId, userId: session?.user._id })
     } catch (err) {
       console.error(err)
     }
@@ -125,6 +147,22 @@ const Review: FC<Props> = ({ movieId, session }) => {
                       />
                     </svg>
                     Reply
+                  </button>
+                  {/* 좋아요 버튼 */}
+                  <button
+                    type="button"
+                    className="like-btn"
+                    onClick={() => handleLike(review._id)}
+                  >
+                    좋아요 {review.likes?.length}
+                  </button>
+                  {/* 싫어요 버튼 */}
+                  <button
+                    type="button"
+                    className="dislike-btn"
+                    onClick={() => handleDislike(review._id)}
+                  >
+                    싫어요 {review.dislikes?.length}
                   </button>
                 </div>
               </article>

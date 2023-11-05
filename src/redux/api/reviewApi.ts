@@ -47,6 +47,30 @@ const reviewApi = createApi({
       }),
       invalidatesTags: ['Reviews'],
     }),
+    likeReview: builder.mutation<any, { id: string; userId: string }>({
+      query: ({ id, userId }) => ({
+        url: `movies/review`,
+        method: 'PATCH',
+        body: {
+          id,
+          userId,
+          action: 'like',
+        },
+      }),
+      invalidatesTags: ['Reviews'],
+    }),
+    dislikeReview: builder.mutation<any, { id: string; userId: string }>({
+      query: ({ id, userId }) => ({
+        url: `movies/review`,
+        method: 'PATCH',
+        body: {
+          id,
+          userId,
+          action: 'dislike',
+        },
+      }),
+      invalidatesTags: ['Reviews'],
+    }),
   }),
 })
 
@@ -55,6 +79,8 @@ export const {
   usePostReviewMutation,
   useEditReviewMutation,
   useDeleteReviewMutation,
+  useLikeReviewMutation,
+  useDislikeReviewMutation,
 } = reviewApi
 
 export default reviewApi

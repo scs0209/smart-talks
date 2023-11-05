@@ -59,5 +59,46 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     await Review.findByIdAndDelete(id) // 리뷰를 삭제
 
     res.status(200).json({ message: 'Review deleted!' })
+  } else if (req.method === 'PATCH') {
+    const { id, userId, action } = req.body // action: 'like' 또는 'dislike'
+
+    const review = await Review.findById(id)
+    if (!review) {
+      res.status(404).json({ message: 'Review not found' })
+      return
+    }
+
+    if (action === 'like') {
+      if (review.likes.includes(userId)) {
+        // 이미 좋아요를 누른 경우 좋아요 제거
+        review.likes = review.likes.filter((id) => id.toString() !== userId)
+        console.log('review: ', review.likes.includes(userId), userId, review)
+      } else {
+        // 좋아요를 누르지 않은 경우 좋아요 추가
+        review.likes.push(userId)
+        // 싫어요를 누른 경우 싫어요 제거
+        review.dislikes = review.dislikes.filter(
+          (id) => id.toString() !== userId,
+        )
+      }
+    } else if (action === 'dislike') {
+      if (review.dislikes.includes(userId)) {
+        // 이미 싫어요를 누른 경우 싫어요 제거
+        review.dislikes = review.dislikes.filter(
+          (id) => id.toString() !== userId,
+        )
+      } else {
+        // 싫어요를 누르지 않은 경우 싫어요 추가
+        review.dislikes.push(userId)
+        // 좋아요를 누른 경우 좋아요 제거
+        review.likes = review.likes.filter((id) => id.toString() !== userId)
+      }
+    } else {
+      res.status(400).json({ message: 'Invalid action' })
+      return
+    }
+
+    const updatedReview = await review.save()
+    res.status(200).json({ message: 'Review updated!', review: updatedReview })
   }
 }
