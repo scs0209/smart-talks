@@ -3,6 +3,7 @@ export interface Review {
   movieId: string
   review: string
   userId: User
+  createdAt: string
   __v: number
 }
 

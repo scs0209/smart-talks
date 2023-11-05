@@ -11,7 +11,6 @@ interface Props {
 }
 
 const ReviewDropDown: FC<Props> = ({ review }) => {
-  console.log(review)
   const dispatch = useDispatch()
   const { data: session } = useSession()
   const [deleteReview] = useDeleteReviewMutation()

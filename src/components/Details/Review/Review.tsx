@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ReviewEditForm from './ReviewEditForm'
 import ReviewDropDown from './ReviewDropDown'
 import { Review } from '@/redux/types/interface'
+import dayjs from 'dayjs'
 
 interface Props {
   movieId: string | undefined
@@ -62,6 +63,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
         </form>
 
         {reviews?.map((review: Review) => {
+          console.log(review)
           return (
             <div key={review._id}>
               <article className="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
@@ -71,7 +73,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
                       {review.userId?.username}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Feb. 8, 2022
+                      {dayjs(review.createdAt).format('YYYY-MM-DD')}
                     </p>
                   </div>
 
