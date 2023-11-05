@@ -13,14 +13,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json(reviews) // 불러온 리뷰를 반환
   } else if (req.method === 'POST') {
-    const { movieId, review, userId } = req.body
+    const { movieId, review, rating, userId } = req.body // rating 추가
 
     if (!userId) {
-      res.status(401).json({ message: 'Unauthorized' }) // 사용자 ID가 없는 경우 401 Unauthorized 응답 반환
+      res.status(401).json({ message: 'Unauthorized' })
       return
     }
 
-    const newReview: IReview = new Review({ movieId, review, userId })
+    const newReview: IReview = new Review({ movieId, review, rating, userId }) // rating 추가
     const savedReview = await newReview.save()
 
     const populatedReview = await Review.findById(savedReview._id).populate(

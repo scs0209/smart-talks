@@ -3,14 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 interface ReviewState {
   dropdownOpen: { [key: string]: boolean }
   editing: { [key: string]: boolean }
-  newReview: string
+  newReview: { review: string; rating: number }
   editingReview: string
 }
 
 const initialState: ReviewState = {
   dropdownOpen: {},
   editing: {},
-  newReview: '',
+  newReview: { review: '', rating: 0 },
   editingReview: '',
 }
 
@@ -26,8 +26,12 @@ const reviewSlice = createSlice({
       const id = action.payload
       state.editing[id] = !state.editing[id]
     },
-    setNewReview: (state, action: PayloadAction<string>) => {
-      state.newReview = action.payload
+    setNewReview: (
+      state,
+      action: PayloadAction<{ review: string; rating: number }>,
+    ) => {
+      // 수정
+      state.newReview = action.payload // 수정
     },
     setEditingReview: (state, action: PayloadAction<string>) => {
       state.editingReview = action.payload

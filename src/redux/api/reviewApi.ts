@@ -10,13 +10,14 @@ const reviewApi = createApi({
       providesTags: ['Reviews'],
     }),
     postReview: builder.mutation<any, Partial<any>>({
-      query: ({ movieId, review, userId }) => ({
+      query: ({ movieId, review, userId, rating }) => ({
         url: `movies/review`,
         method: 'POST',
         body: {
           movieId,
           review,
           userId,
+          rating,
         },
       }),
       // 리뷰를 추가한 후에 getReviews 쿼리의 캐시를 무효화

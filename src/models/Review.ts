@@ -6,8 +6,9 @@ export interface IReview extends Document {
   review: string
   userId: IUser['_id']
   createdAt: Date
-  likes: Array<IUser['_id']> // 좋아요 누른 사용자의 ID 목록
-  dislikes: Array<IUser['_id']> // 싫어요 누른 사용자의 ID 목록
+  likes: Array<IUser['_id']>
+  dislikes: Array<IUser['_id']>
+  rating: number // 평점 추가
 }
 
 const ReviewSchema = new Schema<IReview>({
@@ -35,6 +36,12 @@ const ReviewSchema = new Schema<IReview>({
       default: [],
     },
   ],
+  rating: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5,
+  },
 })
 
 const Review: Model<IReview> =
