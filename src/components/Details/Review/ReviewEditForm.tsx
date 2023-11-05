@@ -38,7 +38,7 @@ const ReviewEditForm: FC<Props> = ({ review }) => {
       </div>
       <button
         type="submit"
-        className="comment-submit-btn"
+        className="comment-submit-btn mr-2"
         onClick={(e) => submitEdit(e, review._id)}
       >
         Submit

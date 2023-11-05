@@ -2,16 +2,16 @@ import {
   useDislikeReviewMutation,
   useGetReviewsQuery,
   useLikeReviewMutation,
-  usePostReviewMutation,
 } from '@/redux/api/reviewApi'
-import { setNewReview, toggleDropdown } from '@/redux/reducers/reviewSlice'
+import { toggleDropdown } from '@/redux/reducers/reviewSlice'
 import { RootState } from '@/redux/store'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import ReviewEditForm from './ReviewEditForm'
-import ReviewDropDown from './ReviewDropDown'
 import { Review } from '@/redux/types/interface'
 import dayjs from 'dayjs'
+import ReviewEditForm from './ReviewEditForm'
+import ReviewDropDown from './ReviewDropDown'
+import ReviewForm from './ReviewForm'
 
 interface Props {
   movieId: string | undefined
@@ -21,25 +21,10 @@ interface Props {
 const Review: FC<Props> = ({ movieId, session }) => {
   const dispatch = useDispatch()
   const { data: reviews } = useGetReviewsQuery(movieId)
-  const [postReview] = usePostReviewMutation()
   const [likeReview] = useLikeReviewMutation()
   const [dislikeReview] = useDislikeReviewMutation()
 
-  const { editing, newReview } = useSelector((state: RootState) => state.review)
-
-  const postComment = async (e: any) => {
-    e.preventDefault()
-    try {
-      await postReview({
-        movieId,
-        review: newReview,
-        userId: session?.user._id,
-      })
-      dispatch(setNewReview(''))
-    } catch (err) {
-      console.error(err)
-    }
-  }
+  const { editing } = useSelector((state: RootState) => state.review)
 
   // 좋아요 버튼 클릭 이벤트 핸들러
   const handleLike = async (reviewId: string) => {
@@ -68,21 +53,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
           </h2>
         </div>
         {/* 댓글 입력 창 */}
-        <form className="mb-6" onSubmit={postComment}>
-          <div className="comment-textarea-wrapper">
-            <textarea
-              rows={6}
-              className="comment-textarea"
-              placeholder="Write a comment..."
-              required
-              value={newReview}
-              onChange={(e) => dispatch(setNewReview(e.target.value))}
-            />
-          </div>
-          <button type="submit" className="comment-submit-btn">
-            Post comment
-          </button>
-        </form>
+        <ReviewForm movieId={movieId} session={session} />
 
         {reviews?.map((review: Review) => {
           console.log(review)
@@ -129,7 +100,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
                   </p>
                 )}
 
-                <div className="flex items-center mt-4 space-x-4">
+                <div className="flex items-center justify-between mt-4 space-x-4">
                   <button type="button" className="reply-btn">
                     <svg
                       className="mr-1.5 w-3.5 h-3.5"
@@ -148,22 +119,46 @@ const Review: FC<Props> = ({ movieId, session }) => {
                     </svg>
                     Reply
                   </button>
-                  {/* 좋아요 버튼 */}
-                  <button
-                    type="button"
-                    className="like-btn"
-                    onClick={() => handleLike(review._id)}
-                  >
-                    좋아요 {review.likes?.length}
-                  </button>
-                  {/* 싫어요 버튼 */}
-                  <button
-                    type="button"
-                    className="dislike-btn"
-                    onClick={() => handleDislike(review._id)}
-                  >
-                    싫어요 {review.dislikes?.length}
-                  </button>
+                  <div>
+                    {/* 좋아요 버튼 */}
+                    <span>
+                      <button
+                        type="button"
+                        className="like-btn"
+                        onClick={() => handleLike(review._id)}
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 18 18"
+                        >
+                          <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z" />
+                        </svg>
+                      </button>
+                      {review.likes?.length}
+                    </span>
+                    {/* 싫어요 버튼 */}
+                    <span>
+                      <button
+                        type="button"
+                        className="dislike-btn"
+                        onClick={() => handleDislike(review._id)}
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 18 18"
+                        >
+                          <path d="M11.955 2.117h-.114C9.732 1.535 6.941.5 4.356.5c-1.4 0-1.592.526-1.879 1.316l-2.355 7A2 2 0 0 0 2 11.5h3.956L4.4 16a1.779 1.779 0 0 0 3.332 1.061 24.8 24.8 0 0 1 4.226-5.36l-.003-9.584ZM15 11h2a1 1 0 0 0 1-1V2a2 2 0 1 0-4 0v8a1 1 0 0 0 1 1Z" />
+                        </svg>
+                      </button>
+                      {review.dislikes?.length}
+                    </span>
+                  </div>
                 </div>
               </article>
             </div>
