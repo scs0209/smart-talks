@@ -11,11 +11,13 @@ const LoginPage = () => {
       <Head title="LogIn" />
       <div className="flex min-h-screen items-center mt-20 justify-end bg-cover bg-center bg-no-repeat">
         <div
-          className={`absolute left-0 top-20 flex h-full w-1/2 items-center justify-center bg-[#00CCCC] transition-transform duration-500 ease-in-out ${
+          className={`absolute left-0 top-20 flex h-full w-1/2 items-center justify-center bg-[#8FB8CA] transition-transform duration-500 ease-in-out ${
             isSignUpActive ? 'translate-x-full transform' : ''
           }`}
           style={{ zIndex: 1 }}
-        ></div>
+        >
+          movix
+        </div>
         <SignupForm />
         <LoginForm />
       </div>
