@@ -121,11 +121,6 @@ const Header = () => {
                   Login
                 </Link>
               </li>
-              <li>
-                <Link href="/signup" className={styles.items}>
-                  Signup
-                </Link>
-              </li>
             </>
           )}
           <DarkThemeToggle className="ml-2" />

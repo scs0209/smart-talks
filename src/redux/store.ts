@@ -12,6 +12,7 @@ import movieApi from './api/movieApi'
 import { userApi } from './api/userApi'
 import reviewApi from './api/reviewApi'
 import reviewSlice from './reducers/reviewSlice'
+import authorSlice from './reducers/authorSlice'
 
 const reducer = (state: any, action: PayloadAction<any>) => {
   return combineReducers({
@@ -20,7 +21,7 @@ const reducer = (state: any, action: PayloadAction<any>) => {
     [reviewApi.reducerPath]: reviewApi.reducer,
     movies: moviesSlice,
     review: reviewSlice,
-    // 추가적인 리듀서들을 여기에 추가해주세요.
+    author: authorSlice,
   })(state, action)
 }
 
