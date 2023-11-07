@@ -72,7 +72,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if (review.likes.includes(userId)) {
         // 이미 좋아요를 누른 경우 좋아요 제거
         review.likes = review.likes.filter((id) => id.toString() !== userId)
-        console.log('review: ', review.likes.includes(userId), userId, review)
       } else {
         // 좋아요를 누르지 않은 경우 좋아요 추가
         review.likes.push(userId)

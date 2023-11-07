@@ -6,12 +6,12 @@ const reviewApi = createApi({
   tagTypes: ['Reviews'],
   endpoints: (builder) => ({
     getReviews: builder.query<any[], string | undefined>({
-      query: (movieId) => `movies/review?movieId=${movieId}`,
+      query: (movieId) => `/movies/review?movieId=${movieId}`,
       providesTags: ['Reviews'],
     }),
     postReview: builder.mutation<any, Partial<any>>({
       query: ({ movieId, review, userId, rating }) => ({
-        url: `movies/review`,
+        url: `/movies/review`,
         method: 'POST',
         body: {
           movieId,
@@ -28,7 +28,7 @@ const reviewApi = createApi({
       { id: string; review: string; userId: string | undefined }
     >({
       query: ({ id, review, userId }) => ({
-        url: `movies/review`,
+        url: `/movies/review`,
         method: 'PUT',
         body: {
           id,
@@ -43,14 +43,14 @@ const reviewApi = createApi({
       { id: string; userId: string | undefined }
     >({
       query: ({ id, userId }) => ({
-        url: `movies/review?id=${id}&userId=${userId}`,
+        url: `/movies/review?id=${id}&userId=${userId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Reviews'],
     }),
     likeReview: builder.mutation<any, { id: string; userId: string }>({
       query: ({ id, userId }) => ({
-        url: `movies/review`,
+        url: `/movies/review`,
         method: 'PATCH',
         body: {
           id,
@@ -62,7 +62,7 @@ const reviewApi = createApi({
     }),
     dislikeReview: builder.mutation<any, { id: string; userId: string }>({
       query: ({ id, userId }) => ({
-        url: `movies/review`,
+        url: `/movies/review`,
         method: 'PATCH',
         body: {
           id,

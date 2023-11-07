@@ -5,14 +5,25 @@ import React, { VFC, useState } from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import Genres from '../common/Genres'
 import VideoPopUp from './VideoPopUp'
+import { useSession } from 'next-auth/react'
+import {
+  useAddFavoriteMutation,
+  useRemoveFavoriteMutation,
+} from '@/redux/api/favoriteApi'
 
 interface Props {
   movieDetails: any
 }
 
 const HeroBanner: VFC<Props> = ({ movieDetails }) => {
+  const { data: session } = useSession()
+  const [addFavorite, { isLoading: isAdding }] = useAddFavoriteMutation()
+  const [removeFavorite, { isLoading: isRemoving }] =
+    useRemoveFavoriteMutation()
+  const [isFavorite, setIsFavorite] = useState(false)
   const [show, setShow] = useState(false)
 
   const posterUrl = movieDetails?.poster && getImageUrl(movieDetails.poster)
@@ -36,6 +47,26 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
     const minutes = totalMinutes % 60
     return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`
   }
+
+  const handleFavorite = async () => {
+    try {
+      if (isFavorite) {
+        await removeFavorite({
+          userId: session?.user._id,
+          movieId: movieDetails.id,
+        })
+      } else {
+        await addFavorite({
+          userId: session?.user._id,
+          movieId: movieDetails.id,
+        })
+      }
+      setIsFavorite(!isFavorite) // 찜 상태 업데이트
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div className="w-full h-full bg-white dark:bg-[#101725] pt-24 md:pt-30 md:mb-0 mb-12 md:min-h-[700px]">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-50">
@@ -89,6 +120,18 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
               />
             </div>
 
+            <button
+              className="flex items-center space-x-5 cursor-pointer hover:text-blue-300"
+              onClick={handleFavorite}
+            >
+              <div>
+                {isFavorite ? (
+                  <FaHeart className="text-red-500 text-5xl mr-3" />
+                ) : (
+                  <FaRegHeart className="text-5xl mr-3" />
+                )}
+              </div>
+            </button>
             <button
               className="flex items-center space-x-5 cursor-pointer hover:text-blue-300"
               onClick={() => {

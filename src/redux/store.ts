@@ -13,12 +13,14 @@ import { userApi } from './api/userApi'
 import reviewApi from './api/reviewApi'
 import reviewSlice from './reducers/reviewSlice'
 import authorSlice from './reducers/authorSlice'
+import favoriteApi from './api/favoriteApi'
 
 const reducer = (state: any, action: PayloadAction<any>) => {
   return combineReducers({
     [movieApi.reducerPath]: movieApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,
+    [favoriteApi.reducerPath]: favoriteApi.reducer,
     movies: moviesSlice,
     review: reviewSlice,
     author: authorSlice,
@@ -33,6 +35,7 @@ const makeStore = (context: Context) =>
         movieApi.middleware,
         userApi.middleware,
         reviewApi.middleware,
+        favoriteApi.middleware,
       ),
     devTools: process.env.NODE_ENV !== 'production',
   })
