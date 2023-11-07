@@ -16,16 +16,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(500).json({ error: 'Error fetching user favorites data' })
     }
   } else if (req.method === 'PATCH') {
-    const { userId, movieId, action } = req.body // action: 'add' 또는 'remove'
+    const { userId, movieId, mediaType, action } = req.body
 
     const userFavorite = await UserFavorite.findOne({ userId, movieId })
     if (!userFavorite && action === 'add') {
-      // 찜 목록에 없는 영화를 찜하려는 경우 찜 추가
-      const newUserFavorite = new UserFavorite({ userId, movieId })
+      const newUserFavorite = new UserFavorite({ userId, movieId, mediaType })
       await newUserFavorite.save()
       res.status(200).json(newUserFavorite)
     } else if (userFavorite && action === 'remove') {
-      // 찜 목록에 있는 영화를 찜 해제하려는 경우 찜 삭제
       await UserFavorite.findByIdAndRemove(userFavorite._id)
       res.status(200).json({ message: 'Removed from favorites' })
     } else {

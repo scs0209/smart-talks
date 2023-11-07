@@ -41,7 +41,7 @@ const MovieDetail = () => {
 
   return (
     <section className="detail">
-      <HeroBanner movieDetails={movieDetails} />
+      <HeroBanner movieDetails={movieDetails} mediaType={mediaType} />
       <Cast cast={cast} />
       <VideoSection videos={videos} />
       <Similar similar={similar} />

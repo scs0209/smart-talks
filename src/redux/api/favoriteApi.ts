@@ -8,12 +8,13 @@ const favoriteApi = createApi({
       query: (userId) => `/movies/favorite?userId=${userId}`,
     }),
     addFavorite: builder.mutation<any, Partial<any>>({
-      query: ({ userId, movieId }) => ({
+      query: ({ userId, movieId, mediaType }) => ({
         url: `/movies/favorite`,
         method: 'PATCH',
         body: {
           userId,
           movieId,
+          mediaType,
           action: 'add',
         },
       }),

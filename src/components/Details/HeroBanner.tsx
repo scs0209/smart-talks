@@ -16,9 +16,10 @@ import {
 
 interface Props {
   movieDetails: any
+  mediaType: string | undefined
 }
 
-const HeroBanner: VFC<Props> = ({ movieDetails }) => {
+const HeroBanner: VFC<Props> = ({ movieDetails, mediaType }) => {
   const { data: session } = useSession()
   const [addFavorite, { isLoading: isAdding }] = useAddFavoriteMutation()
   const [removeFavorite, { isLoading: isRemoving }] =
@@ -59,6 +60,7 @@ const HeroBanner: VFC<Props> = ({ movieDetails }) => {
         await addFavorite({
           userId: session?.user._id,
           movieId: movieDetails.id,
+          mediaType,
         })
       }
       setIsFavorite(!isFavorite) // 찜 상태 업데이트

@@ -4,11 +4,13 @@ import User from './User'
 export interface IUserFavorite extends Document {
   userId: Schema.Types.ObjectId
   movieId: string
+  mediaType: string
 }
 
 const UserFavoritesSchema: Schema = new Schema<IUserFavorite>({
   userId: { type: Schema.Types.ObjectId, ref: User, required: true },
   movieId: { type: String, required: true },
+  mediaType: { type: String, required: true },
 })
 
 const UserFavorite: mongoose.Model<IUserFavorite> =
