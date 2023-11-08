@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
       const userFavorites = await UserFavorite.find({
-        userId: userId,
+        userId,
       })
       res.status(200).json(userFavorites)
     } catch (error) {

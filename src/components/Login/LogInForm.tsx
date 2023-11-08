@@ -4,10 +4,10 @@ import { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import FindPasswordModal from '../FindPasswordModal'
-import SocialBtn from './SocialBtn'
 import { useDispatch } from 'react-redux'
 import { handleSignupClick } from '@/redux/reducers/authorSlice'
+import FindPasswordModal from '../FindPasswordModal'
+import SocialBtn from './SocialBtn'
 
 interface FormValue {
   email: string

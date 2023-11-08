@@ -2,10 +2,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const favoriteApi = createApi({
   reducerPath: 'favorite',
+  tagTypes: ['Favorites'],
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   endpoints: (builder) => ({
     getFavorites: builder.query<any[], string | undefined>({
       query: (userId) => `/movies/favorite?userId=${userId}`,
+      providesTags: ['Favorites'],
     }),
     addFavorite: builder.mutation<any, Partial<any>>({
       query: ({ userId, movieId, mediaType }) => ({
@@ -18,6 +20,7 @@ const favoriteApi = createApi({
           action: 'add',
         },
       }),
+      invalidatesTags: ['Favorites'],
     }),
     removeFavorite: builder.mutation<any, Partial<any>>({
       query: ({ userId, movieId }) => ({
@@ -29,6 +32,7 @@ const favoriteApi = createApi({
           action: 'remove',
         },
       }),
+      invalidatesTags: ['Favorites'],
     }),
   }),
 })

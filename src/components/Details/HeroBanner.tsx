@@ -6,13 +6,13 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
-import Genres from '../common/Genres'
-import VideoPopUp from './VideoPopUp'
 import { useSession } from 'next-auth/react'
 import {
   useAddFavoriteMutation,
   useRemoveFavoriteMutation,
 } from '@/redux/api/favoriteApi'
+import Genres from '../common/Genres'
+import VideoPopUp from './VideoPopUp'
 
 interface Props {
   movieDetails: any

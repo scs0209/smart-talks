@@ -57,7 +57,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
 
   const scoreRatio = useMemo(() => {
     if (!reviews) return Array(6).fill(0)
-    let scoreCount = Array(6).fill(0)
+    const scoreCount = Array(6).fill(0)
     reviews.forEach((review) => {
       scoreCount[review.rating]++
     })
@@ -81,7 +81,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
             <p className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
               {averageRating}/5
             </p>
-            <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+            <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400" />
             <span className="text-lg lg:text-2xl font-medium text-gray-900 underline hover:no-underline dark:text-white">
               {reviews?.length} reviews
             </span>
@@ -105,7 +105,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
                     <div
                       className="h-5 bg-yellow-300 rounded"
                       style={{ width: `${ratio * 100}%` }}
-                    ></div>
+                    />
                   </div>
                   <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                     {Math.round(ratio * 100)}%

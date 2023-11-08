@@ -7,7 +7,7 @@ interface Props {
 const Genres: VFC<Props> = ({ genres }) => {
   return (
     <>
-      {genres.map((genre) => (
+      {genres?.map((genre) => (
         <span key={genre} className="badges">
           {genre}
         </span>
