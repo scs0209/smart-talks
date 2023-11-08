@@ -27,7 +27,7 @@ const Carousel: FC<Props> = ({ children }) => {
   }
 
   return (
-    <div className="relative max-w-screen-xl flex ">
+    <div className="relative max-w-screen-xl flex mx-auto">
       <BsFillArrowLeftCircleFill
         className="text-4xl text-black absolute top-[44%] transform -translate-y-1/2 cursor-pointer opacity-50 z-10 hidden md:block hover:opacity-80"
         onClick={() => navigation('left')}
