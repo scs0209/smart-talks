@@ -4,8 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { FC, useState } from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
-import Genres from '../common/Genres'
 import dayjs from 'dayjs'
+import Genres from '../common/Genres'
 
 interface Props {
   movieId: string

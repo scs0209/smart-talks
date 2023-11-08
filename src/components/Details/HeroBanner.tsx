@@ -9,6 +9,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
 import {
   useAddFavoriteMutation,
+  useGetFavoritesQuery,
   useRemoveFavoriteMutation,
 } from '@/redux/api/favoriteApi'
 import Genres from '../common/Genres'
@@ -21,10 +22,10 @@ interface Props {
 
 const HeroBanner: VFC<Props> = ({ movieDetails, mediaType }) => {
   const { data: session } = useSession()
+  const { data: favorites } = useGetFavoritesQuery(session?.user._id)
   const [addFavorite, { isLoading: isAdding }] = useAddFavoriteMutation()
   const [removeFavorite, { isLoading: isRemoving }] =
     useRemoveFavoriteMutation()
-  const [isFavorite, setIsFavorite] = useState(false)
   const [show, setShow] = useState(false)
 
   const posterUrl = movieDetails?.poster && getImageUrl(movieDetails.poster)
@@ -49,6 +50,10 @@ const HeroBanner: VFC<Props> = ({ movieDetails, mediaType }) => {
     return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`
   }
 
+  const isFavorite = favorites?.some(
+    (fav) => Number(fav.movieId) === movieDetails.id,
+  )
+
   const handleFavorite = async () => {
     try {
       if (isFavorite) {
@@ -63,7 +68,6 @@ const HeroBanner: VFC<Props> = ({ movieDetails, mediaType }) => {
           mediaType,
         })
       }
-      setIsFavorite(!isFavorite) // 찜 상태 업데이트
     } catch (error) {
       console.error(error)
     }
