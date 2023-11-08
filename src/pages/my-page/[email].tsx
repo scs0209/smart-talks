@@ -8,6 +8,7 @@ import useModal from '@/hooks/useModal'
 import { useGetUserByEmailQuery } from '@/redux/api/userApi'
 import { useGetFavoritesQuery } from '@/redux/api/favoriteApi'
 import MovieCard from '@/components/MyPage/MovieCard'
+import Carousel from '@/components/Home/Carousel'
 
 const MyPage = () => {
   const router = useRouter()
@@ -32,7 +33,7 @@ const MyPage = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen text-center align-middle dark:bg-gray-800">
+    <div className="mx-auto h-screen text-center align-middle dark:bg-gray-800">
       <HeadInfo title={`${email}'s Page`} />
       <h1 className="text-5xl p-[4rem] dark:text-white">My Page</h1>
       <div className="flex items-center justify-center">
@@ -44,14 +45,18 @@ const MyPage = () => {
         </Button>
       </div>
       <ChangePasswordModal open={isModalOpen} handleClose={closeModal} />
-      {favorites?.map((favorite, idx) => {
-        return (
-          <MovieCard
-            movieId={favorite.movieId}
-            mediaType={favorite.mediaType}
-          />
-        )
-      })}
+      <Carousel>
+        {favorites?.map((favorite, idx) => {
+          return (
+            <div key={favorite._id} className="min-w-[13rem] gap-2">
+              <MovieCard
+                movieId={favorite.movieId}
+                mediaType={favorite.mediaType}
+              />
+            </div>
+          )
+        })}
+      </Carousel>
     </div>
   )
 }
