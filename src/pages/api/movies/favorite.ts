@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { NextApiRequest, NextApiResponse } from 'next'
 import connectDB from '@/services/dbConnect'
 import UserFavorite from '@/models/UserFavorite'

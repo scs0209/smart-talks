@@ -1,4 +1,4 @@
-export interface Review {
+export interface ReviewState {
   _id: string
   movieId: string
   review: string

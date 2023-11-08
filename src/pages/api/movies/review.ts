@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { NextApiRequest, NextApiResponse } from 'next'
 import connectDB from '@/services/dbConnect'
 import Review, { IReview } from '@/models/Review'

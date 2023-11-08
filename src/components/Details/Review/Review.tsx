@@ -7,7 +7,7 @@ import { toggleDropdown } from '@/redux/reducers/reviewSlice'
 import { RootState } from '@/redux/store'
 import React, { FC, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Review } from '@/redux/types/interface'
+import { ReviewState } from '@/redux/types/interface'
 import dayjs from 'dayjs'
 import ReviewEditForm from './ReviewEditForm'
 import ReviewDropDown from './ReviewDropDown'
@@ -95,12 +95,9 @@ const Review: FC<Props> = ({ movieId, session }) => {
               const score = 5 - index
               return (
                 <div className="flex items-center mt-4" key={score}>
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
+                  <div className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">
                     {score} star
-                  </a>
+                  </div>
                   <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
                     <div
                       className="h-5 bg-yellow-300 rounded"
@@ -117,7 +114,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
         {/* 댓글 입력 창 */}
         <ReviewForm movieId={movieId} session={session} />
 
-        {reviews?.map((review: Review) => {
+        {reviews?.map((review: ReviewState) => {
           return (
             <div key={review._id}>
               <article className="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
