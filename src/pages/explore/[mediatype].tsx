@@ -80,7 +80,13 @@ const ExplorePage = () => {
     }
   }, [data])
 
-  console.log(isFetching, data?.results)
+  console.log(
+    isFetching,
+    data?.results,
+    allResults,
+    mediatype,
+    genresData?.results,
+  )
 
   return (
     <div className="max-w-screen-lg min-h-screen px-4 py-16 mx-auto ">

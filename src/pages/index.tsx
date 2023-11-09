@@ -1,7 +1,6 @@
 import React from 'react'
 
 import Hero from '@/components/Home/Hero'
-import SpecialHall from '@/components/Home/SpecialFeature'
 import Trending from '@/components/Movie/Trending'
 import { GetStaticProps } from 'next'
 import { wrapper } from '@/redux/store'

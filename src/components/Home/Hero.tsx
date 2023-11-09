@@ -11,8 +11,6 @@ const Hero: VFC<Props> = ({ movies }) => {
   const router = useRouter()
   const imageUrl = `https://image.tmdb.org/t/p/original/${movies?.results[0].backdrop_path}`
 
-  console.log(movies)
-
   const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && searchTerm.length > 0) {
       router.push(`/search-results/${searchTerm}`)
