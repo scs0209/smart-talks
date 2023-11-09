@@ -18,7 +18,7 @@ FILM FINDER는 인기 영화 정보 및 영화 정보 검색, 관리, 예고편 
 
 ## 프로젝트 목적
 
-프로젝트의 주된 목적은 사용자들이 편리하게 최신 영화 정보를 찾을 수 있도록 지원하는 웹 애플리케이션을 개발하는 것입니다
+프로젝트의 핵심 목표는 사용자들이 편리하게 최신 영화 정보를 찾아보고, 예고편을 즐길 수 있는 웹 애플리케이션을 만드는 것입니다. 이를 통해 사용자들은 관심 있는 영화를 쉽게 찾을 수 있습니다. 또한, 찜 목록에 영화를 추가하는 기능을 통해 사용자들은 자신이 보고 싶은 영화를 잊어버리지 않고, 극장이나 영화 사이트에서 나중에 볼 수 있도록 기록을 남길 수 있습니다.
 
 ## 프로젝트 기간
 
@@ -69,6 +69,13 @@ npm run dev or npm run start
 - Repository Hosting: <img src="https://img.shields.io/badge/GitHub-181717?logo=GitHub&logoColor=white" style="vertical-align: middle">
 - Version Control: <img src="https://img.shields.io/badge/Git-F05032?logo=Git&logoColor=white" style="vertical-align: middle">
 
+### Additional Libraries
+
+- Form Handling: <img src="https://img.shields.io/badge/React_Hook_Form-92D3F5?logo=React&logoColor=white" style="vertical-align: middle">
+- Date Manipulation: <img src="https://img.shields.io/badge/Day.js-423487?logo=Day.js&logoColor=white" style="vertical-align: middle">
+- Infinite Scrolling: <img src="https://img.shields.io/badge/React_Infinite_Scroll_Component-58D3F7?logo=React&logoColor=white" style="vertical-align: middle">
+- Video Player: <img src="https://img.shields.io/badge/React_Player-1C1C1C?logo=React&logoColor=white" style="vertical-align: middle">
+
 ## 라이브러리 선택 이유
 
 - **Next.js**: 서버 사이드 렌더링(SSR)을 지원하여 검색 엔진 최적화(SEO)를 개선하고 초기 로딩 속도를 높이기 위해 사용했습니다.
@@ -78,6 +85,9 @@ npm run dev or npm run start
 - **RTK Query**: Redux Toolkit의 일부로, 서버 상태와 캐시 관리를 간소화하며 API 호출을 쉽게 만들어줍니다. 이를 통해 개발자는 네트워크 요청과 데이터 관리에 대한 부담을 줄일 수 있습니다.
 - **Axios**: RESTful API 통신을 위해 사용하였고, 쉽게 요청과 응답을 처리할 수 있는 기능을 제공하여 개발에 편리함을 줍니다.
 - **react-hook-form**: 비제어 컴포넌트의 장점은 그대로 살리면서 제어 컴포넌트에서만 다룰 수 있는 실시간 유효성 검사, 실시간 동기화 등의 API를 제공하여 실시간 유효성 검사 및 동기화를 가능하게 해줍니다.
+- **Day.js**: JavaScript에서 날짜와 시간을 다루는 것은 복잡한 작업일 수 있습니다. Day.js는 이러한 작업을 간단하게 해주는 경량화된 라이브러리로, 다양한 플러그인과 국제화 지원이 잘 되어 있어 선택하였습니다.
+- **React Infinite Scroll Component**: 사용자 경험을 높이기 위해 무한 스크롤 기능을 도입하고자 했습니다. 이 라이브러리는 무한 스크롤을 쉽게 구현할 수 있게 도와주며, 추가적인 로딩 UI나 에러 핸들링 기능도 제공합니다.
+- **React Player**: 다양한 비디오 소스를 지원하며, 사용자 친화적인 커스텀 컨트롤을 제공하는 이 라이브러리를 선택하였습니다. 사용자들이 원활하게 영화 예고편을 감상할 수 있도록 도와줍니다.
 
 <details>
 <summary>선택한 라이브러리의 장단점</summary>
@@ -122,8 +132,10 @@ npm run dev or npm run start
 - 로그인 및 회원가입
 - 영화 검색 기능
 - 영화 목록 기능
-- 탭을 이용하여 해당 주제에 맞게 영화 렌더링
-- 티비 및 영화에 대한 정보 목록 기능
+- 탭을 이용하여 해당 주제에 맞게 영화 및 TV Show 렌더링
+- TV 및 영화에 대한 정보 목록 기능
+- 영화 찜 기능
+- 평점을 포함한 리뷰 기능
 - 마이 페이지
 
 ## 프로젝트 설명
@@ -136,7 +148,7 @@ npm run dev or npm run start
 
 ![홈페이지](https://github.com/scs0209/myBlog/assets/110822847/ae8c4d4b-8610-4574-b7d2-767e53399763)
 
-1. 로그인, 회원가입
+2. 로그인, 회원가입
 
 - `next-auth`를 사용하여 커스텀 로그인과 소셜 미디어 프로바이더를 통한 `소셜 로그인`을 구현
 - `react-hook-form`을 사용하여 실시간 유효성 검사 및 불필요한 리렌더링 최소화
@@ -168,15 +180,23 @@ npm run dev or npm run start
 5. 영화 상세 페이지 구현
 
 - 카드 컴포넌트를 클릭하면 해당 데이터에 맞는 영화 상세페이지로 이동
+- 영화 찜 기능 추가(마이페이지에서 조회 가능)
 - 해당 영화에 대한 트레일러, 메인 예고편, 그리고 해당 영화에 맞는 추천 영화들 및 감독 등을 볼 수 있음
-- 데이터들을 편하게 볼 수 있도록 Carousel 구현
+  - 데이터들을 편하게 볼 수 있도록 Carousel 구현
 
 6. 마이 페이지 구현
 
-- 마이 페이지에서 내가 예매한 정보 확인 가능
-- 예매한 정보 삭제 가능
+- 내가 찜한 영화 정보 조회 가능
+- 찜한 영화를 클릭하면 상세 페이지 이동
+- 비밀번호 변경 가능
 
 ![마이페이지](https://github.com/scs0209/myBlog/assets/110822847/f3e11ee4-2052-4f91-b35c-f7be8f46a71d)
+
+7. 영화 검색 페이지
+
+- 내가 검색한 영화에 대한 조회 페이지
+- 해당 결과를 클릭하면 상세 페이지로 이동 가능
+- 일정 데이터 이상이면 무한 스크롤을 통하여 추가로 데이터 불러옴
 
 ## 📂 디렉토리 구조
 
@@ -187,147 +207,137 @@ npm run dev or npm run start
 ```
 📦.next
 📦node_modules
-📦publice
+📦public
 📦src
-┣ 📂@types
-┃ ┗ 📜mongodb.ts
-┣ 📂components
-┃ ┣ 📂Admin
-┃ ┃ ┣ 📜AdminForm.tsx
-┃ ┃ ┣ 📜MovieCreate.tsx
-┃ ┃ ┣ 📜StartEndCreate.tsx
-┃ ┃ ┗ 📜TheaterNScreenCreate.tsx
-┃ ┣ 📂common
-┃ ┃ ┣ 📜Button.tsx
-┃ ┃ ┣ 📜HeadInfo.tsx
-┃ ┃ ┣ 📜Input.tsx
-┃ ┃ ┗ 📜Loading.tsx
-┃ ┣ 📂Home
-┃ ┃ ┣ 📜Hero.tsx
-┃ ┃ ┗ 📜SpecialFeature.tsx
-┃ ┣ 📂Login
-┃ ┃ ┣ 📜LogInForm.tsx
-┃ ┃ ┗ 📜SocialBtn.tsx
-┃ ┣ 📂Movie
-┃ ┃ ┣ 📜MovieCard.tsx
-┃ ┃ ┗ 📜MovieList.tsx
-┃ ┣ 📂MyPage
-┃ ┃ ┗ 📜ReservationTable.tsx
-┃ ┣ 📂reservation
-┃ ┃ ┣ 📜DateSelector.tsx
-┃ ┃ ┣ 📜MovieSelect.tsx
-┃ ┃ ┣ 📜ReservationForm.tsx
-┃ ┃ ┣ 📜SeatTable.tsx
-┃ ┃ ┣ 📜ShowtimeSelect.tsx
-┃ ┃ ┗ 📜TheaterSelect.tsx
-┃ ┣ 📂Signup
-┃ ┃ ┣ 📜InputWithLabel.tsx
-┃ ┃ ┗ 📜SignupForm.tsx
-┃ ┣ 📜ChangePasswordModal.tsx
-┃ ┣ 📜FindPasswordModal.tsx
-┃ ┣ 📜Footer.tsx
-┃ ┣ 📜Layout.tsx
-┃ ┗ 📜Nav.tsx
-┣ 📂config
-┃ ┗ 📜index.ts
-┣ 📂contexts
-┃ ┣ 📜AdminContext.tsx
-┃ ┣ 📜MyPageContext.tsx
-┃ ┗ 📜ReservationContext.tsx
-┣ 📂hooks
-┃ ┣ 📜useAppSelector.ts
-┃ ┣ 📜useFetchData.ts
-┃ ┣ 📜useInput.ts
-┃ ┗ 📜useModal.ts
-┣ 📂models
-┃ ┣ 📜Movie.ts
-┃ ┣ 📜Reservation.ts
-┃ ┣ 📜Screen.ts
-┃ ┣ 📜Showtime.ts
-┃ ┣ 📜Theater.ts
-┃ ┗ 📜User.ts
-┣ 📂pages
-┃ ┣ 📂api
-┃ ┃ ┣ 📂auth
-┃ ┃ ┃ ┗ 📜[...nextauth].ts
-┃ ┃ ┣ 📂movies
-┃ ┃ ┃ ┣ 📜movie-detail.ts
-┃ ┃ ┃ ┣ 📜movie-search.ts
-┃ ┃ ┃ ┣ 📜popular-movie.ts
-┃ ┃ ┃ ┗ 📜post-data.ts
-┃ ┃ ┣ 📂theater
-┃ ┃ ┃ ┗ 📂[id]
-┃ ┃ ┃ ┃ ┗ 📜screen.ts
-┃ ┃ ┣ 📜change-password.ts
-┃ ┃ ┣ 📜find-password.ts
-┃ ┃ ┣ 📜reservation.ts
-┃ ┃ ┣ 📜showtime.ts
-┃ ┃ ┣ 📜theater.ts
-┃ ┃ ┗ 📜user.ts
-┃ ┣ 📂movies
-┃ ┃ ┗ 📜[id].tsx
-┃ ┣ 📂my-page
-┃ ┃ ┗ 📜[email].tsx
-┃ ┣ 📂search-results
-┃ ┃ ┗ 📜[query].tsx
-┃ ┣ 📜admin.tsx
-┃ ┣ 📜index.tsx
-┃ ┣ 📜login.tsx
-┃ ┣ 📜reservation.tsx
-┃ ┣ 📜signup.tsx
-┃ ┣ 📜_app.tsx
-┃ ┣ 📜_document.tsx
-┃ ┗ 📜_error.tsx
-┣ 📂redux
-┃ ┣ 📂actions
-┃ ┃ ┣ 📂movie
-┃ ┃ ┃ ┗ 📜index.ts
-┃ ┃ ┣ 📂reservation
-┃ ┃ ┃ ┗ 📜index.ts
-┃ ┃ ┣ 📂showtime
-┃ ┃ ┃ ┗ 📜index.ts
-┃ ┃ ┗ 📂theater
-┃ ┃ ┃ ┗ 📜index.ts
-┃ ┣ 📂api
-┃ ┃ ┣ 📜index.ts
-┃ ┃ ┣ 📜reservation.ts
-┃ ┃ ┣ 📜showtime.ts
-┃ ┃ ┣ 📜theater.ts
-┃ ┃ ┗ 📜tmdb.ts
-┃ ┣ 📂reducers
-┃ ┃ ┣ 📜movieSlice.ts
-┃ ┃ ┣ 📜reservationSlice.ts
-┃ ┃ ┣ 📜showtimeSlice.ts
-┃ ┃ ┗ 📜theaterSlice.ts
-┃ ┣ 📂types
-┃ ┃ ┣ 📂movie
-┃ ┃ ┃ ┣ 📜index.ts
-┃ ┃ ┃ ┣ 📜movie.ts
-┃ ┃ ┃ ┗ 📜state.ts
-┃ ┃ ┣ 📂reservation
-┃ ┃ ┃ ┗ 📜index.ts
-┃ ┃ ┣ 📂showtime
-┃ ┃ ┃ ┗ 📜index.ts
-┃ ┃ ┗ 📂theater
-┃ ┃ ┃ ┗ 📜index.ts
-┃ ┗ 📜store.ts
-┣ 📂services
-┃ ┣ 📜apiServices.ts
-┃ ┣ 📜authService.ts
-┃ ┣ 📜dbConnect.ts
-┃ ┗ 📜mailer.ts
-┣ 📂styles
-┃ ┣ 📜FindPasswordStyle.tsx
-┃ ┣ 📜globals.css
-┃ ┣ 📜Home.module.css
-┃ ┣ 📜ServiceCardStyle.tsx
-┃ ┗ 📜theme.tsx
-┗ 📂utils
-┃ ┣ 📜fetcher.ts
-┃ ┗ 📜payment.ts
-┃ pakage.json
-┃ ts.config.json
-┗ tailwind.config.js
+ ┣ 📂@types
+ ┃ ┗ 📜mongodb.ts
+ ┣ 📂components
+ ┃ ┣ 📂common
+ ┃ ┃ ┣ 📜Genres.tsx
+ ┃ ┃ ┗ 📜HeadInfo.tsx
+ ┃ ┣ 📂Details
+ ┃ ┃ ┣ 📂Review
+ ┃ ┃ ┃ ┣ 📜Review.tsx
+ ┃ ┃ ┃ ┣ 📜ReviewDropDown.tsx
+ ┃ ┃ ┃ ┣ 📜ReviewEditForm.tsx
+ ┃ ┃ ┃ ┗ 📜ReviewForm.tsx
+ ┃ ┃ ┣ 📜Cast.tsx
+ ┃ ┃ ┣ 📜HeroBanner.tsx
+ ┃ ┃ ┣ 📜Recommendation.tsx
+ ┃ ┃ ┣ 📜Similar.tsx
+ ┃ ┃ ┣ 📜VideoPopUp.tsx
+ ┃ ┃ ┗ 📜VideoSection.tsx
+ ┃ ┣ 📂Home
+ ┃ ┃ ┣ 📜Carousel.tsx
+ ┃ ┃ ┣ 📜Hero.tsx
+ ┃ ┃ ┗ 📜SpecialFeature.tsx
+ ┃ ┣ 📂Login
+ ┃ ┃ ┣ 📜LogInForm.tsx
+ ┃ ┃ ┗ 📜SocialBtn.tsx
+ ┃ ┣ 📂Movie
+ ┃ ┃ ┣ 📜MovieCard.tsx
+ ┃ ┃ ┣ 📜MovieList.tsx
+ ┃ ┃ ┣ 📜Popular.tsx
+ ┃ ┃ ┣ 📜SwitchTab.tsx
+ ┃ ┃ ┣ 📜TopRated,.tsx
+ ┃ ┃ ┗ 📜Trending.tsx
+ ┃ ┣ 📂MyPage
+ ┃ ┃ ┗ 📜MovieCard.tsx
+ ┃ ┣ 📂Search
+ ┃ ┃ ┗ 📜MovieCard.tsx
+ ┃ ┣ 📂Signup
+ ┃ ┃ ┗ 📜SignupForm.tsx
+ ┃ ┣ 📜ChangePasswordModal.tsx
+ ┃ ┣ 📜FindPasswordModal.tsx
+ ┃ ┣ 📜Footer.tsx
+ ┃ ┣ 📜Header.tsx
+ ┃ ┣ 📜Layout.tsx
+ ┃ ┗ 📜ProtecetedLayout.tsx
+ ┣ 📂hooks
+ ┃ ┣ 📜useAppSelector.ts
+ ┃ ┣ 📜useFetchData.ts
+ ┃ ┣ 📜useInfiniteScroll.ts
+ ┃ ┣ 📜useInput.ts
+ ┃ ┗ 📜useModal.ts
+ ┣ 📂models
+ ┃ ┣ 📜Movie.ts
+ ┃ ┣ 📜Reservation.ts
+ ┃ ┣ 📜Review.ts
+ ┃ ┣ 📜Screen.ts
+ ┃ ┣ 📜Showtime.ts
+ ┃ ┣ 📜Theater.ts
+ ┃ ┣ 📜User.ts
+ ┃ ┗ 📜UserFavorite.ts
+ ┣ 📂pages
+ ┃ ┣ 📂admin
+ ┃ ┃ ┗ 📜index.tsx
+ ┃ ┣ 📂api
+ ┃ ┃ ┣ 📂auth
+ ┃ ┃ ┃ ┗ 📜[...nextauth].ts
+ ┃ ┃ ┣ 📂movies
+ ┃ ┃ ┃ ┣ 📜details.ts
+ ┃ ┃ ┃ ┣ 📜explore.ts
+ ┃ ┃ ┃ ┣ 📜favorite.ts
+ ┃ ┃ ┃ ┣ 📜genre.ts
+ ┃ ┃ ┃ ┣ 📜genres.ts
+ ┃ ┃ ┃ ┣ 📜popular.ts
+ ┃ ┃ ┃ ┣ 📜populars.ts
+ ┃ ┃ ┃ ┣ 📜review.ts
+ ┃ ┃ ┃ ┣ 📜search.ts
+ ┃ ┃ ┃ ┣ 📜top-rated.ts
+ ┃ ┃ ┃ ┗ 📜trending.ts
+ ┃ ┃ ┣ 📜change-password.ts
+ ┃ ┃ ┣ 📜find-password.ts
+ ┃ ┃ ┣ 📜movie.ts
+ ┃ ┃ ┗ 📜user.ts
+ ┃ ┣ 📂explore
+ ┃ ┃ ┗ 📜[mediatype].tsx
+ ┃ ┣ 📂movies
+ ┃ ┃ ┗ 📂[mediaType]
+ ┃ ┃ ┃ ┗ 📜[id].tsx
+ ┃ ┣ 📂my-page
+ ┃ ┃ ┗ 📜[email].tsx
+ ┃ ┣ 📂search-results
+ ┃ ┃ ┗ 📜[query].tsx
+ ┃ ┣ 📜index.tsx
+ ┃ ┣ 📜login.tsx
+ ┃ ┣ 📜popular.tsx
+ ┃ ┣ 📜_app.tsx
+ ┃ ┣ 📜_document.tsx
+ ┃ ┗ 📜_error.tsx
+ ┣ 📂redux
+ ┃ ┣ 📂api
+ ┃ ┃ ┣ 📜auth.ts
+ ┃ ┃ ┣ 📜client.ts
+ ┃ ┃ ┣ 📜favoriteApi.ts
+ ┃ ┃ ┣ 📜movieApi.ts
+ ┃ ┃ ┣ 📜reviewApi.ts
+ ┃ ┃ ┣ 📜tmdb.ts
+ ┃ ┃ ┗ 📜userApi.ts
+ ┃ ┣ 📂reducers
+ ┃ ┃ ┣ 📜authorSlice.ts
+ ┃ ┃ ┣ 📜movieSlice.ts
+ ┃ ┃ ┗ 📜reviewSlice.ts
+ ┃ ┣ 📂types
+ ┃ ┃ ┣ 📂movie
+ ┃ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┃ ┣ 📜movie.ts
+ ┃ ┃ ┃ ┗ 📜state.ts
+ ┃ ┃ ┣ 📂reservation
+ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┗ 📜interface.ts
+ ┃ ┗ 📜store.ts
+ ┣ 📂services
+ ┃ ┣ 📜dbConnect.ts
+ ┃ ┗ 📜mailer.ts
+ ┣ 📂styles
+ ┃ ┣ 📜globals.css
+ ┃ ┣ 📜Header.module.css
+ ┃ ┗ 📜Home.module.css
+ ┗ 📂utils
+ ┃ ┣ 📜formDate.ts
+ ┃ ┣ 📜payment.ts
+ ┃ ┗ 📜tmdbApiConfig.ts
 ```
 
 </div>

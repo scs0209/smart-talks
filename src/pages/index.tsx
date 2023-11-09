@@ -24,7 +24,6 @@ export default function Home({ movies }: any) {
       <Trending />
       <TopRated />
       <Popular />
-      <SpecialHall />
     </>
   )
 }

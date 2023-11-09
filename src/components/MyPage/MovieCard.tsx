@@ -80,10 +80,10 @@ const MovieCard: FC<Props> = ({ movieId, mediaType }) => {
       </div>
       <div className="flex flex-col mt-6">
         <span className="overflow-hidden font-sans text-xl font-bold overflow-ellipsis whitespace-nowrap dark:text-white">
-          {movieDetails.title || movieDetails.name}
+          {movieDetails?.title || movieDetails?.name}
         </span>
         <span className="font-sans text-sm font-extrabold text-gray-500">
-          {dayjs(movieDetails.releaseDate).format('MMM D, YYYY')}
+          {dayjs(movieDetails?.releaseDate).format('MMM D, YYYY')}
         </span>
       </div>
     </>
