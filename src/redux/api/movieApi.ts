@@ -52,7 +52,7 @@ const movieApi = createApi({
       }
     >({
       query: ({ mediaType, genreId, sort, page = 1 }) =>
-        `/movies/explore?mediaType=${mediaType}&genreId=${genreId}&sort=${sort}page=${page}`,
+        `/movies/explore?mediaType=${mediaType}&genreId=${genreId}&sort=${sort}&page=${page}`,
     }),
     getGenre: builder.query<{ results: any[] }, string | string[] | undefined>({
       query: (mediaType) => `/movies/genre?mediaType=${mediaType}`,

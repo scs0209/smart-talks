@@ -98,7 +98,7 @@ const ExplorePage = () => {
     }
   }, [data, sort])
 
-  console.log(data?.results, allResults, mediatype, genresData?.results)
+  console.log(data?.results, allResults, mediatype, genresData?.results, page)
 
   return (
     <div className="max-w-screen-lg min-h-screen px-4 py-16 mx-auto ">
