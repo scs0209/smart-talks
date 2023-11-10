@@ -82,23 +82,20 @@ const ExplorePage = () => {
 
   useEffect(() => {
     if (data) {
-      let sortedResults = [...data.results]
+      const sortedResults = [...data.results]
       if (sort) {
         const sortKey = sort.value.split('.')[0] // 정렬 기준 항목 (popularity, vote_average 등)
         const sortOrder = sort.value.split('.')[1] // 정렬 방식 (asc, desc)
         sortedResults.sort((a, b) => {
           if (sortOrder === 'asc') {
             return a[sortKey] - b[sortKey]
-          } else {
-            return b[sortKey] - a[sortKey]
           }
+          return b[sortKey] - a[sortKey]
         })
       }
       dispatch(setAllResults(sortedResults))
     }
   }, [data, sort])
-
-  console.log(data?.results, allResults, mediatype, genresData?.results, page)
 
   return (
     <div className="max-w-screen-lg min-h-screen px-4 py-16 mx-auto ">
