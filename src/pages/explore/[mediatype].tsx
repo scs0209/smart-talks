@@ -48,16 +48,22 @@ const ExplorePage = () => {
     page,
   })
 
-  const onChangeGenre = (newGenre: any) => {
-    setGenre(newGenre)
-    dispatch(setPage(1))
-    dispatch(setAllResults([]))
-  }
+  const onChange = (selectedItems: any, action: any) => {
+    if (action.name === 'sort') {
+      setSort(selectedItems)
+      if (action.action !== 'clear') {
+        dispatch(setPage(1))
+        dispatch(setAllResults([]))
+      }
+    }
 
-  const onChangeSort = (newSort: any) => {
-    setSort(newSort)
-    dispatch(setPage(1))
-    dispatch(setAllResults([]))
+    if (action.name === 'genres') {
+      setGenre(selectedItems)
+      if (action.action !== 'clear') {
+        dispatch(setPage(1))
+        dispatch(setAllResults([]))
+      }
+    }
   }
 
   const fetchMoreData = () => {
@@ -76,17 +82,23 @@ const ExplorePage = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch(setAllResults(data.results))
+      let sortedResults = [...data.results]
+      if (sort) {
+        const sortKey = sort.value.split('.')[0] // 정렬 기준 항목 (popularity, vote_average 등)
+        const sortOrder = sort.value.split('.')[1] // 정렬 방식 (asc, desc)
+        sortedResults.sort((a, b) => {
+          if (sortOrder === 'asc') {
+            return a[sortKey] - b[sortKey]
+          } else {
+            return b[sortKey] - a[sortKey]
+          }
+        })
+      }
+      dispatch(setAllResults(sortedResults))
     }
-  }, [data])
+  }, [data, sort])
 
-  console.log(
-    isFetching,
-    data?.results,
-    allResults,
-    mediatype,
-    genresData?.results,
-  )
+  console.log(data?.results, allResults, mediatype, genresData?.results)
 
   return (
     <div className="max-w-screen-lg min-h-screen px-4 py-16 mx-auto ">
@@ -98,7 +110,7 @@ const ExplorePage = () => {
           options={genresData?.results}
           getOptionLabel={(option: any) => option?.name}
           getOptionValue={(option) => option?.id}
-          onChange={onChangeGenre}
+          onChange={onChange}
           isClearable
           placeholder="Select a genre"
         />
@@ -106,7 +118,7 @@ const ExplorePage = () => {
           name="sort"
           value={sort}
           options={sortOptions}
-          onChange={onChangeSort}
+          onChange={onChange}
           isClearable
           placeholder="Sort by"
         />

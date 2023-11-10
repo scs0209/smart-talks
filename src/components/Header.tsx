@@ -69,6 +69,7 @@ const Header = () => {
             FLIM FINDER
           </Link>
           <div className="flex items-center">
+            <DarkThemeToggle className="ml-2 sm:hidden" />
             <button
               onClick={handleSearchIconClick}
               className="sm:hidden focus:outline-none mr-2"
@@ -112,54 +113,54 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-center w-full">
-          <ul
-            className={`${
-              isOpen
-                ? 'flex flex-col items-center justify-center bg-gray-200 dark:bg-slate-600 w-full'
-                : 'hidden'
-            } sm:flex items-center gap-2 text-sm`}
-          >
-            <li>
-              <Link href="/explore/tv" className={styles.items}>
-                TV Shows
-              </Link>
-            </li>
-            <li>
-              <Link href="/explore/movie" className={styles.items}>
-                Movies
-              </Link>
-            </li>
-            {session ? (
-              <>
-                <li>
-                  <Link
-                    href={`/my-page/${session.user?.email}`}
-                    className={styles.items}
-                  >
-                    My Page
-                  </Link>
-                </li>
-                {session.user.role === 'admin' && (
-                  <li>
-                    <Link href="/admin" className={styles.items}>
-                      Admin Page
-                    </Link>
-                  </li>
-                )}
-                <button onClick={handleLogout} className={styles.items}>
-                  Logout
-                </button>
-              </>
-            ) : (
+        <ul
+          className={`${
+            isOpen
+              ? 'flex flex-col items-center justify-center bg-gray-200 dark:bg-slate-600 w-full'
+              : 'hidden'
+          } sm:flex items-center gap-2 text-sm font-bold`}
+        >
+          <li>
+            <Link href="/explore/tv" className={styles.items}>
+              TV Shows
+            </Link>
+          </li>
+          <li>
+            <Link href="/explore/movie" className={styles.items}>
+              Movies
+            </Link>
+          </li>
+          {session ? (
+            <>
               <li>
-                <Link href="/login" className={styles.items}>
-                  Login
+                <Link
+                  href={`/my-page/${session.user?.email}`}
+                  className={styles.items}
+                >
+                  My Page
                 </Link>
               </li>
-            )}
-            <DarkThemeToggle className="ml-2" />
-          </ul>
+              {session.user.role === 'admin' && (
+                <li>
+                  <Link href="/admin" className={styles.items}>
+                    Admin Page
+                  </Link>
+                </li>
+              )}
+              <button onClick={handleLogout} className={styles.items}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <li>
+              <Link href="/login" className={styles.items}>
+                Login
+              </Link>
+            </li>
+          )}
+        </ul>
+        <div className="flex">
+          <DarkThemeToggle className="ml-2 hidden sm:block" />
           <button
             onClick={handleSearchIconClick}
             className="focus:outline-none mr-2 hidden sm:block"

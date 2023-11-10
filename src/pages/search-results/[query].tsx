@@ -32,8 +32,6 @@ const SearchResults = () => {
     },
   )
 
-  console.log(searchResult)
-
   useEffect(() => {
     if (searchResult) {
       dispatch(setAllResults(searchResult?.results))
