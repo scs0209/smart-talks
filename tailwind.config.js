@@ -9,6 +9,18 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      animation: {
+        move: 'move 0.6s',
+      },
+      keyframes: {
+        move: {
+          '0%, 49.99%': { opacity: '0', zIndex: '1' },
+          '50%, 100%': { opacity: '1', zIndex: '5' },
+        },
+      },
+      width: {
+        200: '200%', // 200% width를 정의
+      },
       colors: {
         primary: {
           50: '#eff6ff',
