@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { KeyboardEvent, VFC, useState } from 'react'
+import { FormEvent, VFC, useState } from 'react'
 
 interface Props {
   movies: any
@@ -11,8 +11,9 @@ const Hero: VFC<Props> = ({ movies }) => {
   const router = useRouter()
   const imageUrl = `https://image.tmdb.org/t/p/original/${movies?.results[0].backdrop_path}`
 
-  const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchTerm.length > 0) {
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault()
+    if (searchTerm.length > 0) {
       router.push(`/search-results/${searchTerm}`)
     }
   }
@@ -37,21 +38,22 @@ const Hero: VFC<Props> = ({ movies }) => {
           Millions of movies, TV shows and people to discover. Explore now.
         </span>
         <div className="flex items-center w-full">
-          <input
-            type="search"
-            id="default-search"
-            className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="영화, TV 프로그램 검색"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyUp={handleSearch}
-          />
-          <button
-            type="submit"
-            className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Search
-          </button>
+          <form className="w-full" onSubmit={handleSearch}>
+            <input
+              type="search"
+              id="default-search"
+              className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="영화, TV 프로그램 검색"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Search
+            </button>
+          </form>
         </div>
       </div>
     </section>
