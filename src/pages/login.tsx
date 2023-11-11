@@ -17,7 +17,7 @@ const LoginPage = () => {
           <LoginForm />
           <div
             className={`absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-all duration-600 ease-in-out
-            z-100 bg-gradient-to-r from-purple-400 to-purple-600 text-white text-center p-10 ${
+            z-100 bg-gradient-to-r from-blue-400 to-blue-600 text-white text-center p-10 ${
               isSignUpActive
                 ? '-translate-x-full rounded-r-3xl'
                 : 'rounded-l-3xl'
@@ -30,32 +30,28 @@ const LoginPage = () => {
             >
               <div
                 onClick={() => dispatch(setSignUpActive(false))}
-                className={`absolute flex top-0 flex-col text-center px-[30px]cursor-pointer w-1/2 h-full transform transition-all duration-600 ease-in-out ${
+                className={`absolute flex top-0 flex-col items-center justify-center text-center px-[30px] cursor-pointer w-1/2 h-full transform transition-all duration-600 ease-in-out ${
                   isSignUpActive ? 'translate-x-0' : 'translate-x-[-200%]'
                 }`}
               >
-                <h1>Welcome Back!</h1>
+                <h1 className="side-title">Welcome Back!</h1>
                 <p className="text-sm mt-2">
                   Enter your personal details to use all of site features
                 </p>
-                <button className="mt-5 py-2 px-4 rounded-md text-purple-600 bg-white w-full">
-                  Sign In
-                </button>
+                <button className="side-btn">Sign In</button>
               </div>
               <div
                 onClick={() => dispatch(setSignUpActive(true))}
-                className={`absolute right-0 top-0 flex flex-col text-center px-[30px]cursor-pointer w-1/2 h-full transform transition-all duration-600 ease-in-out ${
+                className={`absolute right-0 top-0 flex flex-col justify-center items-center text-center px-[30px] cursor-pointer w-1/2 h-full transform transition-all duration-600 ease-in-out ${
                   isSignUpActive ? 'translate-x-[200%]' : 'translate-x-0'
                 }`}
               >
-                <h1>Hello, Friend!</h1>
+                <h1 className="side-title">Hello, Friend!</h1>
                 <p className="text-sm mt-2">
                   Register with your personal details to use all of site
                   features
                 </p>
-                <button className="mt-5 py-2 px-4 rounded-md text-purple-600 bg-white w-full">
-                  Sign Up
-                </button>
+                <button className="side-btn">Sign Up</button>
               </div>
             </div>
           </div>

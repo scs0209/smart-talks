@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleSignupClick } from '@/redux/reducers/authorSlice'
+import { RootState } from '@/redux/store'
 import FindPasswordModal from '../FindPasswordModal'
 import SocialBtn from './SocialBtn'
-import { RootState } from '@/redux/store'
 
 interface FormValue {
   email: string
@@ -58,59 +58,54 @@ const LoginForm = () => {
         <h1 className="text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
           로그인
         </h1>
-        <div>
-          <label
-            htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Your email
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="author-input"
-            {...register('email', {
-              required: '이메일은 필수입니다.',
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: '이메일 형식이 올바르지 않습니다.',
-              },
-            })}
-            placeholder="name@company.com"
-          />
+        <div className="w-full">
+          <div className="relative">
+            <input
+              type="email"
+              className="author-input2 peer"
+              placeholder="Email"
+              {...register('email', {
+                required: '이메일은 필수입니다.',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: '이메일 형식이 올바르지 않습니다.',
+                },
+              })}
+            />
+            <label className="author-label2">Email</label>
+          </div>
           {errors.email && (
             <p className="text-red-500">{errors.email.message}</p>
           )}
-        </div>
-        <div>
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            placeholder="••••••••"
-            className="author-input"
-            {...register('password', {
-              required: '비밀번호는 필수입니다.',
-              minLength: {
-                value: 8,
-                message: '비밀번호는 최소 8자리 이상이어야 합니다.',
-              },
-            })}
-          />
+
+          <div className="relative">
+            <input
+              type="password"
+              className="author-input2 peer"
+              placeholder="Password"
+              {...register('password', {
+                required: '비밀번호는 필수입니다.',
+                minLength: {
+                  value: 8,
+                  message: '비밀번호는 최소 8자리 이상이어야 합니다.',
+                },
+              })}
+            />
+            <label className="author-label2">Password</label>
+          </div>
           {errors.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}
         </div>
-        <div className="flex items-center justify-between">
+
+        <div className="flex items-center justify-between mt-2 w-full">
           <div className="flex items-start">
             <div className="flex items-center h-5">
               <input
                 id="remember"
                 aria-describedby="remember"
                 type="checkbox"
-                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                className="author-checkbox"
               />
             </div>
             <div className="ml-3 text-sm">

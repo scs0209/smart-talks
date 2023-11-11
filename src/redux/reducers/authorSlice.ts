@@ -27,11 +27,9 @@ const authorSlice = createSlice({
     },
     handleSignupClick: (state) => {
       state.isSignUpActive = true
-      window.history.pushState({}, '', '/signup')
     },
     handleLoginClick: (state) => {
       state.isSignUpActive = false
-      window.history.pushState({}, '', '/login')
     },
   },
 })

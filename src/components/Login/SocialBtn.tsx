@@ -13,7 +13,7 @@ const SocialBtn = () => {
     <>
       <button
         onClick={handleGoogleLogin}
-        className="bg-white border py-2 w-full rounded-xl flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium"
+        className="bg-white border py-2 w-full rounded-xl flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium mb-2"
       >
         <svg
           className="mr-3"
@@ -42,7 +42,7 @@ const SocialBtn = () => {
       </button>
       <button
         onClick={handleGithubLogin}
-        className="bg-white border py-2 w-full rounded-xl flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium"
+        className="bg-white border py-2 w-full rounded-xl flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium mb-2"
       >
         <div className="bg-white rounded-full">
           <svg className="w-6" viewBox="0 0 32 32">
