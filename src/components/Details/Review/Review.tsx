@@ -45,7 +45,7 @@ const Review: FC<Props> = ({ movieId, session }) => {
   }
 
   const averageRating = useMemo(() => {
-    if (!reviews) return 0
+    if (!reviews || reviews.length === 0) return 0
     return (
       Math.round(
         (reviews.reduce((prev, curr) => prev + curr.rating, 0) /
