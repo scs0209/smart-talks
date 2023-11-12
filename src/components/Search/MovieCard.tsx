@@ -6,12 +6,15 @@ import Image from 'next/image'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import dayjs from 'dayjs'
+import SkeletonCard from '../Movie/SkeletonCard'
 
 interface Props {
   movie: any
+  isLoading: any
+  isFetching: any
 }
 
-const MovieCard: VFC<Props> = ({ movie }) => {
+const MovieCard: VFC<Props> = ({ movie, isLoading, isFetching }) => {
   const posterUrl = getImageUrl(movie?.poster_path)
   const [imageUrl, setImageUrl] = useState(posterUrl)
 
@@ -30,6 +33,10 @@ const MovieCard: VFC<Props> = ({ movie }) => {
   }
 
   const rating = movie.vote_average.toFixed(1)
+
+  if (isLoading || isFetching) {
+    return <SkeletonCard />
+  }
 
   return (
     <div>

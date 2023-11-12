@@ -7,12 +7,15 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { useGetGenresQuery } from '@/redux/api/movieApi'
 import Genres from '../common/Genres'
+import SkeletonCard from './SkeletonCard'
 
 interface Props {
   movie: any
+  isLoading: any
+  isFetching: any
 }
 
-const MovieCard: VFC<Props> = ({ movie }) => {
+const MovieCard: VFC<Props> = ({ movie, isLoading, isFetching }) => {
   const { data: genres } = useGetGenresQuery()
   const posterUrl = getImageUrl(movie?.poster_path)
   const [imageUrl, setImageUrl] = useState(posterUrl)
@@ -39,6 +42,10 @@ const MovieCard: VFC<Props> = ({ movie }) => {
         genres?.results.find((genre) => genre.id === id)?.name ||
         `Unknown Genre (${id})`,
     ) || []
+
+  if (isLoading || isFetching) {
+    return <SkeletonCard />
+  }
 
   return (
     <div>

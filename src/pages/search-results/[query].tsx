@@ -60,7 +60,12 @@ const SearchResults = () => {
       <h2 className="text-4xl font-semibold">검색 결과</h2>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {allResults.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            isLoading={isLoading}
+            isFetching={isFetching}
+          />
         ))}
       </div>
       <div ref={observerRef} />

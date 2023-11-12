@@ -22,7 +22,11 @@ const MovieList: VFC<Props> = ({
   const [tab, setTab] = useState(defaultTab)
 
   // RTK Query 훅 사용
-  const { data: movies } = useQuery(transformTab ? transformTab(tab) : tab)
+  const {
+    data: movies,
+    isLoading,
+    isFetching,
+  } = useQuery(transformTab ? transformTab(tab) : tab)
 
   const onTabChange = (newTab: string) => {
     setTab(newTab)
@@ -37,7 +41,11 @@ const MovieList: VFC<Props> = ({
       <Carousel>
         {movies?.results.map((movie: any) => (
           <div key={movie.id} className="min-w-[13rem] gap-2">
-            <MovieCard movie={movie} />
+            <MovieCard
+              movie={movie}
+              isLoading={isLoading}
+              isFetching={isFetching}
+            />
             <div className="flex flex-col mt-6">
               <span className="overflow-hidden font-sans text-xl font-bold overflow-ellipsis whitespace-nowrap dark:text-white">
                 {movie.title || movie.name}

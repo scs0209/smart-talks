@@ -22,6 +22,7 @@ const MovieDetail = () => {
     : router.query.id
   const {
     data: movieDetails,
+    isLoading,
     isFetching,
     isError,
   } = useGetMovieDetailsQuery({ mediaType, id: movieId })
@@ -44,8 +45,16 @@ const MovieDetail = () => {
       <HeroBanner movieDetails={movieDetails} mediaType={mediaType} />
       <Cast cast={cast} />
       <VideoSection videos={videos} />
-      <Similar similar={similar} />
-      <Recommendation recommendations={recommendations} />
+      <Similar
+        similar={similar}
+        isFetching={isFetching}
+        isLoading={isLoading}
+      />
+      <Recommendation
+        recommendations={recommendations}
+        isFetching={isFetching}
+        isLoading={isLoading}
+      />
       <Review movieId={movieId} session={session} />
     </section>
   )

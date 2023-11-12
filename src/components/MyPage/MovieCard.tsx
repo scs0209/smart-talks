@@ -6,6 +6,7 @@ import React, { FC, useState } from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import dayjs from 'dayjs'
 import Genres from '../common/Genres'
+import SkeletonCard from '../Movie/SkeletonCard'
 
 interface Props {
   movieId: string
@@ -15,6 +16,7 @@ interface Props {
 const MovieCard: FC<Props> = ({ movieId, mediaType }) => {
   const {
     data: movieDetails,
+    isLoading,
     isFetching,
     isError,
   } = useGetMovieDetailsQuery({ mediaType, id: movieId })
@@ -34,6 +36,11 @@ const MovieCard: FC<Props> = ({ movieId, mediaType }) => {
   }
 
   const rating = movieDetails?.rating.toFixed(1)
+
+  if (isLoading || isFetching) {
+    return <SkeletonCard />
+  }
+
   return (
     <>
       <div>
