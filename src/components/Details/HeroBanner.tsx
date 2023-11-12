@@ -14,13 +14,21 @@ import {
 } from '@/redux/api/favoriteApi'
 import Genres from '../common/Genres'
 import VideoPopUp from './VideoPopUp'
+import HeroBannerSkeleton from '../Movie/HeroBannerSkeleton'
 
 interface Props {
   movieDetails: any
   mediaType: string | undefined
+  isFetching: boolean
+  isLoading: boolean
 }
 
-const HeroBanner: VFC<Props> = ({ movieDetails, mediaType }) => {
+const HeroBanner: VFC<Props> = ({
+  movieDetails,
+  mediaType,
+  isFetching,
+  isLoading,
+}) => {
   const { data: session } = useSession()
   const { data: favorites } = useGetFavoritesQuery(session?.user._id)
   const [addFavorite, { isLoading: isAdding }] = useAddFavoriteMutation()
@@ -71,6 +79,10 @@ const HeroBanner: VFC<Props> = ({ movieDetails, mediaType }) => {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  if (isLoading || isFetching) {
+    return <HeroBannerSkeleton />
   }
 
   return (

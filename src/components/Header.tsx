@@ -82,10 +82,10 @@ const Header = () => {
                 viewBox="0 0 24 24"
               >
                 <path
-                  stroke="#4a77ca"
+                  stroke="#68A5DB"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="2"
+                  strokeWidth="4"
                   d="M21 21l-6-6m2-6a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
               </svg>
@@ -173,10 +173,10 @@ const Header = () => {
               viewBox="0 0 24 24"
             >
               <path
-                stroke="#4a77ca"
+                stroke="#68A5DB"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="2"
+                strokeWidth="4"
                 d="M21 21l-6-6m2-6a7 7 0 11-14 0 7 7 0 0114 0z"
               />
             </svg>
