@@ -32,6 +32,8 @@ const MovieDetail = () => {
   const similar = movieDetails?.similar
   const recommendations = movieDetails?.recommendations
 
+  console.log(recommendations, movieDetails)
+
   if (isFetching) {
     return <div>Loading...</div>
   }
