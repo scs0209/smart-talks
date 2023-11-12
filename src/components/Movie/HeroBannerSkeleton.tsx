@@ -7,13 +7,20 @@ const HeroBannerSkeleton = () => {
         {/* left */}
         <div className="relative w-full flex-shrink-0 block rounded-[20px] md:max-w-[350px] h-[500px] animate-pulse bg-gray-300" />
         {/* right */}
-        <div className="space-y-6">
-          <div className="h-10 animate-pulse bg-gray-300" />
+        <div className="space-y-6 w-full md:w-1/2">
+          <div className="h-12 animate-pulse bg-gray-300" />
+          <div className="h-4 animate-pulse bg-gray-300" />
           <div className="h-6 animate-pulse bg-gray-300" />
+          <div className="h-4 animate-pulse bg-gray-300" />
+          <div className="h-4 animate-pulse bg-gray-300 w-1/2" />
+          <div className="h-4 animate-pulse bg-gray-300 w-1/3" />
+          <div className="h-32 animate-pulse bg-gray-300" />
           <div className="h-6 animate-pulse bg-gray-300" />
-          <div className="h-6 animate-pulse bg-gray-300" />
-          <div className="h-6 animate-pulse bg-gray-300" />
-          <div className="h-6 animate-pulse bg-gray-300" />
+          <div className="h-4 animate-pulse bg-gray-300 w-1/2" />
+          <div className="h-4 animate-pulse bg-gray-300 w-1/2" />
+          <div className="h-4 animate-pulse bg-gray-300 w-1/2" />
+          <div className="h-4 animate-pulse bg-gray-300 w-1/2" />
+          <div className="h-4 animate-pulse bg-gray-300 w-1/2" />
         </div>
       </div>
     </div>
