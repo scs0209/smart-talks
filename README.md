@@ -34,7 +34,7 @@ FILM FINDER는 인기 영화 정보 및 영화 정보 검색, 관리, 예고편 
 
 ## 데모
 
-![영화 예매](https://github.com/scs0209/myBlog/assets/110822847/ebdfc9fb-596d-433b-9251-bbfd708533c5)
+![데모](https://github.com/scs0209/myBlog/assets/110822847/f80bf850-3f3a-44ea-92e9-37830a349da7)
 
 ## 🔧 설치 및 실행
 
@@ -146,20 +146,16 @@ npm run dev or npm run start
 - 검색창으로 영화를 검색할 수 있음
 - Hero Section 아래에는 `TMDB API`가 제공하는 트렌드와 평점순, 그리고 인기있는 영화와 TV 프로그램을 각각 섹션별로 렌더링하고 있음
 
-![홈페이지](https://github.com/scs0209/myBlog/assets/110822847/ae8c4d4b-8610-4574-b7d2-767e53399763)
+![랜딩 페이지](https://github.com/scs0209/myBlog/assets/110822847/00e2514c-1bc6-49b9-902b-2b2bbe1be419)
 
 2. 로그인, 회원가입
 
 - `next-auth`를 사용하여 커스텀 로그인과 소셜 미디어 프로바이더를 통한 `소셜 로그인`을 구현
 - `react-hook-form`을 사용하여 실시간 유효성 검사 및 불필요한 리렌더링 최소화
 
-로그인
+로그인/회원가입
 
-![로그인](https://github.com/scs0209/myBlog/assets/110822847/945568c9-200a-421b-b76a-ebafc40a6aac)
-
-회원가입
-
-![회원가입](https://github.com/scs0209/myBlog/assets/110822847/18301b39-851b-4dd1-a8dc-5635592e8f2f)
+![authForm2](https://github.com/scs0209/myBlog/assets/110822847/edd6b19b-43d9-4237-b3f0-bbdc382b2079)
 
 3. 영화와 TV 프로그램 목록
 
@@ -168,14 +164,17 @@ npm run dev or npm run start
 - UX를 향상시키기 위해 `react-infinite-scroll-component`를 활용하여 무한스크롤 구현
 - `react-select`를 활용하여 선택한 장르와 정렬에 맞게 데이터를 정렬할 수 있도록 구현
 
-![인기 영화 목록](https://github.com/scs0209/myBlog/assets/110822847/bd628082-ed6d-4520-a480-19ef4f7f33b1)
+![영화 목록페이지](https://github.com/scs0209/myBlog/assets/110822847/a334f248-438c-4c78-8b18-aef46ff10edd)
 
 4. 검색 결과 페이지 구현
 
 - 검색한 데이터에 맞게 해당 영화들이 나옴
 - `intersection-observer-api`를 사용하여 무한스크롤 구현
+- 내가 검색한 영화에 대한 조회 페이지
+- 해당 결과를 클릭하면 상세 페이지로 이동 가능
+- 일정 데이터 이상이면 무한 스크롤을 통하여 추가로 데이터 불러옴
 
-![마이페이지](https://github.com/scs0209/myBlog/assets/110822847/f3e11ee4-2052-4f91-b35c-f7be8f46a71d)
+![영화 검색 페이지](https://github.com/scs0209/myBlog/assets/110822847/50ea321f-5d54-410b-a4f2-e0f1ed1acbdd)
 
 5. 영화 상세 페이지 구현
 
@@ -184,19 +183,20 @@ npm run dev or npm run start
 - 해당 영화에 대한 트레일러, 메인 예고편, 그리고 해당 영화에 맞는 추천 영화들 및 감독 등을 볼 수 있음
   - 데이터들을 편하게 볼 수 있도록 Carousel 구현
 
+![상세페이지](https://github.com/scs0209/myBlog/assets/110822847/96abb945-9731-471b-95e4-4f07bec34f83)
+![리뷰](https://github.com/scs0209/myBlog/assets/110822847/ba1c1d6f-3e1a-43bd-8f21-c1d769569703)
+
 6. 마이 페이지 구현
 
 - 내가 찜한 영화 정보 조회 가능
 - 찜한 영화를 클릭하면 상세 페이지 이동
 - 비밀번호 변경 가능
 
-![마이페이지](https://github.com/scs0209/myBlog/assets/110822847/f3e11ee4-2052-4f91-b35c-f7be8f46a71d)
+![영화 찜](https://github.com/scs0209/myBlog/assets/110822847/4ec08777-a3be-4ff4-842c-eee880f5c24a)
 
-7. 영화 검색 페이지
-
-- 내가 검색한 영화에 대한 조회 페이지
-- 해당 결과를 클릭하면 상세 페이지로 이동 가능
-- 일정 데이터 이상이면 무한 스크롤을 통하여 추가로 데이터 불러옴
+7. 관리자 페이지 구현
+   
+- 가입한 유저의 정보와 해당 유저를 삭제 할 수 있음.
 
 ## 📂 디렉토리 구조
 
