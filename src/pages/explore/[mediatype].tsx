@@ -30,15 +30,12 @@ const ExplorePage = () => {
   const [genre, setGenre] = useState<any>(null)
   const [sort, setSort] = useState<any>(null)
 
-  const {
-    data: genresData,
-    isLoading,
-    isError: genresError,
-  } = useGetGenreQuery(mediatype)
+  const { data: genresData, isError: genresError } = useGetGenreQuery(mediatype)
 
   const {
     data,
     isFetching,
+    isLoading,
     isError,
     isLoading: isMediaTypeLoading,
   } = useDiscoverMoviesQuery({
@@ -143,7 +140,12 @@ const ExplorePage = () => {
         >
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {allResults.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                isFetching={isFetching}
+                isLoading={isLoading}
+              />
             ))}
           </div>
         </InfiniteScroll>
