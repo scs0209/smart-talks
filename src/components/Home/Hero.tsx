@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FormEvent, VFC, useState } from 'react'
+import Movix from './Movix'
 
 interface Props {
   movies: any
@@ -29,10 +30,9 @@ const Hero: VFC<Props> = ({ movies }) => {
         />
       </div>
       <div className="absolute top-0 left-0 w-full h-full bg-white-custom-gradient dark:bg-dark-custom-gradient" />
-
       <div className="relative flex flex-col items-center max-w-screen-lg mx-auto text-white">
-        <span className="text-[50px] font-bold mb-[10px] md:mb-0 md:text-[90px]">
-          Welcome.
+        <span className="h-[200px] md:mb-0 w-full">
+          <Movix />
         </span>
         <span className="text-lg font-medium mb-[40px] md:text-xl">
           Millions of movies, TV shows and people to discover. Explore now.

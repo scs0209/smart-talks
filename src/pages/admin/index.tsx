@@ -35,7 +35,7 @@ const AdminPage = () => {
       <Head>
         <title>Admin Page</title>
       </Head>
-      <div className="max-w-screen-lg mx-auto">
+      <div className="max-w-screen-lg mx-auto mt-20 min-h-screen">
         <h1 className="text-3xl font-bold text-center mb-5">Admin Page</h1>
         <Table>
           <Table.HeadCell>ID</Table.HeadCell>

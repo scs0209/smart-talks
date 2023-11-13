@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.12",
+    "@react-three/drei": "^9.88.13",
+    "@react-three/fiber": "^8.15.10",
     "@redux-devtools/extension": "^3.2.5",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/mongoose": "^5.11.97",
@@ -52,7 +54,8 @@
     "react-select": "^5.7.5",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-    "swr": "^2.2.0"
+    "swr": "^2.2.0",
+    "three": "^0.158.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

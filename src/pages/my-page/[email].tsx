@@ -22,8 +22,6 @@ const MyPage = () => {
   } = useGetFavoritesQuery(session?.user?._id)
   const { isModalOpen, openModal, closeModal } = useModal()
 
-  console.log(favorites)
-
   if (status === 'loading') {
     return <div>Loading...</div>
   }
