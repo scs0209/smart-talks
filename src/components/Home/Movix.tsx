@@ -1,5 +1,5 @@
-import React from 'react'
-import { Canvas } from '@react-three/fiber'
+import React, { useMemo, useRef } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
 import {
   Text3D,
   OrbitControls,
@@ -27,27 +27,44 @@ const GradientShaderMaterial = shaderMaterial(
   `,
 )
 
+const TextComponent = () => {
+  const gradientShaderMaterial = useMemo(() => new GradientShaderMaterial(), [])
+  const textRef = useRef<any>()
+
+  useFrame(() => {
+    if (textRef.current) {
+      textRef.current.material = gradientShaderMaterial
+      textRef.current.material.needsUpdate = true
+    }
+  })
+
+  return (
+    <Center rotation={[-0.2, -0.25, 0]}>
+      <Text3D
+        ref={textRef}
+        font="/Inter_Bold.json"
+        curveSegments={32}
+        bevelSize={0.04}
+        bevelThickness={0.1}
+        height={0.5}
+        lineHeight={0.5}
+        letterSpacing={-0.06}
+        size={1.5}
+        material={gradientShaderMaterial}
+      >
+        FILM FINDER
+        <meshBasicMaterial />
+      </Text3D>
+    </Center>
+  )
+}
+
 const Movix = () => {
   return (
     <Canvas>
       <ambientLight intensity={0.1} />
       <pointLight position={[5, 5, 5]} />
-      <Center rotation={[-0.2, -0.25, 0]}>
-        <Text3D
-          font="/Inter_Bold.json"
-          curveSegments={32}
-          bevelSize={0.04}
-          bevelThickness={0.1}
-          height={0.5}
-          lineHeight={0.5}
-          letterSpacing={-0.06}
-          size={1.5}
-          material={new GradientShaderMaterial()}
-        >
-          FILM FINDER
-          <meshBasicMaterial />
-        </Text3D>
-      </Center>
+      <TextComponent />
       <OrbitControls />
     </Canvas>
   )
