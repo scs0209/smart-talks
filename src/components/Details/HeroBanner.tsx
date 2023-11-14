@@ -5,13 +5,26 @@ import React, { VFC, useState } from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
-import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import {
+  FaEnvelopeSquare,
+  FaFacebookSquare,
+  FaHeart,
+  FaRegHeart,
+  FaTwitterSquare,
+} from 'react-icons/fa'
 import { useSession } from 'next-auth/react'
 import {
   useAddFavoriteMutation,
   useGetFavoritesQuery,
   useRemoveFavoriteMutation,
 } from '@/redux/api/favoriteApi'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton,
+} from 'react-share'
+import { useRouter } from 'next/router'
+import { BASE_URL } from '@/redux/api/client'
 import Genres from '../common/Genres'
 import VideoPopUp from './VideoPopUp'
 import HeroBannerSkeleton from '../Movie/HeroBannerSkeleton'
@@ -29,6 +42,7 @@ const HeroBanner: VFC<Props> = ({
   isFetching,
   isLoading,
 }) => {
+  const router = useRouter()
   const { data: session } = useSession()
   const { data: favorites } = useGetFavoritesQuery(session?.user._id)
   const [addFavorite, { isLoading: isAdding }] = useAddFavoriteMutation()
@@ -80,6 +94,9 @@ const HeroBanner: VFC<Props> = ({
       console.error(error)
     }
   }
+
+  const shareUrl = `${BASE_URL}${router.asPath}`
+  console.log(router.asPath)
 
   if (isLoading || isFetching) {
     return <HeroBannerSkeleton />
@@ -211,6 +228,29 @@ const HeroBanner: VFC<Props> = ({
                 </span>
               ))}
             </span>
+          </div>
+          <div className="flex space-x-4 mt-4">
+            <FacebookShareButton url={shareUrl}>
+              <FaFacebookSquare
+                size={24}
+                color="#3b5998"
+                className="transition-colors duration-200 hover:text-blue-600"
+              />
+            </FacebookShareButton>
+            <TwitterShareButton url={shareUrl}>
+              <FaTwitterSquare
+                size={24}
+                color="#1da1f2"
+                className="transition-colors duration-200 hover:text-blue-400"
+              />
+            </TwitterShareButton>
+            <EmailShareButton url={shareUrl}>
+              <FaEnvelopeSquare
+                size={24}
+                color="#D44638"
+                className="transition-colors duration-200 hover:text-red-600"
+              />
+            </EmailShareButton>
           </div>
         </div>
 
