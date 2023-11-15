@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { signOut, useSession } from 'next-auth/react'
 import { useEffect, useState, KeyboardEvent } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import styles from '../styles/Header.module.css'
 
 const Header = () => {
@@ -62,6 +63,7 @@ const Header = () => {
     <nav className={`${getNavbarClass()} fixed top-0 left-0 z-20 w-full`}>
       <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
         <div className="flex items-center justify-between w-full sm:w-auto">
+          <Image src="/filmfinder_logo.png" alt="logo" width={40} height={40} />
           <Link
             href="/"
             className="self-center text-2xl font-semibold text-indigo-300 dark:text-white whitespace-nowrap"

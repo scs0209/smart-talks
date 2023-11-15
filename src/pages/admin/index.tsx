@@ -64,17 +64,6 @@ const AdminPage = () => {
             ))}
           </Table.Body>
         </Table>
-        <div className="justify-end flex gap-2 mt-3">
-          <Button color="dark" size="xs">
-            <Link href="/admin/theater">Go to Create Theater</Link>
-          </Button>
-          <Button color="dark" size="xs">
-            <Link href="/admin/screen">Go to Create Screen</Link>
-          </Button>
-          <Button color="dark" size="xs">
-            <Link href="/admin/showtime">Go to Create Showtime</Link>
-          </Button>
-        </div>
       </div>
     </>
   )
