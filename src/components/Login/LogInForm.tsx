@@ -6,10 +6,10 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleSignupClick } from '@/redux/reducers/authorSlice'
 import { RootState } from '@/redux/store'
-import FindPasswordModal from '../FindPasswordModal'
-import SocialBtn from './SocialBtn'
 import { toast } from 'react-toastify'
 import { TOAST_MESSAGE } from '@/constants/toastMessage'
+import FindPasswordModal from '../FindPasswordModal'
+import SocialBtn from './SocialBtn'
 
 interface FormValue {
   email: string
