@@ -8,6 +8,8 @@ import { handleSignupClick } from '@/redux/reducers/authorSlice'
 import { RootState } from '@/redux/store'
 import FindPasswordModal from '../FindPasswordModal'
 import SocialBtn from './SocialBtn'
+import { toast } from 'react-toastify'
+import { TOAST_MESSAGE } from '@/constants/toastMessage'
 
 interface FormValue {
   email: string
@@ -26,17 +28,23 @@ const LoginForm = () => {
   const [showModal, setShowModal] = useState(false)
 
   const onSubmit = handleSubmit(async (formData) => {
-    const result = await signIn('credentials', {
-      redirect: false,
-      email: formData.email,
-      password: formData.password,
-    })
-    if (result?.error) {
-      console.log('Error:', result.error)
-    } else {
-      router.push('/')
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      })
+      if (result?.error) {
+        toast.error(result?.error)
+      } else {
+        toast.success(TOAST_MESSAGE.LOGIN_SUCCESS)
+        router.push('/')
+      }
+    } catch (error: any) {
+      console.error('Error:', error.message)
     }
   })
+
   const handleForgotPasswordClick = () => {
     setShowModal(true)
   }
@@ -72,7 +80,9 @@ const LoginForm = () => {
                 },
               })}
             />
-            <label className="author-label2">Email</label>
+            <label id="email" className="author-label2">
+              Email
+            </label>
           </div>
           {errors.email && (
             <p className="text-red-500">{errors.email.message}</p>
@@ -91,7 +101,9 @@ const LoginForm = () => {
                 },
               })}
             />
-            <label className="author-label2">Password</label>
+            <label id="password" className="author-label2">
+              Password
+            </label>
           </div>
           {errors.password && (
             <p className="text-red-500">{errors.password.message}</p>

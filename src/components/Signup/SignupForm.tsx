@@ -25,14 +25,13 @@ const SignupForm = () => {
   const [signUp, { isLoading, isError }] = useSignUpMutation()
 
   const onSubmit = handleSubmit(async (formData) => {
-    // Change handleSubmit to onSubmit
     try {
       await signUp({
-        username: formData.username, // Replace with formData
-        email: formData.email, // Replace with formData
-        password: formData.password, // Replace with formData
-        firstName: formData.firstName, // Replace with formData
-        lastName: formData.lastName, // Replace with formData
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
       })
       toast.success(TOAST_MESSAGE.SIGNUP_SUCCESS)
       dispatch(handleLoginClick())
