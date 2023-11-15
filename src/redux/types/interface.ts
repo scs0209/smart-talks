@@ -4,6 +4,7 @@ export interface ReviewState {
   review: string
   userId: User
   createdAt: string
+  rating: number
   __v: number
   likes: User['_id'][] // 좋아요 누른 사용자의 ID 목록
   dislikes: User['_id'][] // 싫어요 누른 사용자의 ID 목록
