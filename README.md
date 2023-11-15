@@ -4,13 +4,7 @@
 <img src="https://user-images.githubusercontent.com/110822847/235289858-a8950f96-5c58-42f9-8a56-5abc50c541af.png" width="300">
 </div>
 
-### <p style="color: skyblue;">예매 시스템에 대한 데이터베이스 설계 이해 부족과 UI/UX가 이상하기 때문에 지금 다시 리팩토링 중입니다. 컨셉은 영화 정보 및 예고편을 볼 수 있는 프로젝트로 변경중입니다. 리팩토링하면서 리팩토링코드에 대한 배포는 계속 하고 있으니 배포링크를 가시면 확인하실 수 있습니다.</p>
-
 ### [배포 링크](https://smart-talks.vercel.app/)
-
-이전 미흡하게나마 예매 성공한 프로젝트를 보시려면 아래 링크를 클릭해주세요
-
-### [이전 버전 프로젝트](https://github.com/scs0209/smart-talks/tree/legacy)
 
 ## 프로젝트 소개
 
@@ -75,6 +69,9 @@ npm run dev or npm run start
 - Date Manipulation: <img src="https://img.shields.io/badge/Day.js-423487?logo=Day.js&logoColor=white" style="vertical-align: middle">
 - Infinite Scrolling: <img src="https://img.shields.io/badge/React_Infinite_Scroll_Component-58D3F7?logo=React&logoColor=white" style="vertical-align: middle">
 - Video Player: <img src="https://img.shields.io/badge/React_Player-1C1C1C?logo=React&logoColor=white" style="vertical-align: middle">
+- 3D Graphics: <img src="https://img.shields.io/badge/React_Three_Fiber-58D3F7?logo=React&logoColor=white" style="vertical-align: middle">
+- Animation: <img src="https://img.shields.io/badge/Framer_Motion-0055FF?logo=Framer&logoColor=white" style="vertical-align: middle">
+- Social Sharing: <img src="https://img.shields.io/badge/React_Share-58D3F7?logo=React&logoColor=white" style="vertical-align: middle">
 
 ## 라이브러리 선택 이유
 
@@ -124,19 +121,38 @@ npm run dev or npm run start
   2. 간결한 API를 제공하여 코드를 깔끔하게 작성할 수 있습니다.
   3. 쉬운 유효성 검사
 
-</div>
-</details>
+**React Infinite Scroll Component**
+
+- 장점:
+  1. 간단한 구현: 무한 스크롤 기능을 쉽게 구현 가능
+  2. 로딩 및 에러 핸들링: 추가적으로 로딩 UI를 제공하며, 에러 발생 시 처리할 수 있는 기능도 제공
+  3. 커스터마이징: 스크롤 동작이나 트리거를 커스터마이징 할 수 있어, 다양한 유스케이스에 적응할 수 있다.
+- 단점:
+  1. 스타일링 제한: 라이브러리가 제공하는 UI는 스타일링에 제한이 있을 수 있음
+
+**React Player**
+
+- 장점:
+  1. 다양한 비디오 소스 지원: YouTube, Facebook, Twitch 등 다양한 비디오 소스를 지원
+  2. 커스텀 컨트롤: 사용자 친화적인 커스텀 컨트롤을 제공하며, 이를 통해 사용자 경험을 향상시킬 수 있음
+- 단점:
+  1. 런타임 오류: 특정 비디오 소스에 대한 지원이 완전 불완전할 수 있으며, 이로 인해 런타임에서 오류가 발생할 수 있음
+  2. 커스텀 컨트롤 제한: 제공되는 커스텀 컨트롤이 제한적일 수 있으며, 특정 비디오 플레이어 기능에 대한 커스텀이 불가능할 수 있음
+  </div>
+  </details>
 
 ## 🎈 구현 기능
 
 - 로그인 및 회원가입
 - 영화 검색 기능
 - 영화 목록 기능
-- 탭을 이용하여 해당 주제에 맞게 영화 및 TV Show 렌더링
+- 탭을 이용하여 해당 주제에 맞게 영화 및 TV Show 데이터 변경
 - TV 및 영화에 대한 정보 목록 기능
 - 영화 찜 기능
 - 평점을 포함한 리뷰 기능
+- 영화 공유 기능
 - 마이 페이지
+- 관리자 페이지
 
 ## 프로젝트 설명
 
@@ -144,9 +160,10 @@ npm run dev or npm run start
 
 - Hero Section에 `TMDB API`를 활용해 랜덤한 영화 이미지가 렌더링 됨
 - 검색창으로 영화를 검색할 수 있음
+- Title은 R3F를 사용하여 3D로 표현
 - Hero Section 아래에는 `TMDB API`가 제공하는 트렌드와 평점순, 그리고 인기있는 영화와 TV 프로그램을 각각 섹션별로 렌더링하고 있음
 
-![랜딩 페이지](https://github.com/scs0209/myBlog/assets/110822847/00e2514c-1bc6-49b9-902b-2b2bbe1be419)
+![홈페이지](https://github.com/scs0209/smart-talks/assets/110822847/a7af387f-2079-436c-a2e9-03dfec552d81)
 
 2. 로그인, 회원가입
 
@@ -159,10 +176,10 @@ npm run dev or npm run start
 
 3. 영화와 TV 프로그램 목록
 
-- `useRouter`를 활용하여 mediatype별로 해당 데이터에 맞게 페이지가 렌더링되게함
-  - mediatype은 URL의 일부로, movie나 tv와 같은 값을 가질 수 있음. 이 값에 따라 탐색 대상이 영화인지 TV 프로그램인지가 결정됨
+- `useRouter`를 활용하여 미디어 유형에 따라 페이지가 올바르게 렌더링되도록 함
+  - 미디어 유형은 URL의 일부로, `movie`나 `tv`와 같은 값을 가지는데, 이 값에 따라 사용자가 탐색하는 대상이 영화인지, 아니면 TV show인지 결정
 - UX를 향상시키기 위해 `react-infinite-scroll-component`를 활용하여 무한스크롤 구현
-- `react-select`를 활용하여 선택한 장르와 정렬에 맞게 데이터를 정렬할 수 있도록 구현
+- `react-select`를 이용하여, 사용자가 선택한 장르와 정렬 방식에 따라 데이터가 적절하게 정렬되도록 구현
 
 ![영화 목록페이지](https://github.com/scs0209/myBlog/assets/110822847/a334f248-438c-4c78-8b18-aef46ff10edd)
 
@@ -182,9 +199,15 @@ npm run dev or npm run start
 - 영화 찜 기능 추가(마이페이지에서 조회 가능)
 - 해당 영화에 대한 트레일러, 메인 예고편, 그리고 해당 영화에 맞는 추천 영화들 및 감독 등을 볼 수 있음
   - 데이터들을 편하게 볼 수 있도록 Carousel 구현
+- `react-share`를 이용하여 사용자가 현재 보고 있는 영화의 페이지 url을 이메일이나 sns로 공유할 수 있는 기능 구현
 
 ![상세페이지](https://github.com/scs0209/myBlog/assets/110822847/96abb945-9731-471b-95e4-4f07bec34f83)
-![리뷰](https://github.com/scs0209/myBlog/assets/110822847/ba1c1d6f-3e1a-43bd-8f21-c1d769569703)
+
+- 리뷰
+  ![리뷰](https://github.com/scs0209/myBlog/assets/110822847/ba1c1d6f-3e1a-43bd-8f21-c1d769569703)
+
+- 추가된 기능(공유 기능)
+  ![image](https://github.com/scs0209/smart-talks/assets/110822847/da90ff45-2847-4cbb-b4d0-3cc579c4c41a)
 
 6. 마이 페이지 구현
 
@@ -195,7 +218,7 @@ npm run dev or npm run start
 ![영화 찜](https://github.com/scs0209/myBlog/assets/110822847/4ec08777-a3be-4ff4-842c-eee880f5c24a)
 
 7. 관리자 페이지 구현
-   
+
 - 가입한 유저의 정보와 해당 유저를 삭제 할 수 있음.
 
 ## 📂 디렉토리 구조
