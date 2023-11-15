@@ -108,7 +108,7 @@
 }
 
 .dropdown-wrapper {
-  @apply z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 absolute right-[18rem];
+  @apply z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 absolute;
 }
 
 .dropdown-li {

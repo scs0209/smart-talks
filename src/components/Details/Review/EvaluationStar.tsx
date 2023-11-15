@@ -70,7 +70,7 @@ const EvaluationStar: FC<Props> = ({ reviews }) => {
                   />
                 </div>
                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  {Math.round(ratio * 100)}%
+                  {Math.round((ratio || 0) * 100)}%
                 </span>
               </div>
             )

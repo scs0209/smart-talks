@@ -1,3 +1,4 @@
+import { TOAST_MESSAGE } from '@/constants/toastMessage'
 import { useEditReviewMutation } from '@/redux/api/reviewApi'
 import { setEditingReview, toggleEditing } from '@/redux/reducers/reviewSlice'
 import { RootState } from '@/redux/store'
@@ -5,6 +6,7 @@ import { ReviewState } from '@/redux/types/interface'
 import { useSession } from 'next-auth/react'
 import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 interface Props {
   review: ReviewState
@@ -16,8 +18,16 @@ const ReviewEditForm: FC<Props> = ({ review }) => {
   const { editingReview } = useSelector((state: RootState) => state.review)
   const [editReview] = useEditReviewMutation()
 
+  const isCurrentUser = session?.user._id === review?.userId._id
+
   const submitEdit = async (e: React.FormEvent, id: string) => {
     e.preventDefault()
+
+    if (!session || !isCurrentUser) {
+      toast.error(TOAST_MESSAGE.REVIEW_AUTH)
+      return
+    }
+
     await editReview({
       id,
       review: editingReview,
