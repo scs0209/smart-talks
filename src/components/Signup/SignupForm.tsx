@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router'
-
 import { useForm } from 'react-hook-form'
 import { useSignUpMutation } from '@/redux/api/userApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleLoginClick } from '@/redux/reducers/authorSlice'
 import { RootState } from '@/redux/store'
+import { toast } from 'react-toastify'
+import { TOAST_MESSAGE } from '@/constants/toastMessage'
 
 interface FormValue {
   email: string
@@ -22,7 +22,6 @@ const SignupForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onChange' })
-  const router = useRouter()
   const [signUp, { isLoading, isError }] = useSignUpMutation()
 
   const onSubmit = handleSubmit(async (formData) => {
@@ -35,8 +34,8 @@ const SignupForm = () => {
         firstName: formData.firstName, // Replace with formData
         lastName: formData.lastName, // Replace with formData
       })
-      alert('회원가입 완료!')
-      router.push('/login')
+      toast.success(TOAST_MESSAGE.SIGNUP_SUCCESS)
+      dispatch(handleLoginClick())
     } catch (error) {
       console.error(error)
     }

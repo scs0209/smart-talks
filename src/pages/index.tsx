@@ -8,6 +8,7 @@ import movieApi, { getRunningQueriesThunk } from '@/redux/api/movieApi'
 import { useScroll, motion } from 'framer-motion'
 import TopRated from '@/components/Movie/TopRated,'
 import Popular from '@/components/Movie/Popular'
+import Head from 'next/head'
 
 export default function Home({ movies }: any) {
   const { scrollYProgress } = useScroll()
@@ -15,6 +16,9 @@ export default function Home({ movies }: any) {
 
   return (
     <>
+      <Head>
+        <title>FILM FINDER</title>
+      </Head>
       <motion.div
         className="fixed left-0 z-20 w-full h-1 bg-blue-500 md:top-[70px]"
         style={{ scaleX: scrollYProgress }}

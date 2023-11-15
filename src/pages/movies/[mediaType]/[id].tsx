@@ -8,6 +8,7 @@ import Similar from '@/components/Details/Similar'
 import Recommendation from '@/components/Details/Recommendation'
 import { useSession } from 'next-auth/react'
 import Review from '@/components/Details/Review/Review'
+import Head from 'next/head'
 
 const MovieDetail = () => {
   const router = useRouter()
@@ -41,27 +42,32 @@ const MovieDetail = () => {
   }
 
   return (
-    <section className="detail">
-      <HeroBanner
-        movieDetails={movieDetails}
-        mediaType={mediaType}
-        isFetching={isFetching}
-        isLoading={isLoading}
-      />
-      <Cast cast={cast} />
-      <VideoSection videos={videos} />
-      <Similar
-        similar={similar}
-        isFetching={isFetching}
-        isLoading={isLoading}
-      />
-      <Recommendation
-        recommendations={recommendations}
-        isFetching={isFetching}
-        isLoading={isLoading}
-      />
-      <Review movieId={movieId} session={session} />
-    </section>
+    <>
+      <Head>
+        <title>{movieDetails.title}</title>
+      </Head>
+      <section className="detail">
+        <HeroBanner
+          movieDetails={movieDetails}
+          mediaType={mediaType}
+          isFetching={isFetching}
+          isLoading={isLoading}
+        />
+        <Cast cast={cast} />
+        <VideoSection videos={videos} />
+        <Similar
+          similar={similar}
+          isFetching={isFetching}
+          isLoading={isLoading}
+        />
+        <Recommendation
+          recommendations={recommendations}
+          isFetching={isFetching}
+          isLoading={isLoading}
+        />
+        <Review movieId={movieId} session={session} />
+      </section>
+    </>
   )
 }
 
