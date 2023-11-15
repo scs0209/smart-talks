@@ -25,6 +25,8 @@ import {
 } from 'react-share'
 import { useRouter } from 'next/router'
 import { BASE_URL } from '@/redux/api/client'
+import { toast } from 'react-toastify'
+import { TOAST_MESSAGE } from '@/constants/toastMessage'
 import Genres from '../common/Genres'
 import VideoPopUp from './VideoPopUp'
 import HeroBannerSkeleton from '../Movie/HeroBannerSkeleton'
@@ -77,6 +79,11 @@ const HeroBanner: VFC<Props> = ({
   )
 
   const handleFavorite = async () => {
+    if (!session) {
+      toast.error(TOAST_MESSAGE.AUTH_FAIL)
+      return
+    }
+
     try {
       if (isFavorite) {
         await removeFavorite({
@@ -96,7 +103,6 @@ const HeroBanner: VFC<Props> = ({
   }
 
   const shareUrl = `${BASE_URL}${router.asPath}`
-  console.log(router.asPath)
 
   if (isLoading || isFetching) {
     return <HeroBannerSkeleton />

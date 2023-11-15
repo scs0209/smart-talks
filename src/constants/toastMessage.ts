@@ -16,4 +16,6 @@ export const TOAST_MESSAGE = {
   // review
   REVIEW_ADD_FAIL: '로그인이 필요합니다. 로그인 후에 다시 시도해주세요.',
   REVIEW_AUTH: '로그인이 필요하거나 본인이 작성한 리뷰가 아닙니다.',
+
+  AUTH_FAIL: '로그인이 필요합니다.',
 }
