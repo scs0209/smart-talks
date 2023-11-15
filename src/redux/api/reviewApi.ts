@@ -48,7 +48,10 @@ const reviewApi = createApi({
       }),
       invalidatesTags: ['Reviews'],
     }),
-    likeReview: builder.mutation<any, { id: string; userId: string }>({
+    likeReview: builder.mutation<
+      any,
+      { id: string; userId: string | undefined }
+    >({
       query: ({ id, userId }) => ({
         url: `/movies/review`,
         method: 'PATCH',
@@ -60,7 +63,10 @@ const reviewApi = createApi({
       }),
       invalidatesTags: ['Reviews'],
     }),
-    dislikeReview: builder.mutation<any, { id: string; userId: string }>({
+    dislikeReview: builder.mutation<
+      any,
+      { id: string; userId: string | undefined }
+    >({
       query: ({ id, userId }) => ({
         url: `/movies/review`,
         method: 'PATCH',
