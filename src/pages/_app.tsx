@@ -19,7 +19,7 @@ type AppPropsWithAuth = AppProps & {
 
 function App({ Component, pageProps }: AppPropsWithAuth) {
   return (
-    <SessionProvider session={...pageProps.session}>
+    <SessionProvider session={pageProps.session}>
       <Flowbite>
         <ToastContainer
           position="top-center"
